@@ -13,7 +13,7 @@
 - [ ] Confirm ATOL / consolidator arrangement for UK flight sales copy
 - [ ] Set `NEXT_PUBLIC_SUPPORT_PHONE` (e.g. `+442079935216`)
 - [ ] Set `NEXT_PUBLIC_SUPPORT_EMAIL` (e.g. `Info@nobletravel.co.uk`)
-- [ ] Set `NEXT_PUBLIC_WHATSAPP_NUMBERS` (comma-separated digits with country code)
+- [ ] Confirm WhatsApp numbers in `apps/web/src/lib/contact.ts` (`WHATSAPP_NUMBERS`)
 - [ ] Create Resend account; verify sender domain
 - [ ] Set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEADS_EMAIL_TO`
 - [ ] Duffel account: test → live token; set `DUFFEL_ACCESS_TOKEN` and `DUFFEL_USE_MOCK=false` when ready
