@@ -3242,37 +3242,31 @@
   filter: saturate(1) brightness(1);
 }
 
+/* LCP text stays visible without waiting for hydration / is-ready */
 .home-hero-line {
-  opacity: 0;
-  transform: translateY(0.75rem);
-  transition:
-    opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.home-hero.is-ready .home-hero-line {
   opacity: 1;
   transform: none;
 }
 
-.home-hero-brand {
-  transition-delay: 0.04s;
-}
-
-.home-hero-title {
-  transition-delay: 0.1s;
-}
-
+.home-hero-brand,
+.home-hero-title,
 .home-hero-copy {
-  transition-delay: 0.16s;
+  opacity: 1;
+  transform: none;
 }
 
+/* Only the search shell animates in after ready */
 .home-hero-search {
-  transition-delay: 0.22s;
+  opacity: 0;
   transform: translateY(1.1rem);
+  transition:
+    opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0.08s;
 }
 
 .home-hero.is-ready .home-hero-search {
+  opacity: 1;
   transform: none;
 }
 
@@ -3460,6 +3454,11 @@
     transform: none !important;
     filter: none !important;
     transition: none !important;
+  }
+
+  .home-hero-search {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .nav-drawer-root:not(.is-open) .nav-drawer {

@@ -8,7 +8,7 @@ const nextConfig = {
   transpilePackages: ['@jlt/ui', '@jlt/shared'],
   outputFileTracingRoot: path.join(__dirname, '../..'),
   experimental: {
-    optimizePackageImports: ['@jlt/ui'],
+    optimizePackageImports: ['@jlt/ui', 'date-fns'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],

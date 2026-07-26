@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Syne } from 'next/font/google';
+import Script from 'next/script';
+import { DeferredWhatsAppChatButton } from '../components/DeferredWhatsAppChatButton';
 import { Providers } from '../components/Providers';
 import { SiteChrome } from '../components/SiteChrome';
 import { SiteFooter } from '../components/SiteFooter';
-import { WhatsAppChatButton } from '../components/WhatsAppChatButton';
 import { AGENCY_NAME } from '../lib/brand';
 import { getSupportEmail, getSupportPhone } from '../lib/contact';
 import { getSiteUrl, SITE_KEYWORDS } from '../lib/seo';
@@ -153,18 +154,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
         </Providers>
         <SiteFooter />
-        <WhatsAppChatButton />
+        <DeferredWhatsAppChatButton />
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? (
           <>
-            <script
-              async
+            <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+              strategy="lazyOnload"
             />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');`,
-              }}
-            />
+            <Script id="ga-init" strategy="lazyOnload">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');`}
+            </Script>
           </>
         ) : null}
       </body>

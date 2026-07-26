@@ -9,7 +9,7 @@ import {
   HomeStaggerItem,
 } from '../../components/HomeMotion';
 import { InstalmentSpotlight } from '../../components/Instalments';
-import { SearchForm } from '../../components/SearchForm';
+import { HomeSearchForm } from '../../components/HomeSearchForm';
 import { findAirport } from '../../data/airports';
 import {
   destinationHref,
@@ -90,6 +90,7 @@ export default function HomePage() {
             alt=""
             fill
             priority
+            quality={75}
             sizes="100vw"
             className="home-hero-media object-cover"
           />
@@ -110,7 +111,7 @@ export default function HomePage() {
         </section>
 
         <div className="home-hero-line home-hero-search relative z-10 mx-auto -mt-36 w-full max-w-280 px-4 sm:-mt-40 sm:px-0">
-          <SearchForm />
+          <HomeSearchForm />
         </div>
       </HomeHero>
 
@@ -149,7 +150,8 @@ export default function HomePage() {
                     src={dest.image}
                     alt={`${dest.city}, ${dest.country}`}
                     fill
-                    sizes="(max-width: 640px) 100vw, 280px"
+                    quality={75}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/25 to-transparent" />
