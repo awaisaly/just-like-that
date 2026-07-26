@@ -936,7 +936,7 @@ export function SearchResults({
               <span className="text-accent">{instalmentCopy.motto}</span>
             </p>
             <p className="m-0 mt-0.5 text-xs text-muted">
-              Select a fare, request a callback — instalments are our primary way to book.
+              Select a fare, book with a UK agent — pay in instalments before you fly.
             </p>
           </div>
           <Link href={INSTALMENTS_HREF} className="flights-results-promise-cta">

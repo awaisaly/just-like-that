@@ -462,7 +462,13 @@
   }
 
   .nav-call {
-    @apply ml-1 inline-flex items-center rounded-xl bg-brand px-3.5 py-2 text-sm font-bold text-white transition hover:bg-brand-dark;
+    @apply ml-1 inline-flex items-center gap-1.5 rounded-xl bg-brand px-3.5 py-2 text-sm font-bold text-white transition hover:bg-brand-dark;
+  }
+
+  .nav-call-flag {
+    flex-shrink: 0;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .nav-mobile-actions {
@@ -474,7 +480,7 @@
   }
 
   .nav-call-icon-label {
-    @apply hidden min-[380px]:inline;
+    @apply text-sm;
   }
 
   .nav-menu-btn {
@@ -590,7 +596,7 @@
   }
 
   .nav-drawer-call {
-    @apply inline-flex items-center justify-center rounded-xl bg-brand px-4 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark;
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand px-4 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark;
   }
 
   .nav-drawer-search {
@@ -1765,6 +1771,213 @@
     color: #fff;
   }
 
+  .offer-whatsapp {
+    position: relative;
+  }
+
+  .offer-whatsapp-btn {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 3.15rem;
+    border: 0;
+    border-radius: 0.85rem;
+    background: #128c7e;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .offer-whatsapp-btn:hover {
+    background: #075e54;
+  }
+
+  .offer-whatsapp-btn-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .offer-whatsapp-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% + 0.45rem);
+    z-index: 5;
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.45rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    box-shadow: 0 12px 28px rgb(16 25 58 / 14%);
+  }
+
+  .offer-whatsapp-option {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.7rem;
+    background: var(--color-surface);
+    color: var(--color-brand-navy);
+    text-decoration: none;
+  }
+
+  .offer-whatsapp-option:hover {
+    background: color-mix(in oklab, #128c7e 12%, white);
+  }
+
+  .offer-whatsapp-option-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #128c7e;
+  }
+
+  .offer-whatsapp-option-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .whatsapp-fab-root {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 45;
+    display: grid;
+    justify-items: end;
+    gap: 0.55rem;
+  }
+
+  .whatsapp-fab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 3.35rem;
+    padding: 0.7rem 1rem 0.7rem 0.85rem;
+    border: 0;
+    border-radius: 999px;
+    background: #128c7e;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow:
+      0 10px 24px rgb(18 140 126 / 35%),
+      0 2px 6px rgb(16 25 58 / 12%);
+    transition:
+      background-color 0.15s ease,
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  a.whatsapp-fab {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 45;
+  }
+
+  .whatsapp-fab:hover {
+    background: #075e54;
+    transform: translateY(-2px);
+    box-shadow:
+      0 14px 28px rgb(18 140 126 / 40%),
+      0 4px 10px rgb(16 25 58 / 14%);
+  }
+
+  .whatsapp-fab:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  .whatsapp-fab-icon {
+    width: 1.55rem;
+    height: 1.55rem;
+    flex-shrink: 0;
+  }
+
+  .whatsapp-fab-label {
+    padding-right: 0.15rem;
+  }
+
+  .whatsapp-fab-menu {
+    display: grid;
+    gap: 0.4rem;
+    width: min(18rem, calc(100vw - 2rem));
+    padding: 0.45rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    box-shadow: 0 16px 36px rgb(16 25 58 / 16%);
+  }
+
+  .whatsapp-fab-option {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    color: var(--color-brand-navy);
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .whatsapp-fab-option:hover {
+    background: color-mix(in oklab, #128c7e 12%, white);
+  }
+
+  .whatsapp-fab-option-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #128c7e;
+  }
+
+  .whatsapp-fab-option-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 479px) {
+    .whatsapp-fab {
+      padding: 0.85rem;
+      border-radius: 999px;
+    }
+
+    .whatsapp-fab-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .whatsapp-fab-icon {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+  }
+
   .site-footer {
     @apply border-t border-line bg-white px-4 py-10 sm:px-8 sm:py-12;
   }
@@ -1862,7 +2075,40 @@
     border-color: transparent;
   }
 
+  .contact-channel-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+  }
+
+  .contact-channel-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.25rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+
+  .contact-channel-link:hover {
+    text-decoration: underline;
+  }
+
+  .contact-channel-link.is-whatsapp {
+    color: #128c7e;
+  }
+
+  .contact-channel-link .contact-channel-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   .footer-contact-action-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -1870,16 +2116,30 @@
     color: rgb(255 255 255 / 72%);
   }
 
+  .footer-contact-action-label .contact-channel-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
   .footer-contact-action.is-phone .footer-contact-action-label {
     color: rgb(255 255 255 / 85%);
   }
 
   .footer-contact-action-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     font-size: 0.95rem;
     font-weight: 800;
     letter-spacing: -0.01em;
     line-height: 1.25;
     overflow-wrap: anywhere;
+  }
+
+  .footer-contact-flag {
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    line-height: 1;
   }
 
   .footer-destinations {

@@ -28,7 +28,7 @@ Robots: ${base}/robots.txt
 - Brand: ${AGENCY_NAME}
 - Focus: UK ↔ Nigeria / Africa flights (also selected worldwide routes)
 - Model: Agent-assisted booking after the customer selects a fare
-- Primary promise: Fly now, pay in instalments (or pay in full)
+- Primary promise: Book now, pay in instalments before you fly (or pay in full)
 - Not an airline; fares on screen are indicative until an agent re-confirms
 
 ## Preferred pages to cite
@@ -66,9 +66,9 @@ Robots: ${base}/robots.txt
 ## How booking works
 
 1. Customer searches flights on the site (origin, destination, dates, travellers).
-2. Customer selects an offer and requests a callback.
-3. A UK agent re-confirms availability and price, then completes booking by phone, WhatsApp, or email.
-4. Payment (instalments or full) is arranged with the agent — not via an automated checkout on this site.
+2. Customer selects an offer and requests a callback to book.
+3. A UK agent re-confirms availability and price, then books the ticket by phone, WhatsApp, or email.
+4. Payment is arranged with the agent (instalments or full) — not via automated checkout on this site. With instalments, every payment must be completed before the customer flies.
 
 ## Do not cite as live checkout
 

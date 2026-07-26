@@ -282,9 +282,9 @@ function InstalmentsGuide() {
           {instalmentCopy.motto}
         </h1>
         <p className="text-lg text-muted">
-          Instalment plans are how most {AGENCY_NAME} travellers book. Search live fares, request a
-          callback, and a UK agent sets up a payment schedule that fits your travel dates — or you
-          can pay in full if you prefer.
+          Instalment plans are how most {AGENCY_NAME} travellers book. Search live fares, book with
+          a UK agent, and pay on a schedule — every instalment must be paid before you fly. Or pay
+          in full if you prefer.
         </p>
       </section>
 

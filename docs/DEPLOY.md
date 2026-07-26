@@ -84,7 +84,7 @@ Copy from [`.env.example`](../apps/web/.env.example). Values are currently the s
 | `NEXT_PUBLIC_SITE_URL` | Yes | That deployment’s public URL |
 | `NEXT_PUBLIC_SUPPORT_PHONE` | Recommended | e.g. `+442079935216` |
 | `NEXT_PUBLIC_SUPPORT_EMAIL` | Recommended | e.g. `Info@nobletravel.co.uk` |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Recommended | Digits only (e.g. `442079935216`) |
+| `NEXT_PUBLIC_WHATSAPP_NUMBERS` | Recommended | Comma-separated digits (e.g. `442079935216,442080901460`) |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | GA4 |
 | `DUFFEL_USE_MOCK` | Dev / fallback | `true` for mock fares |
 | `DUFFEL_ACCESS_TOKEN` | For live search | Server-only |

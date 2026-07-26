@@ -11,15 +11,15 @@ import { buildPageMetadata } from '../../lib/seo';
 export const metadata = buildPageMetadata({
   title: 'About us',
   description:
-    'Elca Airbridge helps travellers fly now and pay in instalments — live fares online, agent-confirmed bookings, and payment plans as our primary promise.',
+    'Elca Airbridge helps travellers book now and pay in instalments — live fares online, agent-booked tickets, and all instalments paid before you fly.',
   path: '/about',
   ogTitle: 'About Elca Airbridge',
 });
 
 const pillars = [
   {
-    title: 'Fly now. Pay in instalments.',
-    body: 'Instalment plans are our primary way to book. Search live fares, request a callback, and we set up a schedule that fits — or settle in full if you prefer.',
+    title: 'Book now. Pay in instalments.',
+    body: 'Instalment plans are our primary way to book. Search live fares, book with a UK agent, and pay on a schedule — every instalment must be paid before you fly. Or settle in full if you prefer.',
   },
   {
     title: 'Airline access that matters',
@@ -27,7 +27,7 @@ const pillars = [
   },
   {
     title: 'People on the booking',
-    body: 'Search online, then speak with a UK agent who re-checks the fare, bags, seats, and your instalment plan before anything is ticketed.',
+    body: 'Search online, then speak with a UK agent who re-checks the fare, bags, and seats, books your ticket, and sets up instalments — all paid before you fly.',
   },
 ];
 
@@ -72,7 +72,7 @@ export default function AboutPage() {
             <span className="text-accent">Booked with people.</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/85">
-            A UK travel desk built so you can fly now and pay in instalments — with a real
+            A UK travel desk built so you can book now and pay in instalments — with a real
             consultant when the details matter.
           </p>
         </div>

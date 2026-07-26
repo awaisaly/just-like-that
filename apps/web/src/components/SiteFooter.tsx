@@ -12,13 +12,15 @@ import {
   formatSupportPhone,
   getSupportEmail,
   getSupportPhone,
+  getWhatsAppLines,
   supportMailtoHref,
-  supportPhoneDigits,
   supportTelHref,
+  whatsappChatHref,
 } from '../lib/contact';
 import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
 import { TOURS_HREF } from '../lib/tours';
 import { AgencyWordmark } from './AgencyWordmark';
+import { PhoneCallIcon, WhatsAppChannelIcon } from './ContactChannelIcons';
 
 function VisaBadge() {
   return (
@@ -149,8 +151,8 @@ function SecureBadge() {
 
 function UkBadge() {
   return (
-    <span className="footer-trust-pill" title="UK call centre">
-      UK call centre
+    <span className="footer-trust-pill" title="UK travel agency">
+      UK travel agency
     </span>
   );
 }
@@ -159,12 +161,8 @@ export function SiteFooter() {
   const supportPhone = getSupportPhone();
   const supportEmail = getSupportEmail();
   const phoneDisplay = formatSupportPhone(supportPhone);
-  const whatsappRaw =
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^\d]/g, '') ||
-    supportPhoneDigits(supportPhone);
-  const whatsappUrl = whatsappRaw
-    ? `https://wa.me/${whatsappRaw}?text=${encodeURIComponent(`Hi, I have a question about flights on ${AGENCY_NAME}.`)}`
-    : null;
+  const whatsappLines = getWhatsAppLines();
+  const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
   const destinationRegions = destinationRegionOrder
     .map((region) => ({
@@ -178,44 +176,6 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="site-footer-inner">
-        <section className="footer-contact" aria-labelledby="footer-contact-title">
-          <div className="footer-contact-copy">
-            <p className="footer-contact-eyebrow">UK call centre</p>
-            <h2 id="footer-contact-title" className="footer-contact-title">
-              Talk to a booking agent
-            </h2>
-            <p className="footer-contact-text">
-              Prefer to speak with someone? Call, WhatsApp, or email — we help with fares,
-              instalments, and callbacks.
-            </p>
-          </div>
-          <div className="footer-contact-actions">
-            <a href={supportTelHref(supportPhone)} className="footer-contact-action is-phone">
-              <span className="footer-contact-action-label">Call us</span>
-              <span className="footer-contact-action-value">{phoneDisplay}</span>
-            </a>
-            {whatsappUrl ? (
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-contact-action is-whatsapp"
-              >
-                <span className="footer-contact-action-label">WhatsApp</span>
-                <span className="footer-contact-action-value">Message the team</span>
-              </a>
-            ) : null}
-            <a href={supportMailtoHref(supportEmail)} className="footer-contact-action is-email">
-              <span className="footer-contact-action-label">Email</span>
-              <span className="footer-contact-action-value">{supportEmail}</span>
-            </a>
-            <Link href="/contact" className="footer-contact-action is-form">
-              <span className="footer-contact-action-label">Send a message</span>
-              <span className="footer-contact-action-value">Contact form →</span>
-            </Link>
-          </div>
-        </section>
-
         <section className="footer-destinations" aria-labelledby="footer-destinations-title">
           <div className="footer-destinations-head">
             <h2 id="footer-destinations-title" className="footer-col-title">
@@ -326,6 +286,61 @@ export function SiteFooter() {
             </div>
           </div>
         </div>
+
+        <section className="footer-contact" aria-labelledby="footer-contact-title">
+          <div className="footer-contact-copy">
+            <p className="footer-contact-eyebrow">UK travel agency</p>
+            <h2 id="footer-contact-title" className="footer-contact-title">
+              Talk to a booking agent
+            </h2>
+            <p className="footer-contact-text">
+              Prefer to speak with someone? Call, email, or WhatsApp — we help with fares,
+              instalments, and callbacks.
+            </p>
+          </div>
+          <div className="footer-contact-actions">
+            <a href={supportTelHref(supportPhone)} className="footer-contact-action is-phone">
+              <span className="footer-contact-action-label">
+                <PhoneCallIcon />
+                Call us
+              </span>
+              <span className="footer-contact-action-value">
+                <span className="footer-contact-flag" aria-hidden="true">
+                  🇬🇧
+                </span>
+                <span>{phoneDisplay}</span>
+              </span>
+            </a>
+            <a href={supportMailtoHref(supportEmail)} className="footer-contact-action is-email">
+              <span className="footer-contact-action-label">Email</span>
+              <span className="footer-contact-action-value">{supportEmail}</span>
+            </a>
+            {whatsappLines.map((line) => (
+              <a
+                key={line.digits}
+                href={whatsappChatHref(line.digits, whatsappMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-contact-action is-whatsapp"
+              >
+                <span className="footer-contact-action-label">
+                  <WhatsAppChannelIcon />
+                  {line.label}
+                </span>
+                <span className="footer-contact-action-value">
+                  <span className="footer-contact-flag" aria-hidden="true">
+                    🇬🇧
+                  </span>
+                  <span>{line.display}</span>
+                </span>
+              </a>
+            ))}
+            <Link href="/contact" className="footer-contact-action is-form">
+              <span className="footer-contact-action-label">Send a message</span>
+              <span className="footer-contact-action-value">Contact form →</span>
+            </Link>
+          </div>
+        </section>
 
         <div className="footer-bottom">
           <div>

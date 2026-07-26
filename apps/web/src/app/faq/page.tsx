@@ -26,7 +26,7 @@ const faqGroups: { title: string; items: FaqItem[] }[] = [
     items: [
       {
         q: 'Can I pay for flights in instalments?',
-        a: 'Yes — instalment plans are our primary way of helping travellers book. After you select a fare and request a callback, your agent will set up a plan that suits you. You can also pay in full if you prefer. Exact terms depend on the airline, fare rules, and how soon you travel.',
+        a: 'Yes — instalment plans are our primary way of helping travellers book. You book the ticket with a UK agent, then pay in instalments. Every instalment must be paid before you fly. You can also pay in full if you prefer. Exact terms depend on the airline, fare rules, and how soon you travel.',
       },
       {
         q: 'Which cards do you accept?',

@@ -151,10 +151,10 @@ export default function DestinationsIndexPage() {
       ))}
 
       <section className="overflow-hidden rounded-3xl bg-brand-navy px-5 py-8 text-white sm:px-8 sm:py-10">
-        <h2 className="m-0 text-2xl font-extrabold text-white">Fly now. Pay in instalments.</h2>
+        <h2 className="m-0 text-2xl font-extrabold text-white">Book now. Pay in instalments.</h2>
         <p className="mt-2 max-w-xl text-white/80">
-          Search London–Lagos, Dubai, Accra, Paris, New York, and more — then ask your UK agent to
-          set up a payment plan. Instalments are our primary way to book.
+          Search London–Lagos, Dubai, Accra, Paris, New York, and more — then book with a UK agent
+          and pay in instalments. Every instalment must be paid before you fly.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link

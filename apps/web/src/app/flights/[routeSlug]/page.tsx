@@ -74,7 +74,7 @@ export default async function RouteLandingPage({
           },
           {
             q: 'Can I pay in instalments?',
-            a: 'Yes — instalment plans are our primary way of helping travellers book. After you select a fare and request a callback, your agent will set up a plan that suits you.',
+            a: 'Yes — instalment plans are our primary way of helping travellers book. You book the ticket with a UK agent, then pay in instalments — every instalment must be paid before you fly.',
           },
           {
             q: 'Are the prices I see final?',
@@ -198,11 +198,12 @@ export default async function RouteLandingPage({
           Our primary promise
         </p>
         <h2 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">
-          Fly now. Pay in instalments.
+          Book now. Pay in instalments.
         </h2>
         <p className="mt-2 max-w-xl text-sm text-white/80 sm:text-base">
           Instalment plans are how most of our travellers book {fromCity}–{toCity}. Search live
-          fares, request a callback, and your UK agent sets up a plan — or pay in full if you prefer.
+          fares, book with a UK agent, and pay in instalments — all paid before you fly. Or pay in
+          full if you prefer.
         </p>
         <Link
           href="/guides/paying-for-flights-in-instalments"

@@ -48,20 +48,20 @@ const steps = [
   },
   {
     n: '02',
-    title: 'Request a callback',
-    body: 'Tell us you want instalments. No payment online — a booking specialist takes it from there.',
+    title: 'Book with a UK agent',
+    body: 'Request a callback — we confirm the fare and book your ticket. No payment online.',
   },
   {
     n: '03',
-    title: 'Pay in instalments & fly',
-    body: 'We re-check the price, bags, and seats, set up your plan, then ticket when ready.',
+    title: 'Pay before you fly',
+    body: 'Spread the cost in instalments. All payments must be complete before departure.',
   },
 ];
 
 const reasons = [
   {
     title: 'Pay in instalments',
-    body: 'Our primary promise — spread the cost with a UK agent. Most travellers book this way.',
+    body: 'Book now, then pay on a schedule — every instalment must be paid before you fly.',
   },
   {
     title: 'Agent-confirmed fares',
@@ -277,7 +277,7 @@ export default function HomePage() {
             Why {AGENCY_NAME}
           </p>
           <h2 className="mt-1 text-2xl font-extrabold sm:text-3xl">
-            The calm way to fly now and pay in instalments
+            The calm way to book now and pay in instalments
           </h2>
         </div>
 
@@ -335,7 +335,7 @@ export default function HomePage() {
                 Pay in instalments.
               </h2>
               <p className="mt-3 max-w-md text-base text-white/80">
-                Search now, then ask your agent to set up a payment plan — our primary way to book.
+                Search now, book with a UK agent, then pay in instalments before you fly.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
