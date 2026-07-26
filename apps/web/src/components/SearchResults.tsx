@@ -915,8 +915,8 @@ export function SearchResults({
   }
 
   return (
-    <div className="flights-results grid items-start gap-5 lg:grid-cols-[280px_1fr]">
-      <div className="hidden lg:block">
+    <div className="flights-results grid min-w-0 max-w-full items-start gap-5 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
+      <div className="hidden min-w-0 lg:block">
         <DesktopFlightFilters
           filters={filters}
           setFilters={setFilters}
@@ -929,7 +929,7 @@ export function SearchResults({
         />
       </div>
 
-      <div className="grid min-w-0 gap-3">
+      <div className="grid min-w-0 max-w-full gap-3">
         <div className="flights-results-promise">
           <div>
             <p className="m-0 text-sm font-extrabold text-brand-navy">
