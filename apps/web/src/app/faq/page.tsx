@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -8,18 +7,16 @@ import {
   supportMailtoHref,
   supportTelHref,
 } from '../../lib/contact';
+import { buildPageMetadata } from '../../lib/seo';
 import { TOURS_HREF } from '../../lib/tours';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'FAQs',
   description:
     'Answers about Elca Airbridge flight search, callbacks, instalments, baggage, and agent-assisted booking.',
-  openGraph: {
-    title: 'Elca Airbridge FAQs',
-    description: 'How agent-assisted booking works — from search to ticket.',
-    images: ['/og?title=FAQs'],
-  },
-};
+  path: '/faq',
+  ogTitle: 'Elca Airbridge FAQs',
+});
 
 type FaqItem = { q: string; a: string };
 

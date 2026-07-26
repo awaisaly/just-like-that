@@ -95,6 +95,16 @@ Copy from [`.env.example`](../apps/web/.env.example). Values are currently the s
 | `RESEND_FROM_EMAIL` | Prod callbacks | Verified sender |
 | `LEADS_EMAIL_TO` | Prod callbacks | Representative inbox |
 
+## SEO & AI discoverability
+
+After deploy, confirm:
+
+1. `NEXT_PUBLIC_SITE_URL` is the real `https://…` domain (canonicals, sitemap, JSON-LD, `/llms.txt`).
+2. [Google Search Console](https://search.google.com/search-console) → submit `${SITE_URL}/sitemap.xml`.
+3. Open `${SITE_URL}/robots.txt`, `${SITE_URL}/sitemap.xml`, and `${SITE_URL}/llms.txt`.
+
+Public content pages (home, destinations, routes, guides, about, FAQ, contact) are indexable. Checkout, live search, and offer pages stay blocked.
+
 ## Behaviour notes
 
 - Callback requests are emailed to `LEADS_EMAIL_TO`. They are **not** stored in a database.

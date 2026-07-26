@@ -101,23 +101,24 @@ export default async function RouteLandingPage({
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-      { '@type': 'ListItem', position: 2, name: 'Flights', item: `${siteUrl}/flights/search` },
+      { '@type': 'ListItem', position: 2, name: 'Destinations', item: `${siteUrl}/destinations` },
       { '@type': 'ListItem', position: 3, name: page.h1, item: `${siteUrl}${pagePath}` },
     ],
   };
 
+  // Indicative fare only — do not claim InStock (agent must re-confirm).
   const productJsonLd = price
     ? {
         '@context': 'https://schema.org',
         '@type': 'Product',
         name: page.h1,
-        description: page.metaDescription,
+        description: `${page.metaDescription} Prices shown are indicative and re-confirmed by a UK agent before booking.`,
         brand: { '@type': 'Brand', name: AGENCY_NAME },
         offers: {
           '@type': 'Offer',
           priceCurrency: price.currency,
           price: (price.amount / 100).toFixed(2),
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/PreOrder',
           url: `${siteUrl}${pagePath}`,
         },
       }
@@ -142,8 +143,8 @@ export default async function RouteLandingPage({
           Home
         </Link>
         <span className="mx-2">/</span>
-        <Link href="/flights/search" className="hover:text-brand hover:underline">
-          Flights
+        <Link href="/destinations" className="hover:text-brand hover:underline">
+          Destinations
         </Link>
         <span className="mx-2">/</span>
         <span className="text-ink">

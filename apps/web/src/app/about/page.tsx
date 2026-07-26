@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { InstalmentSpotlight } from '../../components/Instalments';
@@ -7,18 +6,15 @@ import {
   getSupportPhone,
   supportTelHref,
 } from '../../lib/contact';
+import { buildPageMetadata } from '../../lib/seo';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'About us',
   description:
     'Elca Airbridge helps travellers fly now and pay in instalments — live fares online, agent-confirmed bookings, and payment plans as our primary promise.',
-  openGraph: {
-    title: 'About Elca Airbridge',
-    description:
-      'Meet the UK team behind fly-now, pay-in-instalments flight booking.',
-    images: ['/og?title=About%20us'],
-  },
-};
+  path: '/about',
+  ogTitle: 'About Elca Airbridge',
+});
 
 const pillars = [
   {

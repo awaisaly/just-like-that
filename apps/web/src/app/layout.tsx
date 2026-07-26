@@ -124,17 +124,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     url: siteUrl,
     description: defaultDescription,
     inLanguage: 'en-GB',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${siteUrl}/flights/search?from={from_iata}&to={to_iata}`,
-      },
-      'query-input': [
-        { '@type': 'PropertyValueSpecification', valueRequired: true, valueName: 'from_iata' },
-        { '@type': 'PropertyValueSpecification', valueRequired: true, valueName: 'to_iata' },
-      ],
-    },
+    // Point assistants at indexable hubs — not /flights/search (noindex / robots disallow).
+    significantLink: [
+      `${siteUrl}/destinations`,
+      `${siteUrl}/guides/cheap-flights-to-africa`,
+      `${siteUrl}/guides/flights-uk-nigeria`,
+      `${siteUrl}/guides/paying-for-flights-in-instalments`,
+      `${siteUrl}/faq`,
+      `${siteUrl}/contact`,
+      `${siteUrl}/llms.txt`,
+    ],
   };
 
   return (

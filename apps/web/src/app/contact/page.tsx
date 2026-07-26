@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ContactForm } from '../../components/ContactForm';
@@ -10,17 +9,15 @@ import {
   supportPhoneDigits,
   supportTelHref,
 } from '../../lib/contact';
+import { buildPageMetadata } from '../../lib/seo';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Contact us',
   description:
     'Talk to Elca Airbridge about flying now and paying in instalments — UK support by phone, WhatsApp, or email.',
-  openGraph: {
-    title: 'Contact Elca Airbridge',
-    description: 'Speak with a UK booking agent about instalment plans, fares, and bags.',
-    images: ['/og?title=Contact%20us'],
-  },
-};
+  path: '/contact',
+  ogTitle: 'Contact Elca Airbridge',
+});
 
 export default function ContactPage() {
   const supportPhone = getSupportPhone();
