@@ -1,8 +1,8 @@
 # just-like-that
 
-Internal product / monorepo for the **Elca Airbridge** customer site — UK-first flight search with agent-assisted callback booking. One Next.js app, deployable directly to Vercel — no separate API or admin servers.
+Internal monorepo for the **Elca Airbridge** customer site — UK-first flight search with agent-assisted booking. One Next.js app on Vercel; no separate API or admin servers.
 
-Customers search flights, select a fare, and request a callback. A representative re-confirms availability and completes the booking by phone or WhatsApp. **No online booking or payment is created by the website.**
+Customers compare live fares, select an offer, and request a callback. A UK agent re-confirms availability and completes the booking by phone, WhatsApp, or email. **The website does not create bookings or take payment.**
 
 ## Stack
 
@@ -12,14 +12,45 @@ Customers search flights, select a fare, and request a callback. A representativ
 | `packages/shared` | Money helpers, enums, Zod schemas |
 | `packages/ui` | Shared React UI (Tailwind) |
 
-Package manager: **pnpm**. Styling: **Tailwind CSS v4**.
+Package manager: **pnpm**. Styling: **Tailwind CSS v4**. Flight data: **Duffel** (or mock). Email: **Resend**.
 
-Server capabilities inside Next.js:
+## Customer flow
 
-- `POST /api/flights/search` — Duffel or mock flight search
-- `POST /api/leads` — email callback request via Resend
+```text
+Home / SEO landing
+       ↓
+Search (origin, destination, dates, travellers, cabin)
+       ↓
+Results — sort, filters, flexible dates (±3 days)
+       ↓
+Offer detail
+       ↓
+Request a callback (/checkout)  →  email to LEADS_EMAIL_TO
+       ↓
+Pending confirmation (/checkout/pending)
+```
 
-Airports and SEO landing pages are static typed data under `apps/web/src/data`.
+1. **Search** — Homepage search form or SEO route/destination pages. Trip type: return or one way.
+2. **Results** (`/flights/search`) — Live offers with Best / Cheapest / Fastest, sort, filters (stops, times, airlines, bags, price), and a flexible-dates bar that reuses cached searches.
+3. **Offer** (`/flights/offers/[offerId]`) — Full itinerary; selection is stored in session (`jlt-flight-selection`).
+4. **Callback** (`/checkout`) — Contact details, preferred time, full vs instalments. Posts the selected offer + travellers to `/api/leads`; agent receives the itinerary by email.
+5. **Contact** (`/contact`) — Separate general enquiry form (`/api/contact`); not tied to a selected fare.
+
+Instalments are the primary booking message; payment is arranged offline with the agent after re-price.
+
+## API routes (Next.js)
+
+| Route | Purpose |
+|-------|---------|
+| `POST /api/flights/search` | Full offer search (Duffel or mock), server TTL cache |
+| `POST /api/flights/flexible-dates` | Cheapest fare per nearby day (±3) |
+| `GET /api/flights/offers/[offerId]` | Fresh offer detail (not long-cached) |
+| `POST /api/leads` | Callback request email (includes selected flight) |
+| `POST /api/contact` | Contact-page enquiry email |
+
+Flight search cache lives in `apps/web/src/server/flight-cache.ts` (in-process Map + Next `unstable_cache`). Defaults: **10 min** search, **30 min** flexible dates (`FLIGHT_SEARCH_CACHE_TTL_SECONDS`, `FLIGHT_CALENDAR_CACHE_TTL_SECONDS`). HTTP responses stay `no-store`.
+
+Airports and SEO pages are static data under `apps/web/src/data`. Marketing pages: home, about, FAQ, destinations, route guides, contact.
 
 ## Quick start
 
@@ -31,23 +62,23 @@ pnpm --filter @jlt/web dev                     # loads .env.development (+ .env.
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Env files:
-
 | File | Purpose |
 |------|---------|
-| `apps/web/.env.development` | Defaults for local `dev` |
-| `apps/web/.env.production` | Defaults for `build` / `start` |
-| `apps/web/.env.local` | Gitignored overrides (tokens, etc.) |
+| `apps/web/.env.development` | Defaults for local `dev` (gitignored) |
+| `apps/web/.env.production` | Defaults for `build` / `start` (gitignored) |
+| `apps/web/.env.local` | Overrides / secrets (gitignored) |
+| `apps/web/.env.example` | Documented template (committed) |
 
-Flight search: set `DUFFEL_ACCESS_TOKEN` and `DUFFEL_USE_MOCK=false` for live Duffel (in `.env.local` or Vercel).
-
-Callback emails require Resend env vars on Vercel production. Locally, requests succeed without sending mail when Resend is not configured.
+- **Live flights:** `DUFFEL_ACCESS_TOKEN` + `DUFFEL_USE_MOCK=false`
+- **Emails (callback + contact):** `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEADS_EMAIL_TO`  
+  Locally, requests succeed without sending mail when Resend is not configured. Production on Vercel requires these vars.
+- **Displayed fares:** `FLIGHT_PRICE_MARKUP_PERCENT` (default 5)
 
 ## Scripts
 
-- `pnpm --filter @jlt/web dev` — customer app (development env)
+- `pnpm --filter @jlt/web dev` — customer app
 - `pnpm --filter @jlt/web build` — production build
-- `pnpm build` / `pnpm test` / `pnpm typecheck`
+- `pnpm build` / `pnpm test` / `pnpm typecheck` — turbo across the workspace
 
 ## Deploy (Vercel)
 
@@ -57,13 +88,6 @@ Use **two Vercel projects** (Dev + Prod) from the same repo — see [docs/DEPLOY
 2. Root Directory: repo root or `apps/web` (same on both).
 3. Install: `pnpm install`
 4. Build: `pnpm --filter @jlt/shared build && pnpm --filter @jlt/web build`
-5. Paste env vars from `.env.development` / `.env.production` into each project; set `NEXT_PUBLIC_SITE_URL` to that project’s URL.
+5. Paste env vars from `.env.example` into each project; set `NEXT_PUBLIC_SITE_URL` to that project’s public URL.
 
 Also see [docs/LAUNCH.md](docs/LAUNCH.md).
-
-## Phase 1 scope
-
-- Flight search (mock or Duffel) with filters and passenger/cabin selection
-- Offer detail + callback request form
-- Representative email via Resend + customer-initiated WhatsApp handoff
-- Static SEO route / destination / guide pages, sitemap, redirects
