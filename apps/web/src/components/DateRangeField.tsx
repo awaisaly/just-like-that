@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
-import { DayPicker } from 'react-day-picker';
 import {
   format,
   parseISO,
@@ -10,8 +9,8 @@ import {
   startOfDay,
   differenceInCalendarDays,
 } from 'date-fns';
-import 'react-day-picker/style.css';
 import { FieldError } from './FieldError';
+import { LazyDayPicker } from './LazyDayPicker';
 
 function toISO(d: Date): string {
   return format(d, 'yyyy-MM-dd');
@@ -435,7 +434,7 @@ export function DateRangeField({
                 monthsToShow === 2 ? 'jlt-datepicker-dual' : 'jlt-datepicker-single'
               } ${step === 'depart' ? 'jlt-editing-depart' : 'jlt-editing-return'}`}
             >
-              <DayPicker
+              <LazyDayPicker
                 key={`${mode}-${monthsToShow}-${step}`}
                 mode="single"
                 required={false}
