@@ -1,8 +1,11 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef, useState } from 'react';
 import { AGENCY_NAME } from '../lib/brand';
 import { getWhatsAppLines, whatsappChatHref } from '../lib/contact';
+import { useCheckoutStore } from '../lib/stores';
+import { buildSelectedOfferWhatsAppMessage } from '../lib/whatsapp';
 
 function WhatsAppIcon() {
   return (
@@ -19,10 +22,18 @@ const defaultMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
 /** Fixed WhatsApp button — opens a chat (or a choice when multiple numbers are configured). */
 export function WhatsAppChatButton() {
+  const pathname = usePathname();
+  const selection = useCheckoutStore((state) => state.selection);
   const lines = getWhatsAppLines();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
+
+  const onOfferPage = pathname.startsWith('/flights/offers/');
+  const message =
+    onOfferPage && selection
+      ? buildSelectedOfferWhatsAppMessage(selection.offer, selection.travellers)
+      : defaultMessage;
 
   useEffect(() => {
     if (!open) return;
@@ -48,7 +59,7 @@ export function WhatsAppChatButton() {
   if (!hasMultiple) {
     return (
       <a
-        href={whatsappChatHref(primary.digits, defaultMessage)}
+        href={whatsappChatHref(primary.digits, message)}
         className="whatsapp-fab"
         target="_blank"
         rel="noopener noreferrer"
@@ -67,7 +78,7 @@ export function WhatsAppChatButton() {
           {lines.map((line) => (
             <a
               key={line.digits}
-              href={whatsappChatHref(line.digits, defaultMessage)}
+              href={whatsappChatHref(line.digits, message)}
               className="whatsapp-fab-option"
               target="_blank"
               rel="noopener noreferrer"
