@@ -17,7 +17,7 @@ import { AGENCY_NAME } from '../../../lib/brand';
 import { instalmentCopy } from '../../../lib/instalments';
 import { markUpFlightMoney } from '../../../lib/pricing';
 import { destinationAboutCopy } from '../../../lib/seo-content';
-import { buildPageMetadata } from '../../../lib/seo';
+import { buildPageMetadata, getSiteUrl } from '../../../lib/seo';
 
 export const revalidate = 3600;
 
@@ -78,6 +78,9 @@ export default async function DestinationPage({
           },
         ];
 
+  const siteUrl = getSiteUrl().replace(/\/$/, '');
+  const pagePath = seoPath(page);
+
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -88,9 +91,23 @@ export default async function DestinationPage({
     })),
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Destinations', item: `${siteUrl}/destinations` },
+      { '@type': 'ListItem', position: 3, name: page.h1, item: `${siteUrl}${pagePath}` },
+    ],
+  };
+
   return (
     <div className="stack">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
       <nav className="text-sm text-muted">
         <Link href="/" className="hover:text-brand hover:underline">

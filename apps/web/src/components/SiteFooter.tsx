@@ -242,6 +242,12 @@ export function SiteFooter() {
               <li>
                 <Link href="/contact">Contact us</Link>
               </li>
+              <li>
+                <a href="/sitemap.xml">Sitemap</a>
+              </li>
+              <li>
+                <a href="/llms.txt">AI / LLM info</a>
+              </li>
               {guides
                 .filter(
                   (guide) =>
