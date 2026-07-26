@@ -474,9 +474,9 @@ export const seoPages: SeoPage[] = [
   {
     type: 'guide',
     slug: 'paying-for-flights-in-instalments',
-    title: 'Fly Now, Pay in Instalments',
-    metaDescription: `Instalment plans are ${AGENCY_NAME_POSSESSIVE} primary way to book cheap flights to Africa and Nigeria. Search live fares, request a callback, and spread the cost with a UK agent.`,
-    h1: 'Fly now. Pay in instalments.',
+    title: 'Book Now, Pay in Instalments',
+    metaDescription: `Instalment plans are ${AGENCY_NAME_POSSESSIVE} primary way to book cheap flights to Africa and Nigeria. Book with a UK agent, then pay in instalments — all paid before you fly.`,
+    h1: 'Book now. Pay in instalments.',
     faq: [],
     updatedAt: '2026-07-26T00:00:00.000Z',
   },

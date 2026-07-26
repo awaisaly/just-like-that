@@ -1,14 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ContactForm } from '../../components/ContactForm';
+import { PhoneCallIcon, WhatsAppChannelIcon } from '../../components/ContactChannelIcons';
 import {
   formatSupportPhone,
   getSupportEmail,
   getSupportPhone,
+  getWhatsAppLines,
   supportMailtoHref,
-  supportPhoneDigits,
   supportTelHref,
+  whatsappChatHref,
 } from '../../lib/contact';
+import { AGENCY_NAME } from '../../lib/brand';
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata = buildPageMetadata({
@@ -23,12 +26,8 @@ export default function ContactPage() {
   const supportPhone = getSupportPhone();
   const supportEmail = getSupportEmail();
   const phoneDisplay = formatSupportPhone(supportPhone);
-  const whatsappRaw =
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^\d]/g, '') ||
-    supportPhoneDigits(supportPhone);
-  const whatsappUrl = whatsappRaw
-    ? `https://wa.me/${whatsappRaw}?text=${encodeURIComponent('Hi, I have a question about flights on Elca Airbridge.')}`
-    : null;
+  const whatsappLines = getWhatsAppLines();
+  const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
   return (
     <div className="stack">
@@ -50,7 +49,7 @@ export default function ContactPage() {
             Contact us
           </h1>
           <p className="mt-3 max-w-xl text-base text-white/90 sm:text-lg">
-            Want to fly now and pay in instalments? Our UK call centre is ready to set up your plan.
+            Want to book now and pay in instalments? Our UK call centre is ready to set up your plan.
           </p>
         </div>
       </section>
@@ -60,8 +59,8 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-line bg-white p-5 shadow-sm sm:p-6">
             <h2 className="mt-0 text-lg font-extrabold">UK call centre</h2>
             <p className="text-sm text-muted">
-              We don’t take payment online. Reach out and we’ll confirm availability, set up your
-              instalment plan, then finalise your booking with you.
+              We don’t take payment online. Reach out and we’ll confirm availability, book your
+              ticket, and set up instalments — all paid before you fly.
             </p>
 
             <ul className="mt-5 grid gap-4">
@@ -71,9 +70,11 @@ export default function ContactPage() {
                 </p>
                 <a
                   href={supportTelHref(supportPhone)}
-                  className="mt-1 inline-block text-lg font-bold text-brand hover:underline"
+                  className="contact-channel-link mt-1"
                 >
-                  {phoneDisplay}
+                  <PhoneCallIcon />
+                  <span aria-hidden="true">🇬🇧</span>
+                  <span>{phoneDisplay}</span>
                 </a>
               </li>
               <li>
@@ -87,19 +88,29 @@ export default function ContactPage() {
                   {supportEmail}
                 </a>
               </li>
-              {whatsappUrl ? (
+              {whatsappLines.length ? (
                 <li>
                   <p className="m-0 text-xs font-semibold uppercase tracking-wide text-muted">
                     WhatsApp
                   </p>
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1 inline-block text-lg font-bold text-brand hover:underline"
-                  >
-                    Message us on WhatsApp
-                  </a>
+                  <ul className="mt-1 grid list-none gap-2 p-0">
+                    {whatsappLines.map((line) => (
+                      <li key={line.digits}>
+                        <a
+                          href={whatsappChatHref(line.digits, whatsappMessage)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="contact-channel-link is-whatsapp"
+                        >
+                          <WhatsAppChannelIcon />
+                          <span aria-hidden="true">🇬🇧</span>
+                          <span>
+                            {line.label}: {line.display}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </li>
               ) : null}
               <li>
@@ -129,7 +140,12 @@ export default function ContactPage() {
           <h2 className="mt-0 text-lg font-extrabold">Send a message</h2>
           <p className="mb-5 text-sm text-muted">
             Tell us what you need and we’ll get back to you. For urgent bookings, call{' '}
-            <a href={supportTelHref(supportPhone)} className="font-semibold text-brand hover:underline">
+            <a
+              href={supportTelHref(supportPhone)}
+              className="contact-channel-link !mt-0 align-middle text-base"
+            >
+              <PhoneCallIcon />
+              <span aria-hidden="true">🇬🇧</span>
               {phoneDisplay}
             </a>{' '}
             or email{' '}

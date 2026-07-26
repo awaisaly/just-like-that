@@ -3,6 +3,7 @@ import { Syne } from 'next/font/google';
 import { Providers } from '../components/Providers';
 import { SiteChrome } from '../components/SiteChrome';
 import { SiteFooter } from '../components/SiteFooter';
+import { WhatsAppChatButton } from '../components/WhatsAppChatButton';
 import { AGENCY_NAME } from '../lib/brand';
 import { getSupportEmail, getSupportPhone } from '../lib/contact';
 import { getSiteUrl, SITE_KEYWORDS } from '../lib/seo';
@@ -22,7 +23,7 @@ export const viewport: Viewport = {
 };
 
 const defaultTitle = `${AGENCY_NAME} — Cheap Flights to Africa & Nigeria | Pay in Instalments`;
-const defaultDescription = `Search cheap flights to Africa and Nigeria from the UK — and Nigeria to the UK. London–Lagos, Abuja, Accra and more. Book with ${AGENCY_NAME}, a UK agent. Pay in instalments or in full.`;
+const defaultDescription = `Search cheap flights to Africa and Nigeria from the UK — and Nigeria to the UK. London–Lagos, Abuja, Accra and more. Book with ${AGENCY_NAME}, a UK agent. Pay in instalments before you fly — or in full.`;
 
 export const metadata: Metadata = {
   title: {
@@ -152,6 +153,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
         </Providers>
         <SiteFooter />
+        <WhatsAppChatButton />
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? (
           <>
             <script

@@ -220,7 +220,7 @@ export default async function DestinationPage({
         {[
           {
             title: instalmentCopy.short,
-            body: 'Our primary promise — spread the cost with a UK agent after you request a callback.',
+            body: 'Book now with a UK agent, then pay in instalments — all paid before you fly.',
           },
           {
             title: 'Live fares, then confirmed',

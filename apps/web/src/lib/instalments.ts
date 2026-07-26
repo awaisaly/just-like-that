@@ -4,19 +4,20 @@ export const INSTALMENTS_HREF = '/guides/paying-for-flights-in-instalments';
 export const INSTALMENTS_FAQ_HREF = '/faq';
 
 export const instalmentCopy = {
-  motto: 'Fly now. Pay in instalments.',
+  motto: 'Book now. Pay in instalments.',
   short: 'Pay in instalments',
-  tagline: 'Spread the cost with a UK agent — our primary way to book.',
+  tagline:
+    'Book your ticket with a UK agent, then pay in instalments — all paid before you fly.',
   heroSupport:
-    'Compare live fares, then spread the cost with instalments — our primary way to book.',
-  barLead: 'Fly now',
+    'Compare live fares, book with a UK agent, then pay in instalments before you fly.',
+  barLead: 'Book now',
   barAction: 'Pay in instalments',
   barCta: 'How it works',
   markHint: 'Instalments available',
   priceNote: 'or pay in instalments',
-  spotlightTitle: 'Fly now. Pay in instalments.',
+  spotlightTitle: 'Book now. Pay in instalments.',
   spotlightBody:
-    'Instalment plans are how most of our travellers book. Search live fares, request a callback, and your UK agent sets up a payment plan that fits — or settle in full if you prefer.',
+    'Instalment plans are how most of our travellers book. Search live fares, book with a UK agent, and pay on a schedule — every instalment must be paid before you fly. Or settle in full if you prefer.',
   steps: [
     {
       n: '01',
@@ -25,19 +26,22 @@ export const instalmentCopy = {
     },
     {
       n: '02',
-      title: 'Request a callback',
-      body: 'Tell us you want instalments — no payment on the website.',
+      title: 'Book with a UK agent',
+      body: 'Request a callback — we confirm the fare and book your ticket.',
     },
     {
       n: '03',
-      title: 'Pay your way',
-      body: 'Your agent confirms the plan, then tickets when ready.',
+      title: 'Pay before you fly',
+      body: 'Spread the cost in instalments. All payments must be complete before departure.',
     },
   ],
   checkoutPrimary: 'Pay in instalments',
   checkoutPrimaryBody:
-    'Our primary option. Your agent will set up a scheduled plan that suits your travel dates.',
+    'Book now, then pay on a schedule. Every instalment must be paid before you fly.',
   checkoutFull: 'Pay in full',
   checkoutFullBody: 'Settle the full fare by phone with your agent if you prefer.',
-  footerLine: 'Fly now · Pay in instalments',
+  footerLine: 'Book now · Pay in instalments',
+  ctaPrimary: 'Book now · pay in instalments',
+  offerNote:
+    'No payment online. Your agent books the ticket and sets up instalments — all paid before you fly.',
 } as const;

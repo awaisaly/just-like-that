@@ -10,6 +10,7 @@ import { isMockOfferId } from '../../../../lib/flight';
 import { INSTALMENTS_HREF, instalmentCopy } from '../../../../lib/instalments';
 import { useCheckoutStore } from '../../../../lib/stores';
 import { FlightItinerary } from '../../../../components/FlightItinerary';
+import { OfferWhatsAppButton } from '../../../../components/OfferWhatsAppButton';
 
 export default function OfferDetailPage() {
   const { offerId } = useParams<{ offerId: string }>();
@@ -159,11 +160,10 @@ export default function OfferDetailPage() {
             className="w-full rounded-xl bg-accent py-3.5 text-base font-bold text-white transition hover:bg-accent-dark"
             onClick={() => router.push('/checkout')}
           >
-            Request callback · pay in instalments
+            {instalmentCopy.ctaPrimary}
           </button>
-          <p className="text-center text-xs text-muted">
-            No booking or payment online. Your agent will re-check the fare and set up your plan.
-          </p>
+          <OfferWhatsAppButton offer={offer} travellers={selection?.travellers} />
+          <p className="text-center text-xs text-muted">{instalmentCopy.offerNote}</p>
         </aside>
       </div>
     </div>

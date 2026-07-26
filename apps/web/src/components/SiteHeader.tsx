@@ -139,6 +139,9 @@ export function SiteHeader() {
 
           <div className="nav-drawer-footer">
             <a href={supportTelHref(supportPhone)} className="nav-drawer-call">
+              <span className="nav-call-flag" aria-hidden="true">
+                🇬🇧
+              </span>
               Call {phoneDisplay}
             </a>
             <Link
@@ -185,6 +188,9 @@ export function SiteHeader() {
             className="nav-call"
             aria-label={`Call ${phoneDisplay}`}
           >
+            <span className="nav-call-flag" aria-hidden="true">
+              🇬🇧
+            </span>
             {phoneDisplay}
           </a>
         </nav>
@@ -195,7 +201,9 @@ export function SiteHeader() {
             className="nav-call-icon"
             aria-label={`Call ${phoneDisplay}`}
           >
-            <PhoneIcon />
+            <span className="nav-call-flag" aria-hidden="true">
+              🇬🇧
+            </span>
             <span className="nav-call-icon-label">Call</span>
           </a>
           <button
@@ -217,13 +225,5 @@ export function SiteHeader() {
       </div>
       {drawer}
     </header>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden fill="currentColor">
-      <path d="M4.2 2.8c.4-.4 1-.5 1.5-.3l2.2.9c.5.2.8.7.7 1.2l-.4 2a1 1 0 0 1-.6.7l-1 .4a9.4 9.4 0 0 0 4.4 4.4l.4-1a1 1 0 0 1 .7-.6l2-.4c.5-.1 1 .2 1.2.7l.9 2.2c.2.5.1 1.1-.3 1.5l-1.3 1.3c-.4.4-1 .6-1.6.5C7.5 16.3 3.7 12.5 2.5 7.2c-.1-.6.1-1.2.5-1.6L4.2 2.8z" />
-    </svg>
   );
 }

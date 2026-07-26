@@ -118,10 +118,10 @@ export default function CheckoutPage() {
 
   return (
     <div className="stack">
-      <h1>Request a callback</h1>
+      <h1>Book now · pay in instalments</h1>
       <p className="muted text-sm">
-        No booking or payment is created online. A UK representative will re-check the fare and
-        finalise your booking by phone or WhatsApp.
+        No payment is taken online. A UK representative will re-check the fare, book your ticket,
+        and set up instalments — all paid before you fly.
       </p>
 
       <div className="grid gap-5 lg:grid-cols-[1fr_340px] lg:items-start">
