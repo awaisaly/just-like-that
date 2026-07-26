@@ -84,10 +84,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Use **two Vercel projects** (Dev + Prod) from the same repo — see [docs/DEPLOY.md](docs/DEPLOY.md).
 
-1. Create project `just-like-that-dev` (branch `develop`) and `just-like-that` (branch `main`).
-2. Root Directory: repo root or `apps/web` (same on both).
-3. Install: `pnpm install`
-4. Build: `pnpm --filter @jlt/shared build && pnpm --filter @jlt/web build`
+1. Create project `just-like-that-dev` (branch `dev`) and `just-like-that` (branch `main`).
+2. **Root Directory:** `apps/web` (required — `next` is not in the repo-root `package.json`).
+3. Enable **Include files outside the root directory in the Build Step**.
+4. Install: `cd ../.. && pnpm install` · Build: `cd ../.. && pnpm --filter @jlt/shared build && pnpm --filter @jlt/web build`
 5. Paste env vars from `.env.example` into each project; set `NEXT_PUBLIC_SITE_URL` to that project’s public URL.
 
 Also see [docs/LAUNCH.md](docs/LAUNCH.md).
