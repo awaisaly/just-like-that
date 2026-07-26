@@ -1773,6 +1773,115 @@
     @apply mx-auto flex w-[min(1200px,100%)] flex-col gap-10;
   }
 
+  .footer-contact {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.35rem 1.25rem;
+    border-radius: 1.25rem;
+    background:
+      linear-gradient(135deg, color-mix(in oklab, var(--color-brand-navy) 96%, black), var(--color-brand-navy));
+    color: #fff;
+    box-shadow: 0 16px 36px rgb(16 25 58 / 14%);
+  }
+
+  @media (min-width: 900px) {
+    .footer-contact {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: center;
+      gap: 1.75rem;
+      padding: 1.6rem 1.75rem;
+    }
+  }
+
+  .footer-contact-eyebrow {
+    margin: 0;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--color-accent) 85%, white);
+  }
+
+  .footer-contact-title {
+    margin: 0.35rem 0 0;
+    font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  .footer-contact-text {
+    margin: 0.45rem 0 0;
+    max-width: 28rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: rgb(255 255 255 / 78%);
+  }
+
+  .footer-contact-actions {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  @media (min-width: 640px) {
+    .footer-contact-actions {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .footer-contact-action {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.85rem;
+    border: 1px solid rgb(255 255 255 / 14%);
+    background: rgb(255 255 255 / 8%);
+    color: #fff;
+    text-decoration: none;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .footer-contact-action:hover {
+    background: rgb(255 255 255 / 14%);
+    border-color: rgb(255 255 255 / 28%);
+    transform: translateY(-1px);
+  }
+
+  .footer-contact-action.is-phone {
+    background: var(--color-accent);
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .footer-contact-action.is-phone:hover {
+    background: var(--color-accent-dark);
+    border-color: transparent;
+  }
+
+  .footer-contact-action-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 72%);
+  }
+
+  .footer-contact-action.is-phone .footer-contact-action-label {
+    color: rgb(255 255 255 / 85%);
+  }
+
+  .footer-contact-action-value {
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
   .footer-destinations {
     @apply grid gap-4;
   }
