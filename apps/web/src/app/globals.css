@@ -1020,35 +1020,186 @@
     }
   }
 
-  /* From / To pair — matching full borders; swap sits in the gap */
+  /* From / To pair */
   .search-route-pair {
+    position: relative;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.55rem;
-    align-items: end;
+    min-width: 0;
   }
 
+  /*
+   * Mobile: one route card — From / To stacked, swap sits on the right
+   * spanning both rows (quiet chip, not a floating mid-gap badge).
+   */
+  .search-route-pair {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'from swap'
+      'to swap';
+    column-gap: 0.2rem;
+    row-gap: 0;
+    align-items: stretch;
+    padding: 0.4rem 0.4rem 0.4rem 0.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: 1rem;
+    background: #fff;
+  }
+
+  .search-route-from {
+    grid-area: from;
+    min-width: 0;
+  }
+
+  .search-route-to {
+    grid-area: to;
+    min-width: 0;
+    border-top: 1px solid var(--color-line);
+    margin-top: 0.15rem;
+    padding-top: 0.15rem;
+  }
+
+  .search-route-pair .field-label {
+    margin-bottom: 0.15rem;
+    padding-left: 0.15rem;
+  }
+
+  .search-route-pair .control {
+    height: auto;
+    min-height: 2.85rem;
+    border: 0;
+    border-radius: 0.7rem;
+    background: transparent;
+    box-shadow: none;
+    padding: 0.35rem 0.4rem;
+  }
+
+  .search-route-pair .control:hover {
+    border-color: transparent;
+    background: var(--color-surface);
+  }
+
+  .search-route-pair .control.is-open,
+  .search-route-pair .control.control-error,
+  .search-route-pair .field-wrap:focus-within .control {
+    border-color: transparent;
+    background: var(--color-chip);
+    box-shadow: none;
+  }
+
+  .search-route-pair .control.control-error {
+    background: #fff7f8;
+  }
+
+  .search-route-swap {
+    grid-area: swap;
+    z-index: 4;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: 0 0.15rem;
+    flex-shrink: 0;
+    border: 1px solid var(--color-line);
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    color: var(--color-brand-navy);
+    box-shadow: none;
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease,
+      color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .search-route-swap-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    transform: rotate(90deg);
+  }
+
+  .search-route-swap:hover {
+    border-color: color-mix(in oklab, var(--color-brand) 35%, var(--color-line));
+    background: var(--color-chip);
+    color: var(--color-brand);
+  }
+
+  .search-route-swap:active {
+    transform: scale(0.96);
+  }
+
+  .search-route-swap-skel {
+    grid-area: swap;
+    align-self: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: 0 0.15rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+  }
+
+  /* Desktop / tablet: side-by-side fields, circular swap in the middle join */
   @media (min-width: 640px) {
     .search-route-pair {
       grid-template-columns: minmax(0, 1fr) 0 minmax(0, 1fr);
+      grid-template-areas: 'from swap to';
       column-gap: 0.7rem;
+      row-gap: 0;
       align-items: end;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .search-route-from,
+    .search-route-to {
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .search-route-pair .field-label {
+      margin-bottom: 0.25rem;
+      padding-left: 0;
+    }
+
+    .search-route-pair .control {
+      height: 3.5rem;
+      min-height: 3.5rem;
+      border: 1px solid var(--color-line);
+      border-radius: 0.75rem;
+      background: #fff;
+      padding: 0 0.875rem;
+    }
+
+    .search-route-pair .control:hover {
+      border-color: color-mix(in oklab, var(--color-brand) 60%, var(--color-line));
+      background: #fff;
+    }
+
+    .search-route-pair .control.is-open {
+      border-color: var(--color-brand);
+      background: #fff;
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-brand) 20%, transparent);
+    }
+
+    .search-route-pair .control.control-error {
+      border-color: #e11d48;
+      background: #fff7f8;
+      box-shadow: 0 0 0 2px color-mix(in oklab, #e11d48 14%, transparent);
     }
 
     .search-route-from .control {
-      /* Clear the overlapping swap control */
       padding-right: 1.55rem;
     }
 
     .search-route-to .control {
-      /* Keep a little room for the overlapping swap control */
       padding-left: 0.85rem;
     }
 
-    /*
-     * Focus often moves into the portaled city search panel, so
-     * :focus-within alone is not enough — lift the active control.
-     */
     .search-route-from .control.is-open,
     .search-route-from .control.control-error,
     .search-route-from:focus-within .control,
@@ -1058,64 +1209,30 @@
       position: relative;
       z-index: 2;
     }
-  }
 
-  .search-route-swap {
-    z-index: 4;
-    display: grid;
-    place-items: center;
-    width: 2.35rem;
-    height: 2.35rem;
-    margin: 0 auto;
-    flex-shrink: 0;
-    border: 1px solid var(--color-line);
-    border-radius: 999px;
-    background: #fff;
-    color: var(--color-brand);
-    box-shadow: 0 2px 8px rgb(16 25 58 / 8%);
-    cursor: pointer;
-    transition:
-      border-color 0.15s ease,
-      background-color 0.15s ease,
-      color 0.15s ease;
-  }
-
-  @media (min-width: 640px) {
     .search-route-swap {
       width: 2.4rem;
       height: 2.4rem;
       margin: 0 -1.2rem 0.8rem;
       justify-self: center;
       align-self: end;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--color-brand);
+      box-shadow: 0 2px 8px rgb(16 25 58 / 8%);
     }
-  }
 
-  .search-route-swap:hover {
-    border-color: color-mix(in oklab, var(--color-brand) 40%, var(--color-line));
-    background: var(--color-chip);
-  }
+    .search-route-swap-icon {
+      transform: none;
+    }
 
-  .search-route-swap-icon {
-    width: 1.15rem;
-    height: 1.15rem;
-  }
-
-  .search-route-swap-skel {
-    width: 2.35rem;
-    height: 2.35rem;
-    margin: 0 auto;
-    border-radius: 999px;
-    border: 1px solid var(--color-line);
-    background: var(--color-surface);
-  }
-
-  @media (min-width: 640px) {
     .search-route-swap-skel {
       width: 2.4rem;
       height: 2.4rem;
       margin: 0 -1.2rem 0.8rem;
       justify-self: center;
       align-self: end;
+      border-radius: 999px;
     }
   }
 
