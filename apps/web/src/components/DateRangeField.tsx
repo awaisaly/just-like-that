@@ -262,7 +262,7 @@ export function DateRangeField({
                 aria-invalid={departError ? true : undefined}
               >
                 <span className="date-field-slot-label">Depart</span>
-                <span className={`control-value block ${depart ? '' : 'text-muted'}`}>
+                <span className={`date-field-value${depart ? '' : ' is-empty'}`}>
                   {depart ? format(depart, 'EEE d MMM') : 'Add date'}
                 </span>
               </button>
@@ -280,7 +280,7 @@ export function DateRangeField({
                 className={`date-field-slot date-field-return${returnActive ? ' is-active' : ''}${returnError ? ' is-invalid' : ''}`}
               >
                 <span className="date-field-slot-label">Return</span>
-                <span className={`control-value block ${ret ? '' : 'text-muted'}`}>
+                <span className={`date-field-value${ret ? '' : ' is-empty'}`}>
                   {ret ? format(ret, 'EEE d MMM') : 'Add date'}
                 </span>
               </button>

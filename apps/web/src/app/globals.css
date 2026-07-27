@@ -35,6 +35,11 @@
     }
   }
 
+  html {
+    /* 100vw full-bleed breakouts otherwise create a horizontal scrollbar (scrollbar gutter). */
+    overflow-x: clip;
+  }
+
   html,
   body {
     @apply min-h-full bg-surface font-sans text-ink antialiased;
@@ -936,7 +941,7 @@
     border: 0;
     border-radius: 0.7rem;
     background: transparent;
-    padding: 0.4rem 0.7rem;
+    padding: 0.4rem 0.55rem;
     text-align: left;
     color: inherit;
     cursor: pointer;
@@ -988,6 +993,20 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Same look as .control-value, but never ellipsize dates. */
+  .date-field-value {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+
+  .date-field-value.is-empty {
     color: var(--color-muted);
   }
 
@@ -2252,12 +2271,13 @@
   }
 
   /*
-   * Break out of main's side gutters (1rem below 1200px, centering above).
-   * Previous formula used max(0px, …) so mid-width screens kept left/right gaps.
+   * Break out of main's side gutters to the viewport edges.
+   * overflow-x: clip on html/body absorbs the 100vw vs scrollbar-width mismatch.
    */
   .full-bleed-x {
-    margin-left: calc(-1 * max(1rem, (100vw - 1200px) / 2));
-    margin-right: calc(-1 * max(1rem, (100vw - 1200px) / 2));
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
 
   .card {
