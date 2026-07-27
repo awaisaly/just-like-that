@@ -1,6 +1,7 @@
 'use client';
 
 import * as Popover from '@radix-ui/react-popover';
+import { useId } from 'react';
 
 export type Cabin = 'economy' | 'premium_economy' | 'business' | 'first';
 
@@ -29,11 +30,13 @@ function Stepper({
   onChange,
   min,
   max = 9,
+  label,
 }: {
   value: number;
   onChange: (v: number) => void;
   min: number;
   max?: number;
+  label: string;
 }) {
   return (
     <div className="flex items-center gap-3">
@@ -42,17 +45,19 @@ function Stepper({
         className="stepper-btn"
         disabled={value <= min}
         onClick={() => onChange(value - 1)}
-        aria-label="Decrease"
+        aria-label={`Decrease ${label}`}
       >
         −
       </button>
-      <span className="w-5 text-center text-sm font-bold">{value}</span>
+      <span className="w-5 text-center text-sm font-bold" aria-live="polite">
+        {value}
+      </span>
       <button
         type="button"
         className="stepper-btn"
         disabled={value >= max}
         onClick={() => onChange(value + 1)}
-        aria-label="Increase"
+        aria-label={`Increase ${label}`}
       >
         +
       </button>
@@ -72,13 +77,22 @@ export function PassengerSelector({
   onOpenChange?: (open: boolean) => void;
 }) {
   const total = value.adults + value.children + value.infants;
+  const labelId = useId();
 
   return (
     <div>
-      <span className="field-label">Travellers &amp; cabin</span>
+      <span id={labelId} className="field-label">
+        Travellers &amp; cabin
+      </span>
       <Popover.Root open={openControlled} onOpenChange={onOpenChange}>
         <Popover.Trigger asChild>
-          <button type="button" className="control">
+          <button
+            type="button"
+            className="control"
+            aria-labelledby={labelId}
+            aria-haspopup="dialog"
+            aria-expanded={openControlled}
+          >
             <span aria-hidden className="text-lg leading-none">
               👤
             </span>
@@ -122,6 +136,7 @@ export function PassengerSelector({
                     <div className="text-xs text-muted">{row.hint}</div>
                   </div>
                   <Stepper
+                    label={row.label}
                     value={value[row.key]}
                     min={row.key === 'infants' ? 0 : row.min}
                     max={row.key === 'infants' ? value.adults : 9}
@@ -143,6 +158,7 @@ export function PassengerSelector({
                           ? 'border-brand bg-chip text-brand'
                           : 'border-line text-ink hover:border-brand/50'
                       }`}
+                      aria-pressed={value.cabin === c}
                     >
                       {cabinLabels[c]}
                     </button>

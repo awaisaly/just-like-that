@@ -14,7 +14,8 @@
   --color-accent-dark: #e2560f;
   --color-deal: #e0325b;
   --color-ink: #16202c;
-  --color-muted: #64748b;
+  /* Slate-600 — ~7:1 on white for body secondary text (WCAG AA). */
+  --color-muted: #475569;
   --color-line: #e5e8ec;
   --color-surface: #f4f6f9;
   --color-chip: #eaf1fd;
@@ -56,9 +57,46 @@
   h2 {
     @apply text-lg font-semibold text-brand-navy;
   }
+
+  /* Keyboard focus only — mouse clicks keep no ring. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  #main-content:focus {
+    outline: none;
+  }
 }
 
 @layer components {
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    padding: 0.65rem 1rem;
+    border-radius: 0.75rem;
+    background: var(--color-brand-navy);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-160%);
+    transition: transform 0.15s ease;
+  }
+
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
   /* Children participate in body flow — required for sticky nav to pin to the viewport. */
   .site-chrome {
     display: contents;
@@ -2422,7 +2460,7 @@
   }
 
   .field-input {
-    @apply w-full rounded-xl border border-line bg-white px-3.5 py-3 text-[15px] text-ink outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-2 focus:ring-brand/20;
+    @apply w-full rounded-xl border border-line bg-white px-3.5 py-3 text-[15px] text-ink outline-none transition placeholder:text-muted focus:border-brand focus:ring-2 focus:ring-brand/20;
   }
 
   /* Search widget shared control (button-like trigger) */

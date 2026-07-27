@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import {
   format,
@@ -70,6 +70,9 @@ export function DateRangeField({
 
   const wide = useWideCalendar();
   const monthsToShow = mode === 'return' && wide ? 2 : 1;
+  const labelId = useId();
+  const departErrorId = useId();
+  const returnErrorId = useId();
 
   const minDate = startOfDay(fromISO(min) ?? new Date());
   const depart = fromISO(departDate);
@@ -122,10 +125,6 @@ export function DateRangeField({
   }, [open, mode]);
 
   const error = departError || returnError;
-  const errorMessages = [departError, returnError].filter(
-    (message, index, list): message is string =>
-      Boolean(message) && list.indexOf(message) === index,
-  );
   const nights =
     depart && ret ? Math.max(0, differenceInCalendarDays(ret, depart)) : null;
   const bothSelected = Boolean(departDate && returnDate);
@@ -225,7 +224,7 @@ export function DateRangeField({
 
   return (
     <div className={error ? 'field-wrap has-error' : 'field-wrap'}>
-      <span className={`field-label${error ? ' is-error' : ''}`}>
+      <span id={labelId} className={`field-label${error ? ' is-error' : ''}`}>
         {mode === 'return' ? 'Dates' : 'Depart'}
       </span>
       <Popover.Root open={open} onOpenChange={setOpen}>
@@ -259,7 +258,9 @@ export function DateRangeField({
                 className={`date-field-slot date-field-depart${departActive ? ' is-active' : ''}${departError ? ' is-invalid' : ''}`}
                 aria-expanded={open}
                 aria-haspopup="dialog"
+                aria-labelledby={labelId}
                 aria-invalid={departError ? true : undefined}
+                aria-describedby={departError ? departErrorId : undefined}
               >
                 <span className="date-field-slot-label">Depart</span>
                 <span className={`date-field-value${depart ? '' : ' is-empty'}`}>
@@ -277,6 +278,7 @@ export function DateRangeField({
                 aria-expanded={mode === 'return' ? open : undefined}
                 aria-haspopup={mode === 'return' ? 'dialog' : undefined}
                 aria-invalid={returnError ? true : undefined}
+                aria-describedby={returnError ? returnErrorId : undefined}
                 className={`date-field-slot date-field-return${returnActive ? ' is-active' : ''}${returnError ? ' is-invalid' : ''}`}
               >
                 <span className="date-field-slot-label">Return</span>
@@ -493,9 +495,8 @@ export function DateRangeField({
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
-      {errorMessages.map((message) => (
-        <FieldError key={message} message={message} />
-      ))}
+      {departError ? <FieldError id={departErrorId} message={departError} /> : null}
+      {returnError ? <FieldError id={returnErrorId} message={returnError} /> : null}
     </div>
   );
 }

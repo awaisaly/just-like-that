@@ -66,10 +66,38 @@ export function SiteHeader() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    const drawerNode = document.getElementById(menuId);
+
+    const focusableSelector =
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !drawerNode) return;
+
+      const focusable = Array.from(
+        drawerNode.querySelectorAll<HTMLElement>(focusableSelector),
+      ).filter((el) => !el.hasAttribute('disabled') && el.tabIndex !== -1);
+
+      if (!focusable.length) return;
+
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      const active = document.activeElement as HTMLElement | null;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener('keydown', onKeyDown);
     closeRef.current?.focus();
 
@@ -78,7 +106,7 @@ export function SiteHeader() {
       window.removeEventListener('keydown', onKeyDown);
       menuButtonRef.current?.focus();
     };
-  }, [open]);
+  }, [open, menuId]);
 
   const drawer =
     mounted &&
@@ -87,7 +115,7 @@ export function SiteHeader() {
         <button
           type="button"
           className="nav-drawer-backdrop"
-          tabIndex={open ? 0 : -1}
+          tabIndex={-1}
           aria-label="Close menu"
           onClick={() => setOpen(false)}
         />

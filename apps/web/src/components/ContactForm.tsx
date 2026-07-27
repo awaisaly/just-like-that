@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { apiFetch } from '../lib/api';
 import { AGENCY_NAME } from '../lib/brand';
+import { FieldError } from './FieldError';
 
 type FormValues = {
   name: string;
@@ -18,6 +19,11 @@ type FormValues = {
 export function ContactForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [reference, setReference] = useState<string | null>(null);
+  const nameId = useId();
+  const emailId = useId();
+  const messageId = useId();
+  const consentId = useId();
+  const serverId = useId();
 
   const {
     register,
@@ -73,7 +79,7 @@ export function ContactForm() {
 
   if (reference) {
     return (
-      <div className="rounded-2xl border border-line bg-chip px-5 py-8 text-center sm:px-8">
+      <div className="rounded-2xl border border-line bg-chip px-5 py-8 text-center sm:px-8" role="status">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">Message sent</p>
         <h2 className="mt-2 text-2xl font-extrabold text-brand-navy">Thanks — we’ll be in touch</h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted">
@@ -94,39 +100,40 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="stack" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="block">
+        <label className="block" htmlFor={nameId}>
           <span className="field-label">Full name</span>
           <input
+            id={nameId}
             className={`field-input ${errors.name ? 'control-error' : ''}`}
             autoComplete="name"
+            aria-invalid={errors.name ? true : undefined}
+            aria-describedby={errors.name ? `${nameId}-error` : undefined}
             {...register('name', { required: 'Enter your name' })}
           />
-          {errors.name ? <span className="field-error">{errors.name.message}</span> : null}
+          <FieldError id={`${nameId}-error`} message={errors.name?.message} />
         </label>
-        <label className="block">
+        <label className="block" htmlFor={emailId}>
           <span className="field-label">Email</span>
           <input
+            id={emailId}
             type="email"
             className={`field-input ${errors.email ? 'control-error' : ''}`}
             autoComplete="email"
+            aria-invalid={errors.email ? true : undefined}
+            aria-describedby={errors.email ? `${emailId}-error` : undefined}
             {...register('email', {
               required: 'Enter your email',
               pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email' },
             })}
           />
-          {errors.email ? <span className="field-error">{errors.email.message}</span> : null}
+          <FieldError id={`${emailId}-error`} message={errors.email?.message} />
         </label>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="field-label">Phone (optional)</span>
-          <input
-            type="tel"
-            className="field-input"
-            autoComplete="tel"
-            {...register('phone')}
-          />
+          <input type="tel" className="field-input" autoComplete="tel" {...register('phone')} />
         </label>
         <label className="block">
           <span className="field-label">Topic</span>
@@ -139,28 +146,37 @@ export function ContactForm() {
         </label>
       </div>
 
-      <label className="block">
+      <label className="block" htmlFor={messageId}>
         <span className="field-label">Message</span>
         <textarea
+          id={messageId}
           rows={5}
           className={`field-input resize-y ${errors.message ? 'control-error' : ''}`}
           placeholder="Tell us how we can help…"
+          aria-invalid={errors.message ? true : undefined}
+          aria-describedby={errors.message ? `${messageId}-error` : undefined}
           {...register('message', {
             required: 'Write a short message',
             minLength: { value: 10, message: 'Please add a little more detail' },
           })}
         />
-        {errors.message ? <span className="field-error">{errors.message.message}</span> : null}
+        <FieldError id={`${messageId}-error`} message={errors.message?.message} />
       </label>
 
-      <label className="flex items-start gap-3 text-sm text-muted">
+      <label className="flex items-start gap-3 text-sm text-muted" htmlFor={consentId}>
         <input
+          id={consentId}
           type="checkbox"
           className="mt-1"
-          {...register('consent', { required: true })}
+          aria-invalid={errors.consent ? true : undefined}
+          aria-describedby={errors.consent ? `${consentId}-error` : undefined}
+          {...register('consent', {
+            required: 'Please confirm we can contact you about this enquiry',
+          })}
         />
         <span>I agree that {AGENCY_NAME} can contact me about this enquiry.</span>
       </label>
+      <FieldError id={`${consentId}-error`} message={errors.consent?.message} />
 
       {/* Honeypot */}
       <input
@@ -173,7 +189,11 @@ export function ContactForm() {
       />
 
       {serverError ? (
-        <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+        <p
+          id={serverId}
+          role="alert"
+          className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700"
+        >
           {serverError}
         </p>
       ) : null}
