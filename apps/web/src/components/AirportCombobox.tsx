@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -105,6 +106,8 @@ export function AirportCombobox({
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const errorId = useId();
+  const labelId = useId();
 
   const selected = useMemo(() => (value ? findAirport(value) ?? null : null), [value]);
   const selectedLabel = selected ? airportSelectionLabel(selected) : null;
@@ -204,7 +207,9 @@ export function AirportCombobox({
 
   return (
     <div className={error ? 'field-wrap has-error' : 'field-wrap'}>
-      <span className={`field-label${error ? ' is-error' : ''}`}>{label}</span>
+      <span id={labelId} className={`field-label${error ? ' is-error' : ''}`}>
+        {label}
+      </span>
       <Popover.Root
         open={open}
         onOpenChange={(next) => {
@@ -216,9 +221,11 @@ export function AirportCombobox({
           <button
             type="button"
             className={`control ${open ? 'is-open' : ''} ${trailing ? 'has-trailing' : ''} ${leading ? 'has-leading' : ''} ${error ? 'control-error' : ''}`}
+            aria-labelledby={labelId}
             aria-haspopup="listbox"
             aria-expanded={open}
             aria-invalid={error ? true : undefined}
+            aria-describedby={error ? errorId : undefined}
             onKeyDown={onTriggerKeyDown}
           >
             <span aria-hidden className="text-lg leading-none">
@@ -421,7 +428,7 @@ export function AirportCombobox({
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
-      <FieldError message={error} />
+      <FieldError id={errorId} message={error} />
     </div>
   );
 }

@@ -445,7 +445,7 @@ export function SearchForm({ initialParams }: { initialParams?: SearchFormParams
         )}
       />
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,2.7fr)_minmax(0,1.6fr)_minmax(0,1.15fr)] lg:items-start">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,2.35fr)_minmax(14.5rem,1.75fr)_minmax(0,1.15fr)] lg:items-start">
         <div className="search-route-pair min-w-0 sm:col-span-2 lg:col-span-1">
           <div className="search-route-from min-w-0">
             <Controller
