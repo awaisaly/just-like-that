@@ -110,7 +110,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="home-hero-line home-hero-search relative z-10 mx-auto -mt-36 w-full max-w-280 px-4 sm:-mt-40 sm:px-0">
+        <div className="home-hero-line home-hero-search relative z-10 mx-auto -mt-36 w-full max-w-280 sm:-mt-40">
           <HomeSearchForm />
         </div>
       </HomeHero>

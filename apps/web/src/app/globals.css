@@ -28,22 +28,32 @@
     --site-header-h: 3.5rem;
     /* Sticky side panels sit under the sticky nav (promo strip scrolls away). */
     --site-chrome-height: var(--site-header-h);
+    --page-pad: 1rem;
   }
 
   @media (min-width: 640px) {
     :root {
       --site-header-h: 4rem;
+      --page-pad: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --page-pad: 2rem;
     }
   }
 
   html {
-    /* 100vw full-bleed breakouts otherwise create a horizontal scrollbar (scrollbar gutter). */
+    /* Clip any residual horizontal overflow (full-bleed / iOS vw quirks). */
     overflow-x: clip;
   }
 
   html,
   body {
     @apply min-h-full bg-surface font-sans text-ink antialiased;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   a {
@@ -2153,11 +2163,12 @@
   }
 
   .site-footer {
-    @apply border-t border-line bg-white px-4 py-10 sm:px-8 sm:py-12;
+    @apply border-t border-line bg-white py-10 sm:py-12;
+    padding-inline: var(--page-pad);
   }
 
   .site-footer-inner {
-    @apply mx-auto flex w-[min(1200px,100%)] flex-col gap-10;
+    @apply mx-auto flex w-full max-w-[1200px] flex-col gap-10;
   }
 
   .footer-contact {
@@ -2422,17 +2433,30 @@
   }
 
   main {
-    @apply mx-auto w-[min(1200px,calc(100%-2rem))] py-6 pb-16;
+    @apply mx-auto w-full max-w-[1200px] py-6 pb-16;
+    padding-inline: var(--page-pad);
+    box-sizing: border-box;
   }
 
   /*
-   * Break out of main's side gutters to the viewport edges.
-   * overflow-x: clip on html/body absorbs the 100vw vs scrollbar-width mismatch.
+   * Break out of main's padding to the edges of the content column.
+   * Avoid 100vw on small screens — it overflows on iOS Chrome/Safari and
+   * shifts the page (left gap / right flush, footer opposite).
    */
   .full-bleed-x {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    width: calc(100% + 2 * var(--page-pad));
+    max-width: none;
+    margin-left: calc(-1 * var(--page-pad));
+    margin-right: calc(-1 * var(--page-pad));
+  }
+
+  /* When main is centered in a wider viewport, bleed to the real viewport edges. */
+  @media (min-width: 1280px) {
+    .full-bleed-x {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+    }
   }
 
   .card {
