@@ -86,6 +86,7 @@ Copy from [`.env.example`](../apps/web/.env.example). Values are currently the s
 | `NEXT_PUBLIC_SUPPORT_EMAIL` | Recommended | e.g. `Info@nobletravel.co.uk` |
 | `NEXT_PUBLIC_GTM_ID` | Recommended | e.g. `GTM-WGQLWH3J` (site-wide Tag Manager) |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Direct GA4 only — leave empty if GA4 is configured in GTM |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Recommended | e.g. `AW-18381676468` (Google Ads gtag) |
 | `DUFFEL_USE_MOCK` | Dev / fallback | `true` for mock fares |
 | `DUFFEL_ACCESS_TOKEN` | For live search | Server-only |
 | `FLIGHT_PRICE_MARKUP_PERCENT` | Optional | Default `5` |
