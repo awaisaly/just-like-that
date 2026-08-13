@@ -18,6 +18,7 @@
 - [ ] Set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEADS_EMAIL_TO`
 - [ ] Duffel account: test → live token; set `DUFFEL_ACCESS_TOKEN` and `DUFFEL_USE_MOCK=false` when ready
 - [ ] Google Search Console + GTM (`NEXT_PUBLIC_GTM_ID=GTM-WGQLWH3J`); leave `NEXT_PUBLIC_GA_MEASUREMENT_ID` empty if GA4 is in GTM
+- [ ] Google Ads gtag (`NEXT_PUBLIC_GOOGLE_ADS_ID=AW-18381676468`) on Prod (+ Dev if needed); redeploy after setting
 
 ## Security / compliance
 

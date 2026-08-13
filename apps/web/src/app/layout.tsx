@@ -87,6 +87,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const supportEmail = getSupportEmail();
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim();
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+  const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim();
+  const gtagIds = [gaId, googleAdsId].filter(Boolean) as string[];
+  const gtagPrimaryId = gtagIds[0];
 
   const siteUrl = getSiteUrl();
 
@@ -182,15 +185,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${gtmId}');`}
           </Script>
         ) : null}
-        {/* Prefer loading GA4 via GTM; keep this only if GA is not configured in the container. */}
-        {gaId ? (
+        {/* Direct gtag (GA4 and/or Google Ads). Prefer GA4 via GTM when possible to avoid double counting. */}
+        {gtagPrimaryId ? (
           <>
             <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="lazyOnload"
+              src={`https://www.googletagmanager.com/gtag/js?id=${gtagPrimaryId}`}
+              strategy="afterInteractive"
             />
-            <Script id="ga-init" strategy="lazyOnload">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${gtagIds
+                .map((id) => `gtag('config','${id}');`)
+                .join('')}`}
             </Script>
           </>
         ) : null}
