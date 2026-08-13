@@ -17,7 +17,7 @@
 - [ ] Create Resend account; verify sender domain
 - [ ] Set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEADS_EMAIL_TO`
 - [ ] Duffel account: test → live token; set `DUFFEL_ACCESS_TOKEN` and `DUFFEL_USE_MOCK=false` when ready
-- [ ] Google Search Console + GA4 (`NEXT_PUBLIC_GA_MEASUREMENT_ID`)
+- [ ] Google Search Console + GTM (`NEXT_PUBLIC_GTM_ID=GTM-WGQLWH3J`); leave `NEXT_PUBLIC_GA_MEASUREMENT_ID` empty if GA4 is in GTM
 
 ## Security / compliance
 
