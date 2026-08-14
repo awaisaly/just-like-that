@@ -88,8 +88,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim();
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim();
+  const googleAdsPhoneConversionId =
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_ID?.trim();
+  const googleAdsPhoneConversionNumber =
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_NUMBER?.trim();
   const gtagIds = [gaId, googleAdsId].filter(Boolean) as string[];
-  const gtagPrimaryId = gtagIds[0];
+  const gtagPrimaryId = gtagIds[0] ?? googleAdsPhoneConversionId?.split('/')[0];
+  const gtagPhoneConversion =
+    googleAdsPhoneConversionId && googleAdsPhoneConversionNumber
+      ? `gtag('config',${JSON.stringify(googleAdsPhoneConversionId)},${JSON.stringify({
+          phone_conversion_number: googleAdsPhoneConversionNumber,
+        })});`
+      : '';
 
   const siteUrl = getSiteUrl();
 
@@ -194,8 +204,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             />
             <Script id="gtag-init" strategy="afterInteractive">
               {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${gtagIds
-                .map((id) => `gtag('config','${id}');`)
-                .join('')}`}
+                .map((id) => `gtag('config',${JSON.stringify(id)});`)
+                .join('')}${gtagPhoneConversion}`}
             </Script>
           </>
         ) : null}
