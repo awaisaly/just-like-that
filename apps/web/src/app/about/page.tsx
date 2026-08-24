@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import { InstalmentSpotlight } from '../../components/Instalments';
 import {
   formatSupportPhone,
@@ -72,7 +73,8 @@ export default function AboutPage() {
             <span className="text-accent">Booked with people.</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/85">
-            A UK travel desk built so you can book now and pay in instalments — with a real
+            A UK travel desk built so you can book now and{' '}
+            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> — with a real
             consultant when the details matter.
           </p>
         </div>

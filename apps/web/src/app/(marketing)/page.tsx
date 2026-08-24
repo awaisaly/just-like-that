@@ -10,6 +10,7 @@ import {
 } from '../../components/HomeMotion';
 import { InstalmentSpotlight } from '../../components/Instalments';
 import { HomeSearchForm } from '../../components/HomeSearchForm';
+import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import { findAirport } from '../../data/airports';
 import {
   destinationHref,
@@ -25,7 +26,6 @@ import {
   supportMailtoHref,
   supportTelHref,
 } from '../../lib/contact';
-import { instalmentCopy } from '../../lib/instalments';
 import { markUpFlightMoney } from '../../lib/pricing';
 import { buildPageMetadata } from '../../lib/seo';
 
@@ -104,8 +104,8 @@ export default function HomePage() {
               Cheap flights to Africa &amp; Nigeria
             </h1>
             <p className="home-hero-line home-hero-copy mt-3 max-w-md text-base text-white/80 sm:text-lg">
-              UK to Nigeria and back — compare live fares, then {instalmentCopy.motto.toLowerCase()} with
-              a UK agent.
+              UK to Nigeria and back — compare live fares, then book now.{' '}
+              <PayInInstalmentsAccent>Pay in instalments</PayInInstalmentsAccent> with a UK agent.
             </p>
           </div>
         </section>

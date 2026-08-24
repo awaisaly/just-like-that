@@ -5,6 +5,10 @@ import { formatMoney } from '@jlt/shared';
 import { SearchForm } from '../../../components/SearchForm';
 import { SearchResults } from '../../../components/SearchResults';
 import { SearchScrollTarget } from '../../../components/SearchScrollTarget';
+import {
+  InstalmentMottoAccent,
+  PayInInstalmentsAccent,
+} from '../../../components/InstalmentAccent';
 import { findAirport, formatAirportPlace } from '../../../data/airports';
 import { getHomeDestinationCards } from '../../../data/destinations';
 import { getSeoPagesByType, routeGuidePath, seoPath } from '../../../data/seo-pages';
@@ -112,13 +116,23 @@ export default async function FlightSearchPage({ searchParams }: Props) {
                   </span>
                 </>
               ) : (
-                instalmentCopy.motto
+                <InstalmentMottoAccent />
               )}
             </h1>
             <p className="flights-hero-support">
-              {hasRoute
-                ? instalmentCopy.tagline
-                : 'Compare live fares, then book with a UK agent — instalments are our primary way to fly.'}
+              {hasRoute ? (
+                <>
+                  Book with a UK agent, then{' '}
+                  <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> — all paid
+                  before you fly.
+                </>
+              ) : (
+                <>
+                  Compare live fares, then book with a UK agent —{' '}
+                  <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> is our primary
+                  way to fly.
+                </>
+              )}
             </p>
           </div>
 

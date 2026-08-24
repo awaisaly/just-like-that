@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { InstalmentSpotlight } from '../../../components/Instalments';
+import { PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
 import { findAirport } from '../../../data/airports';
 import { getSeoPage, getSeoPagesByType, seoPath } from '../../../data/seo-pages';
 import { AGENCY_NAME } from '../../../lib/brand';
@@ -370,7 +371,11 @@ function ToursGuide({ faq }: { faq: { q: string; a: string }[] }) {
           <h1 className="mt-4 max-w-3xl text-[clamp(2.25rem,5.5vw,3.75rem)] font-extrabold leading-[0.98] tracking-tight text-white">
             {tourCopy.motto}
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-white/85">{tourCopy.heroSupport}</p>
+          <p className="mt-5 max-w-xl text-lg text-white/85">
+            {tourCopy.heroSupport} Or{' '}
+            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> on the flights
+            that get you there.
+          </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/contact"
