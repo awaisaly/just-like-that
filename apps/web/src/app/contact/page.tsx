@@ -4,6 +4,7 @@ import { ContactForm } from '../../components/ContactForm';
 import { PhoneCallIcon, WhatsAppChannelIcon } from '../../components/ContactChannelIcons';
 import {
   formatSupportPhone,
+  getAdsTrackingPhoneIfDistinct,
   getSupportEmail,
   getSupportPhone,
   getWhatsAppLines,
@@ -26,6 +27,10 @@ export default function ContactPage() {
   const supportPhone = getSupportPhone();
   const supportEmail = getSupportEmail();
   const phoneDisplay = formatSupportPhone(supportPhone);
+  const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
+  const adsTrackingDisplay = adsTrackingPhone
+    ? formatSupportPhone(adsTrackingPhone)
+    : null;
   const whatsappLines = getWhatsAppLines();
   const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
@@ -76,6 +81,16 @@ export default function ContactPage() {
                   <span aria-hidden="true">🇬🇧</span>
                   <span>{phoneDisplay}</span>
                 </a>
+                {adsTrackingPhone && adsTrackingDisplay ? (
+                  <a
+                    href={supportTelHref(adsTrackingPhone)}
+                    className="contact-channel-link mt-2"
+                  >
+                    <PhoneCallIcon />
+                    <span aria-hidden="true">🇬🇧</span>
+                    <span>{adsTrackingDisplay}</span>
+                  </a>
+                ) : null}
               </li>
               <li>
                 <p className="m-0 text-xs font-semibold uppercase tracking-wide text-muted">

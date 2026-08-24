@@ -10,6 +10,7 @@ import { getSeoPagesByType, seoPath } from '../data/seo-pages';
 import { AGENCY_NAME } from '../lib/brand';
 import {
   formatSupportPhone,
+  getAdsTrackingPhoneIfDistinct,
   getSupportEmail,
   getSupportPhone,
   getWhatsAppLines,
@@ -161,6 +162,10 @@ export function SiteFooter() {
   const supportPhone = getSupportPhone();
   const supportEmail = getSupportEmail();
   const phoneDisplay = formatSupportPhone(supportPhone);
+  const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
+  const adsTrackingDisplay = adsTrackingPhone
+    ? formatSupportPhone(adsTrackingPhone)
+    : null;
   const whatsappLines = getWhatsAppLines();
   const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
@@ -311,6 +316,23 @@ export function SiteFooter() {
                 <span>{phoneDisplay}</span>
               </span>
             </a>
+            {adsTrackingPhone && adsTrackingDisplay ? (
+              <a
+                href={supportTelHref(adsTrackingPhone)}
+                className="footer-contact-action is-phone"
+              >
+                <span className="footer-contact-action-label">
+                  <PhoneCallIcon />
+                  Call us
+                </span>
+                <span className="footer-contact-action-value">
+                  <span className="footer-contact-flag" aria-hidden="true">
+                    🇬🇧
+                  </span>
+                  <span>{adsTrackingDisplay}</span>
+                </span>
+              </a>
+            ) : null}
             <a href={supportMailtoHref(supportEmail)} className="footer-contact-action is-email">
               <span className="footer-contact-action-label">Email</span>
               <span className="footer-contact-action-value">{supportEmail}</span>

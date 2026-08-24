@@ -11,6 +11,7 @@ import {
 } from '../lib/brand';
 import {
   formatSupportPhone,
+  getAdsTrackingPhoneIfDistinct,
   getSupportPhone,
   supportTelHref,
 } from '../lib/contact';
@@ -27,6 +28,10 @@ function resolveNavMark(raw: string | null): NavWordmarkVariant {
 
 const supportPhone = getSupportPhone();
 const phoneDisplay = formatSupportPhone(supportPhone);
+const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
+const adsTrackingDisplay = adsTrackingPhone
+  ? formatSupportPhone(adsTrackingPhone)
+  : null;
 
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '/flights/search', label: 'Flights' },
@@ -172,6 +177,14 @@ export function SiteHeader() {
               </span>
               Call {phoneDisplay}
             </a>
+            {adsTrackingPhone && adsTrackingDisplay ? (
+              <a href={supportTelHref(adsTrackingPhone)} className="nav-drawer-call">
+                <span className="nav-call-flag" aria-hidden="true">
+                  🇬🇧
+                </span>
+                Call {adsTrackingDisplay}
+              </a>
+            ) : null}
             <Link
               href="/flights/search"
               className="nav-drawer-search"
@@ -221,6 +234,18 @@ export function SiteHeader() {
             </span>
             {phoneDisplay}
           </a>
+          {adsTrackingPhone && adsTrackingDisplay ? (
+            <a
+              href={supportTelHref(adsTrackingPhone)}
+              className="nav-call"
+              aria-label={`Call ${adsTrackingDisplay}`}
+            >
+              <span className="nav-call-flag" aria-hidden="true">
+                🇬🇧
+              </span>
+              {adsTrackingDisplay}
+            </a>
+          ) : null}
         </nav>
 
         <div className="nav-mobile-actions">

@@ -3,6 +3,8 @@ import { z } from 'zod';
 /** UK call-centre defaults (Noble Travel). Override via NEXT_PUBLIC_* env vars. */
 export const DEFAULT_SUPPORT_PHONE = '+442079935216';
 export const DEFAULT_SUPPORT_EMAIL = 'Info@nobletravel.co.uk';
+/** Google Ads website call-conversion number (national or E.164). */
+export const DEFAULT_ADS_TRACKING_PHONE = '02080901460';
 
 /**
  * WhatsApp chat lines (E.164 digits, no +). Edit here — not via env.
@@ -16,6 +18,46 @@ export function getSupportPhone(): string {
 
 export function getSupportEmail(): string {
   return process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || DEFAULT_SUPPORT_EMAIL;
+}
+
+/**
+ * Normalise a UK/E.164 phone string to `+` E.164 (or return trimmed input).
+ * Accepts `02080901460`, `+442080901460`, `442080901460`.
+ */
+export function toE164Phone(phone: string): string {
+  const trimmed = phone.trim();
+  if (!trimmed) return trimmed;
+  if (trimmed.startsWith('+')) {
+    const digits = trimmed.replace(/[^\d]/g, '');
+    return digits ? `+${digits}` : trimmed;
+  }
+  const digits = trimmed.replace(/[^\d]/g, '');
+  if (digits.startsWith('0') && digits.length === 11) return `+44${digits.slice(1)}`;
+  if (digits.startsWith('44') && digits.length >= 12) return `+${digits}`;
+  return digits ? `+${digits}` : trimmed;
+}
+
+/**
+ * Phone number used for Google Ads website call conversions.
+ * Prefer NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_NUMBER (same value as gtag).
+ */
+export function getAdsTrackingPhone(): string | null {
+  const raw =
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_NUMBER?.trim() ||
+    process.env.NEXT_PUBLIC_ADS_TRACKING_PHONE?.trim() ||
+    DEFAULT_ADS_TRACKING_PHONE;
+  if (!raw) return null;
+  return toE164Phone(raw);
+}
+
+/** Ads tracking line when it differs from the main support number (avoid duplicate links). */
+export function getAdsTrackingPhoneIfDistinct(
+  supportPhone = getSupportPhone(),
+): string | null {
+  const ads = getAdsTrackingPhone();
+  if (!ads) return null;
+  if (supportPhoneDigits(ads) === supportPhoneDigits(supportPhone)) return null;
+  return ads;
 }
 
 /** Digits for tel: / wa.me (E.164 without +). */
@@ -37,7 +79,7 @@ export function formatSupportPhone(phone = getSupportPhone()): string {
 }
 
 export function supportTelHref(phone = getSupportPhone()): string {
-  const digits = supportPhoneDigits(phone);
+  const digits = supportPhoneDigits(toE164Phone(phone));
   return digits ? `tel:+${digits}` : `tel:${phone}`;
 }
 
