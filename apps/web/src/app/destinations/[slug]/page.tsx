@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatMoney } from '@jlt/shared';
 import { SearchForm } from '../../../components/SearchForm';
+import { PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
 import { findAirport } from '../../../data/airports';
 import { InstalmentSpotlight } from '../../../components/Instalments';
 import {
@@ -140,7 +141,8 @@ export default async function DestinationPage({
               {page.h1}
             </h1>
             <p className="mt-2 max-w-xl text-base text-white/90">
-              {dest.blurb}
+              {dest.blurb} Book with a UK agent and{' '}
+              <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent>.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               {priceLabel ? (

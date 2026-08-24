@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
   destinationHref,
   destinationRegionOrder,
@@ -112,7 +113,8 @@ export default function DestinationsIndexPage() {
           </h1>
           <p className="mt-3 max-w-xl text-base text-white/90 sm:text-lg">
             {destinations.length} cities — from Lagos and Accra to London returns, Europe, the Middle
-            East, Asia, and the Americas. Compare fares, then finalise with a UK agent.
+            East, Asia, and the Americas. Compare fares, then{' '}
+            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> with a UK agent.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

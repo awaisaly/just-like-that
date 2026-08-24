@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ContactForm } from '../../components/ContactForm';
 import { PhoneCallIcon, WhatsAppChannelIcon } from '../../components/ContactChannelIcons';
+import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
   formatSupportPhone,
   getAdsTrackingPhoneIfDistinct,
@@ -54,7 +55,8 @@ export default function ContactPage() {
             Contact us
           </h1>
           <p className="mt-3 max-w-xl text-base text-white/90 sm:text-lg">
-            Want to book now and pay in instalments? Our UK call centre is ready to set up your plan.
+            Want to book now and <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent>
+            ? Our UK call centre is ready to set up your plan.
           </p>
         </div>
       </section>

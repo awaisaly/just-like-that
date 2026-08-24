@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
   formatSupportPhone,
   getSupportEmail,
@@ -140,7 +141,8 @@ export default function FaqPage() {
             Questions, answered clearly
           </h1>
           <p className="mt-4 max-w-lg text-lg text-white/85">
-            How Elca Airbridge works — from searching fares to speaking with a UK agent.
+            How Elca Airbridge works — from searching fares to{' '}
+            <PayInInstalmentsAccent>paying in instalments</PayInInstalmentsAccent> with a UK agent.
           </p>
         </div>
       </section>
