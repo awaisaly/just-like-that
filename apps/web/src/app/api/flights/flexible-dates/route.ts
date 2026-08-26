@@ -4,7 +4,7 @@ import { getFlexibleDateQuotes } from '../../../../server/flight-cache';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+export const maxDuration = 10;
 
 export async function POST(request: Request) {
   let body: unknown;

@@ -15,6 +15,8 @@ type MemoryEntry<T> = {
 
 /** Process-local L1 cache (warm Next.js / Node instances). */
 const memory = new Map<string, MemoryEntry<unknown>>();
+/** Process-local in-flight search coalescing (same instance, same key). */
+const inflight = new Map<string, Promise<NormalizedOffer[]>>();
 
 function memoryGet<T>(key: string): T | undefined {
   const hit = memory.get(key);
@@ -84,15 +86,25 @@ export async function getCachedFlightSearch(
   const warm = memoryGet<NormalizedOffer[]>(memKey);
   if (warm) return warm;
 
-  const ttl = searchTtl();
-  const results = await unstable_cache(
-    async () => searchFlights(input),
-    ['flight-search', key],
-    { revalidate: ttl },
-  )();
+  const existing = inflight.get(memKey);
+  if (existing) return existing;
 
-  memorySet(memKey, results, ttl);
-  return results;
+  const ttl = searchTtl();
+  const pending = (async () => {
+    const results = await unstable_cache(
+      async () => searchFlights(input),
+      ['flight-search', key],
+      { revalidate: ttl },
+    )();
+    memorySet(memKey, results, ttl);
+    rememberCalendarQuote(input, results);
+    return results;
+  })().finally(() => {
+    inflight.delete(memKey);
+  });
+
+  inflight.set(memKey, pending);
+  return pending;
 }
 
 export type FlexibleDateQuote = {
@@ -101,9 +113,24 @@ export type FlexibleDateQuote = {
   cheapest: Money | null;
 };
 
+function calendarKey(input: FlightSearchInput): string {
+  return `calendar:${flightSearchCacheKey(input)}`;
+}
+
+function rememberCalendarQuote(input: FlightSearchInput, offers: NormalizedOffer[]) {
+  memorySet(calendarKey(input), { cheapest: cheapestOf(offers) }, calendarTtl());
+}
+
+function peekCheapestQuote(input: FlightSearchInput): Money | null {
+  const cachedSearch = memoryGet<NormalizedOffer[]>(`search:${flightSearchCacheKey(input)}`);
+  if (cachedSearch) return cheapestOf(cachedSearch);
+  const cachedQuote = memoryGet<{ cheapest: Money | null }>(calendarKey(input));
+  return cachedQuote?.cheapest ?? null;
+}
+
 /**
- * Cheapest fares for nearby dates — shares the same search cache as full search
- * so flexible dates and results reuse Duffel responses.
+ * Nearby-date cheapest fares from cache only — never starts extra Duffel searches.
+ * A live search runs when the traveller taps a day (or searches that date directly).
  */
 export async function getFlexibleDateQuotes(input: {
   origin: string;
@@ -130,34 +157,27 @@ export async function getFlexibleDateQuotes(input: {
         )
       : null;
 
-  return Promise.all(
-    offsets.map(async (offset) => {
-      const departDate = shiftUtcDate(baseDepart, offset);
-      const returnDate =
-        tripNights != null ? shiftUtcDate(departDate, tripNights) : undefined;
-      const searchInput: FlightSearchInput = {
-        origin: input.origin,
-        destination: input.destination,
-        departDate,
-        returnDate,
-        adults: input.adults,
-        children: input.children,
-        infants: input.infants,
-        cabin: input.cabin,
-      };
+  return offsets.map((offset) => {
+    const departDate = shiftUtcDate(baseDepart, offset);
+    const returnDate =
+      tripNights != null ? shiftUtcDate(departDate, tripNights) : undefined;
+    const searchInput: FlightSearchInput = {
+      origin: input.origin,
+      destination: input.destination,
+      departDate,
+      returnDate,
+      adults: input.adults,
+      children: input.children,
+      infants: input.infants,
+      cabin: input.cabin,
+    };
 
-      const calKey = `calendar:${flightSearchCacheKey(searchInput)}`;
-      const cachedQuote = memoryGet<{ cheapest: Money | null }>(calKey);
-      if (cachedQuote) {
-        return { departDate, returnDate, cheapest: cachedQuote.cheapest };
-      }
-
-      const results = await getCachedFlightSearch(searchInput);
-      const cheapest = cheapestOf(results);
-      memorySet(calKey, { cheapest }, calendarTtl());
-      return { departDate, returnDate, cheapest };
-    }),
-  );
+    return {
+      departDate,
+      returnDate,
+      cheapest: peekCheapestQuote(searchInput),
+    };
+  });
 }
 
 function shiftUtcDate(iso: string, days: number): string {

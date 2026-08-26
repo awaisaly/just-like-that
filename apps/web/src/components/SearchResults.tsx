@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import * as Popover from '@radix-ui/react-popover';
 import { formatMoney } from '@jlt/shared';
 import { apiFetch } from '../lib/api';
+import { airlineDisplayName } from '../lib/airline';
 import type { NormalizedOffer, NormalizedSegment, TravellerSummary } from '../lib/flight';
 import { isMockOfferId } from '../lib/flight';
 import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
@@ -76,15 +77,20 @@ const SORT_OPTIONS: {
   },
 ];
 
-const carrierNames: Record<string, string> = {
-  BA: 'British Airways',
-  EK: 'Emirates',
-  VS: 'Virgin Atlantic',
-  FR: 'Ryanair',
-  EZY: 'easyJet',
-};
-
 const PAGE_SIZE = 8;
+
+function airlineNamesFromOffers(offers: NormalizedOffer[]): Record<string, string> {
+  const names: Record<string, string> = {};
+  for (const offer of offers) {
+    for (const slice of offer.slices) {
+      for (const segment of slice.segments) {
+        const code = segment.carrier.trim().toUpperCase();
+        names[code] = airlineDisplayName(code, segment.carrierName);
+      }
+    }
+  }
+  return names;
+}
 
 function offerStops(o: NormalizedOffer): number {
   // Worst-leg stop count — used for ranking convenience like Booking/Agoda.
@@ -560,6 +566,7 @@ function OfferCard({
   const stops = offerStops(detailsOffer);
   const via = stopCities(segs);
   const carriers = offerCarriers(detailsOffer);
+  const carrierNames = airlineNamesFromOffers([detailsOffer]);
   const carrier = carriers[0] ?? first?.carrier ?? '';
   const hasReturn = (detailsOffer.slices.length ?? 0) > 1;
 
@@ -602,7 +609,7 @@ function OfferCard({
             <div className="mt-2 flex flex-wrap gap-2">
               {carriers.length > 1 ? (
                 <span className="chip">
-                  {carriers.map((code) => carrierNames[code] ?? code).join(' · ')}
+                  {carriers.map((code) => carrierNames[code] ?? airlineDisplayName(code)).join(' · ')}
                 </span>
               ) : null}
               {detailsOffer.fareBrand ? <span className="chip">{detailsOffer.fareBrand}</span> : null}
@@ -829,6 +836,7 @@ export function SearchResults({
     results.forEach((o) => offerCarriers(o).forEach((code) => s.add(code)));
     return [...s].sort();
   }, [results]);
+  const airlineNames = useMemo(() => airlineNamesFromOffers(results), [results]);
 
   const priceBounds = useMemo(() => {
     if (!results.length) return { min: 0, max: 1000 };
@@ -921,6 +929,7 @@ export function SearchResults({
           filters={filters}
           setFilters={setFilters}
           airlines={airlines}
+          airlineNames={airlineNames}
           priceBounds={priceBounds}
           durationBounds={durationBounds}
           loading={loading}
@@ -994,6 +1003,7 @@ export function SearchResults({
           filters={filters}
           setFilters={setFilters}
           airlines={airlines}
+          airlineNames={airlineNames}
           priceBounds={priceBounds}
           durationBounds={durationBounds}
           loading={loading}

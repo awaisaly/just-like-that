@@ -1,30 +1,9 @@
 'use client';
 
 import { findAirport } from '../data/airports';
+import { airlineDisplayName } from '../lib/airline';
 import type { NormalizedSegment, SegmentAmenities } from '../lib/flight';
 import { AirlineLogo } from './AirlineLogo';
-
-const carrierNames: Record<string, string> = {
-  BA: 'British Airways',
-  EK: 'Emirates',
-  VS: 'Virgin Atlantic',
-  FR: 'Ryanair',
-  EZY: 'easyJet',
-  U2: 'easyJet',
-  W3: 'Arik Air',
-  QR: 'Qatar Airways',
-  AF: 'Air France',
-  KL: 'KLM',
-  LH: 'Lufthansa',
-  TK: 'Turkish Airlines',
-  PK: 'Pakistan International',
-  EY: 'Etihad Airways',
-  SQ: 'Singapore Airlines',
-};
-
-function airlineName(code: string) {
-  return carrierNames[code.toUpperCase()] ?? code.toUpperCase();
-}
 
 function flightNumberLabel(carrier: string, flightNumber: string) {
   const code = carrier.trim().toUpperCase();
@@ -243,7 +222,7 @@ function SegmentBlock({
   segment: NormalizedSegment;
   cabinLabel?: string;
 }) {
-  const name = airlineName(segment.carrier);
+  const name = airlineDisplayName(segment.carrier, segment.carrierName);
   const flight = flightNumberLabel(segment.carrier, segment.flightNumber);
   const cabin = segment.cabinMarketingName || cabinLabel || 'Economy';
   const arriveOffset = dayOffsetLabel(segment.departAt, segment.arriveAt);
@@ -289,7 +268,7 @@ function SegmentBlock({
             <p className="flight-itin-carrier-meta">
               {cabin} · {flight}
               {segment.operatingCarrier && segment.operatingCarrier !== segment.carrier
-                ? ` · Op. ${airlineName(segment.operatingCarrier)}`
+                ? ` · Op. ${airlineDisplayName(segment.operatingCarrier, segment.operatingCarrierName)}`
                 : ''}
             </p>
           </div>
