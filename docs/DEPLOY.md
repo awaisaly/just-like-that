@@ -91,6 +91,7 @@ Copy from [`.env.example`](../apps/web/.env.example). Values are currently the s
 | `NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_NUMBER` | Optional | Number shown for call tracking, e.g. `02080901460` |
 | `DUFFEL_USE_MOCK` | Dev / fallback | `true` for mock fares |
 | `DUFFEL_ACCESS_TOKEN` | For live search | Server-only |
+| `DUFFEL_SUPPLIER_TIMEOUT_MS` | Optional | Default `15000`. Must stay below the search route timeout. |
 | `FLIGHT_PRICE_MARKUP_PERCENT` | Optional | Default `5` |
 | `FLIGHT_SEARCH_CACHE_TTL_SECONDS` | Optional | Default `600` |
 | `FLIGHT_CALENDAR_CACHE_TTL_SECONDS` | Optional | Default `1800` |

@@ -3,9 +3,16 @@ import type { FlightSearchInput } from '@jlt/shared';
 import { money } from '@jlt/shared';
 import type { NormalizedOffer, NormalizedSegment, SegmentAmenities } from '../lib/flight';
 import { isMockOfferId, seatTypeLabel } from '../lib/flight';
+import { airlineDisplayName } from '../lib/airline';
 import { markUpFlightAmount } from '../lib/pricing';
 
 const DUFFEL_API = 'https://api.duffel.com/air';
+
+/** Wait less than the search route `maxDuration` so we return partial airline results instead of an empty timeout. */
+const DEFAULT_SUPPLIER_TIMEOUT_MS = 15_000;
+/** Duffel List Offers max page size is 200; keep a large cheapest page plus a fastest page. */
+const CHEAPEST_OFFER_LIMIT = 150;
+const FASTEST_OFFER_LIMIT = 50;
 
 type DuffelAirport = { iata_code: string };
 type DuffelAirline = { iata_code: string; name?: string };
@@ -140,6 +147,12 @@ export async function getFlightOffer(offerId: string): Promise<NormalizedOffer |
   return normalizeDuffelOffer(payload.data);
 }
 
+function supplierTimeoutMs(): number {
+  const raw = Number(process.env.DUFFEL_SUPPLIER_TIMEOUT_MS ?? DEFAULT_SUPPLIER_TIMEOUT_MS);
+  if (!Number.isFinite(raw)) return DEFAULT_SUPPLIER_TIMEOUT_MS;
+  return Math.min(60_000, Math.max(2_000, Math.round(raw)));
+}
+
 async function duffelSearch(
   input: FlightSearchInput,
   accessToken: string,
@@ -164,27 +177,82 @@ async function duffelSearch(
     });
   }
 
-  const response = await fetch(`${DUFFEL_API}/offer_requests?return_offers=true`, {
-    method: 'POST',
+  const timeout = supplierTimeoutMs();
+  const created = await fetch(
+    `${DUFFEL_API}/offer_requests?return_offers=false&supplier_timeout=${timeout}`,
+    {
+      method: 'POST',
+      cache: 'no-store',
+      headers: duffelHeaders(accessToken),
+      body: JSON.stringify({
+        data: {
+          slices,
+          passengers,
+          cabin_class: input.cabin,
+          max_connections: 1,
+        },
+      }),
+    },
+  );
+
+  if (!created.ok) {
+    const detail = await created.text();
+    console.error('Duffel search failed', created.status, detail);
+    throw new Error('The flight provider could not complete this search');
+  }
+
+  const createdPayload = (await created.json()) as { data?: { id?: string } };
+  const offerRequestId = createdPayload.data?.id;
+  if (!offerRequestId) {
+    throw new Error('The flight provider could not complete this search');
+  }
+
+  const [cheapest, fastest] = await Promise.all([
+    listDuffelOffers(accessToken, offerRequestId, 'total_amount', CHEAPEST_OFFER_LIMIT),
+    listDuffelOffers(accessToken, offerRequestId, 'total_duration', FASTEST_OFFER_LIMIT),
+  ]);
+
+  return mergeDuffelOffers(cheapest, fastest).map((offer) =>
+    normalizeDuffelOffer(offer, input),
+  );
+}
+
+async function listDuffelOffers(
+  accessToken: string,
+  offerRequestId: string,
+  sort: 'total_amount' | 'total_duration',
+  limit: number,
+): Promise<DuffelOffer[]> {
+  const params = new URLSearchParams({
+    offer_request_id: offerRequestId,
+    sort,
+    limit: String(limit),
+  });
+  const response = await fetch(`${DUFFEL_API}/offers?${params.toString()}`, {
+    method: 'GET',
     cache: 'no-store',
     headers: duffelHeaders(accessToken),
-    body: JSON.stringify({
-      data: {
-        slices,
-        passengers,
-        cabin_class: input.cabin,
-      },
-    }),
   });
 
   if (!response.ok) {
     const detail = await response.text();
-    console.error('Duffel search failed', response.status, detail);
+    console.error('Duffel list offers failed', sort, response.status, detail);
     throw new Error('The flight provider could not complete this search');
   }
 
-  const payload = (await response.json()) as { data: { offers: DuffelOffer[] } };
-  return payload.data.offers.slice(0, 40).map((offer) => normalizeDuffelOffer(offer, input));
+  const payload = (await response.json()) as { data?: DuffelOffer[] };
+  return payload.data ?? [];
+}
+
+function mergeDuffelOffers(cheapest: DuffelOffer[], fastest: DuffelOffer[]): DuffelOffer[] {
+  const seen = new Set<string>();
+  const merged: DuffelOffer[] = [];
+  for (const offer of [...cheapest, ...fastest]) {
+    if (!offer.id || seen.has(offer.id)) continue;
+    seen.add(offer.id);
+    merged.push(offer);
+  }
+  return merged;
 }
 
 function normalizeDuffelOffer(
@@ -247,10 +315,20 @@ function normalizeDuffelSegment(segment: DuffelSegment): NormalizedSegment {
   const operating = segment.operating_carrier.iata_code;
   const amenities = extractAmenities(passenger);
 
+  const carrierCode = marketing || operating;
+  const carrierName =
+    (marketing ? segment.marketing_carrier?.name : undefined) ||
+    segment.operating_carrier.name ||
+    undefined;
+  const operatingName = segment.operating_carrier.name || undefined;
+
   return {
-    carrier: marketing || operating,
+    carrier: carrierCode,
+    carrierName: carrierName || undefined,
     flightNumber: segment.marketing_carrier_flight_number,
     operatingCarrier: operating && operating !== marketing ? operating : undefined,
+    operatingCarrierName:
+      operating && operating !== marketing ? operatingName : undefined,
     origin: segment.origin.iata_code,
     destination: segment.destination.iata_code,
     originTerminal: segment.origin_terminal ?? undefined,
@@ -578,6 +656,7 @@ function createMockSlice(
     return [
       {
         carrier: carrier.iata,
+        carrierName: airlineDisplayName(carrier.iata),
         flightNumber: String(carrier.flight),
         origin,
         destination,
@@ -602,6 +681,7 @@ function createMockSlice(
   return [
     {
       carrier: carrier.iata,
+      carrierName: airlineDisplayName(carrier.iata),
       flightNumber: String(carrier.flight),
       origin,
       destination: connection,
@@ -616,6 +696,7 @@ function createMockSlice(
     },
     {
       carrier: carrier.iata,
+      carrierName: airlineDisplayName(carrier.iata),
       flightNumber: String(carrier.flight + 1),
       origin: connection,
       destination,

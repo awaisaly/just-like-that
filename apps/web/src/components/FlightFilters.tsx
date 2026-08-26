@@ -5,6 +5,7 @@ import { formatMoney } from '@jlt/shared';
 import type { NormalizedOffer } from '../lib/flight';
 import type { ResultsFilterDraft } from '../lib/stores';
 import { AirlineLogo } from './AirlineLogo';
+import { airlineDisplayName } from '../lib/airline';
 
 export type Filters = {
   maxStops: number | null;
@@ -23,23 +24,6 @@ export const TIME_WINDOWS = [
   { key: 'afternoon', label: 'Afternoon', hint: '12:00 – 18:00', from: 12, to: 18 },
   { key: 'evening', label: 'Evening', hint: 'After 18:00', from: 18, to: 24 },
 ] as const;
-
-const carrierNames: Record<string, string> = {
-  BA: 'British Airways',
-  EK: 'Emirates',
-  VS: 'Virgin Atlantic',
-  FR: 'Ryanair',
-  EZY: 'easyJet',
-  U2: 'easyJet',
-  W3: 'Arik Air',
-  QR: 'Qatar Airways',
-  AF: 'Air France',
-  KL: 'KLM',
-  LH: 'Lufthansa',
-  TK: 'Turkish Airlines',
-  PK: 'Pakistan International',
-  EY: 'Etihad Airways',
-};
 
 export function emptyFilters(): Filters {
   return {
@@ -113,6 +97,7 @@ type FilterPanelProps = {
   filters: Filters;
   setFilters: (next: Filters) => void;
   airlines: string[];
+  airlineNames?: Record<string, string>;
   priceBounds: { min: number; max: number };
   durationBounds: { min: number; max: number };
   loading?: boolean;
@@ -138,6 +123,7 @@ export function FilterPanel({
   filters,
   setFilters,
   airlines,
+  airlineNames,
   priceBounds,
   durationBounds,
   loading = false,
@@ -297,7 +283,7 @@ export function FilterPanel({
         ) : (
           <div className="ff-airline-list">
             {airlines.map((code) => {
-              const name = carrierNames[code] ?? code;
+              const name = airlineDisplayName(code, airlineNames?.[code]);
               const checked = filters.airlines.has(code);
               return (
                 <label key={code} className={`ff-airline-row${checked ? ' is-checked' : ''}`}>

@@ -4,6 +4,9 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "build:prod": "pnpm --filter @jlt/shared build && pnpm --filter @jlt/web build:prod",
+    "start:prod": "pnpm --filter @jlt/web start:prod",
+    "prod": "pnpm build:prod && pnpm start:prod",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck"

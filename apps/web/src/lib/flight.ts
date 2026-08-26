@@ -37,8 +37,10 @@ export const segmentAmenitiesSchema = z.object({
 
 export const normalizedSegmentSchema = z.object({
   carrier: z.string().min(1).max(3),
+  carrierName: z.string().max(80).optional(),
   flightNumber: z.string().min(1).max(10),
   operatingCarrier: z.string().min(1).max(3).optional(),
+  operatingCarrierName: z.string().max(80).optional(),
   origin: z.string().length(3),
   destination: z.string().length(3),
   originTerminal: z.string().max(10).optional(),

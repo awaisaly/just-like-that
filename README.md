@@ -31,7 +31,7 @@ Pending confirmation (/checkout/pending)
 ```
 
 1. **Search** — Homepage search form or SEO route/destination pages. Trip type: return or one way.
-2. **Results** (`/flights/search`) — Live offers with Best / Cheapest / Fastest, sort, filters (stops, times, airlines, bags, price), and a flexible-dates bar that reuses cached searches.
+2. **Results** (`/flights/search`) — Live offers with Best / Cheapest / Fastest, sort, filters (stops, times, airlines, bags, price), and a flexible-dates bar that shows cached nearby fares (a live search runs when you tap a day).
 3. **Offer** (`/flights/offers/[offerId]`) — Full itinerary; selection is stored in session (`jlt-flight-selection`).
 4. **Callback** (`/checkout`) — Contact details, preferred time, full vs instalments. Posts the selected offer + travellers to `/api/leads`; agent receives the itinerary by email.
 5. **Contact** (`/contact`) — Separate general enquiry form (`/api/contact`); not tied to a selected fare.
@@ -43,7 +43,7 @@ Instalments are the primary booking message; payment is arranged offline with th
 | Route | Purpose |
 |-------|---------|
 | `POST /api/flights/search` | Full offer search (Duffel or mock), server TTL cache |
-| `POST /api/flights/flexible-dates` | Cheapest fare per nearby day (±3) |
+| `POST /api/flights/flexible-dates` | Cached cheapest fare per nearby day (±3); no extra Duffel searches |
 | `GET /api/flights/offers/[offerId]` | Fresh offer detail (not long-cached) |
 | `POST /api/leads` | Callback request email (includes selected flight) |
 | `POST /api/contact` | Contact-page enquiry email |

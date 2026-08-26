@@ -112,7 +112,9 @@ export function FlexibleDatesBar({
         setPrices(next);
       } catch {
         if (cancelled || controller.signal.aborted) return;
-        // Leave chips as "—" until retry / navigation.
+        const next: Record<string, Money | null> = {};
+        for (const day of days) next[day.departDate] = null;
+        setPrices(next);
       }
     })();
 
@@ -167,7 +169,6 @@ export function FlexibleDatesBar({
     });
     const live = useLiveFlightSearchStore.getState();
     if (live.key !== cacheKey || !live.results) {
-      // Warm client store from server cache (same key flexible-dates just filled).
       setPendingDate(day.departDate);
       setSearching(true);
       try {
@@ -208,7 +209,7 @@ export function FlexibleDatesBar({
       <div className="flex-dates-head">
         <p className="flex-dates-title">Flexible dates</p>
         <p className="flex-dates-hint">
-          {returnDate ? 'Keeps your trip length · tap a cheaper day' : 'Compare nearby departure days'}
+          {returnDate ? 'Keeps your trip length · tap a day to search' : 'Tap a nearby day to search'}
         </p>
       </div>
       <div
