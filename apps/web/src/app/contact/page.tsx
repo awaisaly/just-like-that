@@ -5,6 +5,7 @@ import { PhoneCallIcon, WhatsAppChannelIcon } from '../../components/ContactChan
 import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
   formatSupportPhone,
+  getAdsTrackingPhoneDisplay,
   getAdsTrackingPhoneIfDistinct,
   getSupportEmail,
   getSupportPhone,
@@ -29,9 +30,7 @@ export default function ContactPage() {
   const supportEmail = getSupportEmail();
   const phoneDisplay = formatSupportPhone(supportPhone);
   const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
-  const adsTrackingDisplay = adsTrackingPhone
-    ? formatSupportPhone(adsTrackingPhone)
-    : null;
+  const adsTrackingDisplay = adsTrackingPhone ? getAdsTrackingPhoneDisplay() : null;
   const whatsappLines = getWhatsAppLines();
   const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
