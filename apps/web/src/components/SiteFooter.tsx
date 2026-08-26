@@ -10,6 +10,7 @@ import { getSeoPagesByType, seoPath } from '../data/seo-pages';
 import { AGENCY_NAME } from '../lib/brand';
 import {
   formatSupportPhone,
+  getAdsTrackingPhoneDisplay,
   getAdsTrackingPhoneIfDistinct,
   getSupportEmail,
   getSupportPhone,
@@ -163,9 +164,7 @@ export function SiteFooter() {
   const supportEmail = getSupportEmail();
   const phoneDisplay = formatSupportPhone(supportPhone);
   const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
-  const adsTrackingDisplay = adsTrackingPhone
-    ? formatSupportPhone(adsTrackingPhone)
-    : null;
+  const adsTrackingDisplay = adsTrackingPhone ? getAdsTrackingPhoneDisplay() : null;
   const whatsappLines = getWhatsAppLines();
   const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 

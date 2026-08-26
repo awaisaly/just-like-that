@@ -11,6 +11,7 @@ import {
 } from '../lib/brand';
 import {
   formatSupportPhone,
+  getAdsTrackingPhoneDisplay,
   getAdsTrackingPhoneIfDistinct,
   getSupportPhone,
   supportTelHref,
@@ -29,9 +30,7 @@ function resolveNavMark(raw: string | null): NavWordmarkVariant {
 const supportPhone = getSupportPhone();
 const phoneDisplay = formatSupportPhone(supportPhone);
 const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
-const adsTrackingDisplay = adsTrackingPhone
-  ? formatSupportPhone(adsTrackingPhone)
-  : null;
+const adsTrackingDisplay = adsTrackingPhone ? getAdsTrackingPhoneDisplay() : null;
 
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '/flights/search', label: 'Flights' },

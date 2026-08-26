@@ -60,6 +60,17 @@ export function getAdsTrackingPhoneIfDistinct(
   return ads;
 }
 
+/**
+ * Visible Ads number must match `phone_conversion_number` in gtag exactly
+ * (Google’s website-call snippet will not swap a spaced/formatted number).
+ */
+export function getAdsTrackingPhoneDisplay(): string {
+  return (
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_NUMBER?.trim() ||
+    DEFAULT_ADS_TRACKING_PHONE
+  );
+}
+
 /** Digits for tel: / wa.me (E.164 without +). */
 export function supportPhoneDigits(phone = getSupportPhone()): string {
   return phone.replace(/[^\d]/g, '');
