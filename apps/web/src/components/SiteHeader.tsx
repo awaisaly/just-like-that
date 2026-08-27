@@ -10,6 +10,8 @@ import {
   type NavWordmarkVariant,
 } from '../lib/brand';
 import {
+  ADS_CALL_LINK_CLASS,
+  ADS_CALL_NUMBER_CLASS,
   formatSupportPhone,
   getAdsTrackingPhoneDisplay,
   getAdsTrackingPhoneIfDistinct,
@@ -177,11 +179,14 @@ export function SiteHeader() {
               Call {phoneDisplay}
             </a>
             {adsTrackingPhone && adsTrackingDisplay ? (
-              <a href={supportTelHref(adsTrackingPhone)} className="nav-drawer-call">
+              <a
+                href={supportTelHref(adsTrackingPhone)}
+                className={`nav-drawer-call ${ADS_CALL_LINK_CLASS}`}
+              >
                 <span className="nav-call-flag" aria-hidden="true">
                   🇬🇧
                 </span>
-                Call {adsTrackingDisplay}
+                Call <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
               </a>
             ) : null}
             <Link
@@ -236,13 +241,13 @@ export function SiteHeader() {
           {adsTrackingPhone && adsTrackingDisplay ? (
             <a
               href={supportTelHref(adsTrackingPhone)}
-              className="nav-call"
+              className={`nav-call ${ADS_CALL_LINK_CLASS}`}
               aria-label={`Call ${adsTrackingDisplay}`}
             >
               <span className="nav-call-flag" aria-hidden="true">
                 🇬🇧
               </span>
-              {adsTrackingDisplay}
+              <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
             </a>
           ) : null}
         </nav>
