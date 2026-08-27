@@ -10,6 +10,8 @@ import { getSeoPagesByType, seoPath } from '../data/seo-pages';
 import { AGENCY_NAME } from '../lib/brand';
 import {
   formatSupportPhone,
+  ADS_CALL_LINK_CLASS,
+  ADS_CALL_NUMBER_CLASS,
   getAdsTrackingPhoneDisplay,
   getAdsTrackingPhoneIfDistinct,
   getSupportEmail,
@@ -318,7 +320,7 @@ export function SiteFooter() {
             {adsTrackingPhone && adsTrackingDisplay ? (
               <a
                 href={supportTelHref(adsTrackingPhone)}
-                className="footer-contact-action is-phone"
+                className={`footer-contact-action is-phone ${ADS_CALL_LINK_CLASS}`}
               >
                 <span className="footer-contact-action-label">
                   <PhoneCallIcon />
@@ -328,7 +330,7 @@ export function SiteFooter() {
                   <span className="footer-contact-flag" aria-hidden="true">
                     🇬🇧
                   </span>
-                  <span>{adsTrackingDisplay}</span>
+                  <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
                 </span>
               </a>
             ) : null}

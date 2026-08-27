@@ -6,7 +6,12 @@ import { Providers } from '../components/Providers';
 import { SiteChrome } from '../components/SiteChrome';
 import { SiteFooter } from '../components/SiteFooter';
 import { AGENCY_NAME } from '../lib/brand';
-import { getSupportEmail, getSupportPhone } from '../lib/contact';
+import {
+  ADS_CALL_LINK_CLASS,
+  ADS_CALL_NUMBER_CLASS,
+  getSupportEmail,
+  getSupportPhone,
+} from '../lib/contact';
 import { getSiteUrl, SITE_KEYWORDS } from '../lib/seo';
 import './globals.css';
 
@@ -96,9 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const gtagPrimaryId = gtagIds[0] ?? googleAdsPhoneConversionId?.split('/')[0];
   const gtagPhoneConversion =
     googleAdsPhoneConversionId && googleAdsPhoneConversionNumber
-      ? `gtag('config',${JSON.stringify(googleAdsPhoneConversionId)},${JSON.stringify({
-          phone_conversion_number: googleAdsPhoneConversionNumber,
-        })});`
+      ? `gtag('config',${JSON.stringify(googleAdsPhoneConversionId)},{phone_conversion_number:${JSON.stringify(googleAdsPhoneConversionNumber)},phone_conversion_css_class:${JSON.stringify(ADS_CALL_LINK_CLASS)},phone_conversion_callback:function(formatted_number,mobile_number){document.querySelectorAll('a.${ADS_CALL_LINK_CLASS}').forEach(function(link){link.setAttribute('href','tel:'+mobile_number);link.querySelectorAll('.${ADS_CALL_NUMBER_CLASS}').forEach(function(node){node.textContent=formatted_number;});});}});`
       : '';
 
   const siteUrl = getSiteUrl();

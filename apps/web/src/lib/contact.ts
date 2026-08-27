@@ -60,6 +60,10 @@ export function getAdsTrackingPhoneIfDistinct(
   return ads;
 }
 
+/** Class Google’s website-call snippet uses to rewrite display + tel: href. */
+export const ADS_CALL_LINK_CLASS = 'js-ads-call';
+export const ADS_CALL_NUMBER_CLASS = 'js-ads-call-number';
+
 /**
  * Visible Ads number must match `phone_conversion_number` in gtag exactly
  * (Google’s website-call snippet will not swap a spaced/formatted number).

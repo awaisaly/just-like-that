@@ -5,6 +5,8 @@ import { PhoneCallIcon, WhatsAppChannelIcon } from '../../components/ContactChan
 import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
   formatSupportPhone,
+  ADS_CALL_LINK_CLASS,
+  ADS_CALL_NUMBER_CLASS,
   getAdsTrackingPhoneDisplay,
   getAdsTrackingPhoneIfDistinct,
   getSupportEmail,
@@ -85,11 +87,11 @@ export default function ContactPage() {
                 {adsTrackingPhone && adsTrackingDisplay ? (
                   <a
                     href={supportTelHref(adsTrackingPhone)}
-                    className="contact-channel-link mt-2"
+                    className={`contact-channel-link mt-2 ${ADS_CALL_LINK_CLASS}`}
                   >
                     <PhoneCallIcon />
                     <span aria-hidden="true">🇬🇧</span>
-                    <span>{adsTrackingDisplay}</span>
+                    <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
                   </a>
                 ) : null}
               </li>
