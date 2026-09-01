@@ -4,18 +4,19 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import {
-  formatSupportPhone,
+  getPrimaryWhatsAppLine,
   getSupportEmail,
-  getSupportPhone,
   supportMailtoHref,
-  supportTelHref,
+  whatsappChatHref,
 } from '../../../lib/contact';
 import { useCheckoutStore } from '../../../lib/stores';
 import { buildWhatsAppUrl } from '../../../lib/whatsapp';
 
-const supportPhone = getSupportPhone();
 const supportEmail = getSupportEmail();
-const supportPhoneDisplay = formatSupportPhone(supportPhone);
+const whatsappFallback = getPrimaryWhatsAppLine();
+const whatsappFallbackHref = whatsappFallback
+  ? whatsappChatHref(whatsappFallback.digits)
+  : null;
 
 function PendingInner() {
   const params = useSearchParams();
@@ -57,13 +58,16 @@ function PendingInner() {
             >
               Message us on WhatsApp
             </a>
+          ) : whatsappFallbackHref ? (
+            <a
+              href={whatsappFallbackHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl bg-[#25D366] px-6 py-3 font-bold text-white transition hover:bg-[#1ebe57]"
+            >
+              Message us on WhatsApp
+            </a>
           ) : null}
-          <a
-            href={supportTelHref(supportPhone)}
-            className="rounded-xl border border-brand px-6 py-3 font-semibold text-brand transition hover:bg-chip"
-          >
-            Call {supportPhoneDisplay}
-          </a>
           <a
             href={supportMailtoHref(supportEmail)}
             className="rounded-xl border border-line px-6 py-3 font-semibold text-brand-navy transition hover:bg-surface"

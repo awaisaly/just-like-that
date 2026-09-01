@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { InstalmentPhrase } from './InstalmentAccent';
 import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
 
 /** Persistent sitewide strip — primary brand reminder. */
@@ -59,7 +60,7 @@ export function InstalmentSpotlight({ className = '', compact = false }: Spotlig
         <div className="instalment-spotlight-copy">
           <p className="instalment-spotlight-eyebrow">Our primary promise</p>
           <h2 id="instalment-spotlight-title" className="instalment-spotlight-title">
-            {instalmentCopy.spotlightTitle}
+            <InstalmentPhrase>{instalmentCopy.spotlightTitle}</InstalmentPhrase>
           </h2>
           <p className="instalment-spotlight-body">{instalmentCopy.spotlightBody}</p>
           <div className="instalment-spotlight-actions">
@@ -94,7 +95,9 @@ export function InstalmentSpotlight({ className = '', compact = false }: Spotlig
 export function InstalmentFooterBand() {
   return (
     <div className="instalment-footer-band">
-      <p className="instalment-footer-motto">{instalmentCopy.footerLine}</p>
+      <p className="instalment-footer-motto">
+        <InstalmentPhrase>{instalmentCopy.footerLine}</InstalmentPhrase>
+      </p>
       <Link href={INSTALMENTS_HREF} className="instalment-footer-link">
         See how it works →
       </Link>

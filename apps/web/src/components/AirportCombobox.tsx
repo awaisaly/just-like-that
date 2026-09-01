@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  useDeferredValue,
   useEffect,
   useId,
   useMemo,
@@ -103,6 +104,8 @@ export function AirportCombobox({
   };
 
   const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);
+  const resultsPending = deferredQuery !== query;
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -111,8 +114,14 @@ export function AirportCombobox({
 
   const selected = useMemo(() => (value ? findAirport(value) ?? null : null), [value]);
   const selectedLabel = selected ? airportSelectionLabel(selected) : null;
-  const groups = useMemo(() => searchAirportGroups(query, query ? 10 : 8), [query]);
-  const list = useMemo(() => flattenAirportPicks(groups, query), [groups, query]);
+  const groups = useMemo(
+    () => searchAirportGroups(deferredQuery, deferredQuery ? 10 : 8),
+    [deferredQuery],
+  );
+  const list = useMemo(
+    () => flattenAirportPicks(groups, deferredQuery),
+    [groups, deferredQuery],
+  );
 
   useEffect(() => {
     if (!open) {
@@ -123,7 +132,7 @@ export function AirportCombobox({
 
   useEffect(() => {
     setActiveIndex(0);
-  }, [query]);
+  }, [deferredQuery]);
 
   useEffect(() => {
     if (!open || !list.length) return;
@@ -300,8 +309,14 @@ export function AirportCombobox({
                 aria-activedescendant={activeOptionId}
               />
             </div>
-            <ul id={listboxId} role="listbox" aria-label={panelTitle} className="max-h-80 list-none overflow-auto p-2">
-              {!query ? (
+            <ul
+              id={listboxId}
+              role="listbox"
+              aria-label={panelTitle}
+              aria-busy={resultsPending || undefined}
+              className={`max-h-80 list-none overflow-auto p-2 ${resultsPending ? 'opacity-60' : ''}`}
+            >
+              {!deferredQuery ? (
                 <li className="px-2 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-muted">
                   Popular {isDestination ? 'destinations' : 'departures'}
                 </li>

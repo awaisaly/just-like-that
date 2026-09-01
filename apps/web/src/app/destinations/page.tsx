@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
+import {
+  InstalmentMottoAccent,
+  PayInInstalmentsAccent,
+} from '../../components/InstalmentAccent';
 import {
   destinationHref,
   destinationRegionOrder,
@@ -13,21 +16,21 @@ import {
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'Cheap Flights to Africa, Nigeria & Worldwide Destinations',
+  title: 'Cheap Flights to Lagos from London, Nigeria & Worldwide',
   description:
-    'Browse cheap flight destinations to Nigeria and Africa from the UK, plus Europe, the Middle East, Asia, and the Americas. Book with Elca Airbridge — a UK agent.',
+    'Browse cheap flights from London to Lagos and flights to Nigeria from London, plus tickets from Lagos to London, Africa, Europe, the Middle East, Asia, and the Americas. Book with Elca Airbridge — a UK agent.',
   path: '/destinations',
-  ogTitle: 'Flight destinations — Africa, Nigeria & worldwide',
+  ogTitle: 'Cheap flights from London to Lagos & worldwide destinations',
 });
 
 const regionBlurbs: Record<(typeof destinationRegionOrder)[number], string> = {
   Nigeria:
-    'Cheap flights to Lagos, Abuja, Port Harcourt and more from the UK — and Nigeria to UK arrivals.',
-  'United Kingdom': 'Major UK cities for Nigeria to UK arrivals and UK departures.',
+    'Cheap flights from London to Lagos, Abuja and more — plus tickets from Lagos to London.',
+  'United Kingdom': 'Flights from Nigeria to London, Manchester and more — tickets from Lagos to London.',
   Africa: 'Cheap flights to Africa from the UK — West, East, North, and Southern Africa.',
   'Middle East': 'Gulf hubs and Saudi gateways — stopovers, Umrah, and business travel.',
   Europe: 'Short-haul city breaks and major European hubs.',
-  Asia: 'India and Southeast Asia corridors for family and business travel.',
+  Asia: 'India, Pakistan, and Southeast Asia corridors for family and business travel.',
   Americas: 'North America gateways for family visits and city trips.',
 };
 
@@ -109,11 +112,11 @@ export default function DestinationsIndexPage() {
             Elca Airbridge
           </p>
           <h1 className="mt-3 max-w-2xl text-4xl font-extrabold leading-tight text-white sm:text-5xl">
-            Cheap flights to Africa, Nigeria &amp; beyond
+            Cheap flights from London to Lagos &amp; beyond
           </h1>
           <p className="mt-3 max-w-xl text-base text-white/90 sm:text-lg">
-            {destinations.length} cities — from Lagos and Accra to London returns, Europe, the Middle
-            East, Asia, and the Americas. Compare fares, then{' '}
+            {destinations.length} cities — flights to Nigeria from London, tickets from Lagos to
+            London, Accra, Europe, the Middle East, Asia, and the Americas. Compare fares, then{' '}
             <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> with a UK agent.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -124,10 +127,16 @@ export default function DestinationsIndexPage() {
               Search flights
             </Link>
             <Link
+              href="/flights/london-to-lagos"
+              className="inline-flex rounded-xl border border-white/35 bg-white/10 px-6 py-3.5 text-base font-bold text-white backdrop-blur transition hover:bg-white/20"
+            >
+              London to Lagos
+            </Link>
+            <Link
               href="/guides/flights-uk-nigeria"
               className="inline-flex rounded-xl border border-white/35 bg-white/10 px-6 py-3.5 text-base font-bold text-white backdrop-blur transition hover:bg-white/20"
             >
-              UK–Nigeria guide
+              Flights to Nigeria from London
             </Link>
             <Link
               href="/contact"
@@ -153,7 +162,9 @@ export default function DestinationsIndexPage() {
       ))}
 
       <section className="overflow-hidden rounded-3xl bg-brand-navy px-5 py-8 text-white sm:px-8 sm:py-10">
-        <h2 className="m-0 text-2xl font-extrabold text-white">Book now. Pay in instalments.</h2>
+        <h2 className="m-0 text-2xl font-extrabold text-white">
+          <InstalmentMottoAccent />
+        </h2>
         <p className="mt-2 max-w-xl text-white/80">
           Search London–Lagos, Dubai, Accra, Paris, New York, and more — then book with a UK agent
           and pay in instalments. Every instalment must be paid before you fly.

@@ -1,18 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
-import { InstalmentSpotlight } from '../../components/Instalments';
 import {
-  formatSupportPhone,
-  getSupportPhone,
-  supportTelHref,
-} from '../../lib/contact';
+  InstalmentMottoAccent,
+  PayInInstalmentsAccent,
+} from '../../components/InstalmentAccent';
+import { InstalmentSpotlight } from '../../components/Instalments';
+import { getPrimaryWhatsAppLine, whatsappChatHref } from '../../lib/contact';
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata = buildPageMetadata({
   title: 'About us',
   description:
-    'Elca Airbridge helps travellers book now and pay in instalments — live fares online, agent-booked tickets, and all instalments paid before you fly.',
+    'Elca Airbridge helps travellers book cheap flights from London to Lagos and flights to Nigeria from London — plus tickets from Lagos to London. Book now, pay in instalments, with a UK agent.',
   path: '/about',
   ogTitle: 'About Elca Airbridge',
 });
@@ -48,8 +47,9 @@ const moments = [
 ];
 
 export default function AboutPage() {
-  const phone = getSupportPhone();
-  const phoneDisplay = formatSupportPhone(phone);
+  const whatsapp = getPrimaryWhatsAppLine();
+  const whatsappHref = whatsapp ? whatsappChatHref(whatsapp.digits) : '/contact';
+  const whatsappDisplay = whatsapp?.display ?? 'WhatsApp';
 
   return (
     <div className="about-page">
@@ -133,7 +133,13 @@ export default function AboutPage() {
         <div className="mx-auto grid w-[min(1200px,calc(100%-2rem))] gap-8 py-12 sm:grid-cols-3 sm:gap-6 sm:py-16">
           {pillars.map((pillar) => (
             <div key={pillar.title}>
-              <h3 className="m-0 text-lg font-extrabold text-brand-navy">{pillar.title}</h3>
+              <h3 className="m-0 text-lg font-extrabold text-brand-navy">
+                {pillar.title === 'Book now. Pay in instalments.' ? (
+                  <InstalmentMottoAccent />
+                ) : (
+                  pillar.title
+                )}
+              </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{pillar.body}</p>
             </div>
           ))}
@@ -188,18 +194,20 @@ export default function AboutPage() {
             Talk to us
           </p>
           <h2 className="mt-2 text-3xl font-extrabold leading-tight">
-            Prefer a human voice to a form?
+            Prefer a person to a form?
           </h2>
           <p className="mt-3 max-w-md text-base text-white/80">
-            Pick up the phone. That is still the fastest way to set up an instalment plan — our
-            primary promise — or to sort groups and sold-out dates.
+            Message us on WhatsApp. That is still the fastest way to set up an instalment plan —
+            our primary promise — or to sort groups and sold-out dates.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href={supportTelHref(phone)}
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex rounded-xl bg-accent px-6 py-3.5 text-base font-bold text-white transition hover:bg-accent-dark"
             >
-              Call {phoneDisplay}
+              WhatsApp {whatsappDisplay}
             </a>
             <Link
               href="/flights/search"

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { InstalmentFooterBand } from './Instalments';
+import { PayInInstalmentsAccent } from './InstalmentAccent';
 import {
   destinationHref,
   destinationRegionOrder,
@@ -9,22 +10,15 @@ import { findAirport } from '../data/airports';
 import { getSeoPagesByType, seoPath } from '../data/seo-pages';
 import { AGENCY_NAME } from '../lib/brand';
 import {
-  formatSupportPhone,
-  ADS_CALL_LINK_CLASS,
-  ADS_CALL_NUMBER_CLASS,
-  getAdsTrackingPhoneDisplay,
-  getAdsTrackingPhoneIfDistinct,
   getSupportEmail,
-  getSupportPhone,
   getWhatsAppLines,
   supportMailtoHref,
-  supportTelHref,
   whatsappChatHref,
 } from '../lib/contact';
 import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
 import { TOURS_HREF } from '../lib/tours';
 import { AgencyWordmark } from './AgencyWordmark';
-import { PhoneCallIcon, WhatsAppChannelIcon } from './ContactChannelIcons';
+import { WhatsAppChannelIcon } from './ContactChannelIcons';
 
 function VisaBadge() {
   return (
@@ -162,11 +156,7 @@ function UkBadge() {
 }
 
 export function SiteFooter() {
-  const supportPhone = getSupportPhone();
   const supportEmail = getSupportEmail();
-  const phoneDisplay = formatSupportPhone(supportPhone);
-  const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
-  const adsTrackingDisplay = adsTrackingPhone ? getAdsTrackingPhoneDisplay() : null;
   const whatsappLines = getWhatsAppLines();
   const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
@@ -220,8 +210,21 @@ export function SiteFooter() {
                 const toCity = findAirport(destination)?.city ?? destination;
                 return (
                   <li key={route.slug}>
-                    <Link href={seoPath(route)}>
-                      {fromCity} → {toCity}
+                    <Link
+                      href={seoPath(route)}
+                      title={
+                        route.slug === 'london-to-lagos'
+                          ? 'Cheap flights from London to Lagos'
+                          : route.slug === 'lagos-to-london'
+                            ? 'Tickets from Lagos to London'
+                            : `Flights from ${fromCity} to ${toCity}`
+                      }
+                    >
+                      {route.slug === 'london-to-lagos'
+                        ? 'Cheap flights from London to Lagos'
+                        : route.slug === 'lagos-to-london'
+                          ? 'Tickets from Lagos to London'
+                          : `${fromCity} → ${toCity}`}
                     </Link>
                   </li>
                 );
@@ -239,7 +242,9 @@ export function SiteFooter() {
                 <Link href={TOURS_HREF}>Tours & packages</Link>
               </li>
               <li>
-                <Link href={INSTALMENTS_HREF}>Pay in instalments</Link>
+                <Link href={INSTALMENTS_HREF}>
+                  <PayInInstalmentsAccent>Pay in instalments</PayInInstalmentsAccent>
+                </Link>
               </li>
               <li>
                 <Link href="/about">About us</Link>
@@ -300,40 +305,11 @@ export function SiteFooter() {
               Talk to a booking agent
             </h2>
             <p className="footer-contact-text">
-              Prefer to speak with someone? Call, email, or WhatsApp — we help with fares,
-              instalments, and callbacks.
+              Prefer to speak with someone? WhatsApp or email — we help with fares, instalments,
+              and callbacks.
             </p>
           </div>
           <div className="footer-contact-actions">
-            <a href={supportTelHref(supportPhone)} className="footer-contact-action is-phone">
-              <span className="footer-contact-action-label">
-                <PhoneCallIcon />
-                Call us
-              </span>
-              <span className="footer-contact-action-value">
-                <span className="footer-contact-flag" aria-hidden="true">
-                  🇬🇧
-                </span>
-                <span>{phoneDisplay}</span>
-              </span>
-            </a>
-            {adsTrackingPhone && adsTrackingDisplay ? (
-              <a
-                href={supportTelHref(adsTrackingPhone)}
-                className={`footer-contact-action is-phone ${ADS_CALL_LINK_CLASS}`}
-              >
-                <span className="footer-contact-action-label">
-                  <PhoneCallIcon />
-                  Call us
-                </span>
-                <span className="footer-contact-action-value">
-                  <span className="footer-contact-flag" aria-hidden="true">
-                    🇬🇧
-                  </span>
-                  <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
-                </span>
-              </a>
-            ) : null}
             <a href={supportMailtoHref(supportEmail)} className="footer-contact-action is-email">
               <span className="footer-contact-action-label">Email</span>
               <span className="footer-contact-action-value">{supportEmail}</span>

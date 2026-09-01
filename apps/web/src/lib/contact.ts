@@ -1,16 +1,21 @@
 import { z } from 'zod';
 
-/** UK call-centre defaults (Noble Travel). Override via NEXT_PUBLIC_* env vars. */
-export const DEFAULT_SUPPORT_PHONE = '+442079935216';
+/** WhatsApp line (1460). Not used for `tel:` links. */
+export const DEFAULT_SUPPORT_PHONE = '+442080901460';
 export const DEFAULT_SUPPORT_EMAIL = 'Info@nobletravel.co.uk';
 /** Google Ads website call-conversion number (national or E.164). */
 export const DEFAULT_ADS_TRACKING_PHONE = '02080901460';
 
 /**
- * WhatsApp chat lines (E.164 digits, no +). Edit here — not via env.
- * First entry is primary.
+ * Voice line — shown only on `/contact`. Do not use in header, footer, or CTAs.
  */
-export const WHATSAPP_NUMBERS = ['442079935216', '442080901460'] as const;
+export const CONTACT_CALL_PHONE = '+442079935216';
+
+/**
+ * WhatsApp chat lines (E.164 digits, no +). Edit here — not via env.
+ * 1460 is WhatsApp only — site “call” buttons open WhatsApp, not tel:.
+ */
+export const WHATSAPP_NUMBERS = ['442080901460'] as const;
 
 export function getSupportPhone(): string {
   return process.env.NEXT_PUBLIC_SUPPORT_PHONE?.trim() || DEFAULT_SUPPORT_PHONE;
@@ -18,6 +23,15 @@ export function getSupportPhone(): string {
 
 export function getSupportEmail(): string {
   return process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || DEFAULT_SUPPORT_EMAIL;
+}
+
+/** UK voice number for the contact page only. */
+export function getContactCallPhone(): string {
+  return CONTACT_CALL_PHONE;
+}
+
+export function getContactCallDisplay(): string {
+  return formatSupportPhone(CONTACT_CALL_PHONE);
 }
 
 /**
@@ -50,14 +64,16 @@ export function getAdsTrackingPhone(): string | null {
   return toE164Phone(raw);
 }
 
-/** Ads tracking line when it differs from the main support number (avoid duplicate links). */
-export function getAdsTrackingPhoneIfDistinct(
-  supportPhone = getSupportPhone(),
-): string | null {
+/** True when the public support line is the Google Ads website-call number. */
+export function isAdsTrackedPhone(phone = getSupportPhone()): boolean {
   const ads = getAdsTrackingPhone();
-  if (!ads) return null;
-  if (supportPhoneDigits(ads) === supportPhoneDigits(supportPhone)) return null;
-  return ads;
+  return Boolean(ads && supportPhoneDigits(ads) === supportPhoneDigits(phone));
+}
+
+/** Visible Call number — unspaced Ads format when that is the support line. */
+export function getPublicPhoneDisplay(phone = getSupportPhone()): string {
+  if (isAdsTrackedPhone(phone)) return getAdsTrackingPhoneDisplay();
+  return formatSupportPhone(phone);
 }
 
 /** Class Google’s website-call snippet uses to rewrite display + tel: href. */
@@ -80,7 +96,7 @@ export function supportPhoneDigits(phone = getSupportPhone()): string {
   return phone.replace(/[^\d]/g, '');
 }
 
-/** Human-readable UK display, e.g. 0207 993 5216 */
+/** Human-readable UK display, e.g. 0208 090 1460 */
 export function formatSupportPhone(phone = getSupportPhone()): string {
   const digits = supportPhoneDigits(phone);
   if (digits.startsWith('44') && digits.length === 12) {
@@ -93,7 +109,8 @@ export function formatSupportPhone(phone = getSupportPhone()): string {
   return phone;
 }
 
-export function supportTelHref(phone = getSupportPhone()): string {
+/** `tel:` href — pass the contact-page voice number; never the WhatsApp line. */
+export function supportTelHref(phone: string): string {
   const digits = supportPhoneDigits(toE164Phone(phone));
   return digits ? `tel:+${digits}` : `tel:${phone}`;
 }
@@ -116,9 +133,14 @@ export function getWhatsAppLines(): WhatsAppLine[] {
 
   return unique.map((value, index) => ({
     digits: value,
-    display: formatSupportPhone(`+${value}`),
+    display: getPublicPhoneDisplay(`+${value}`),
     label: unique.length > 1 ? `WhatsApp ${index + 1}` : 'WhatsApp',
   }));
+}
+
+/** Primary WhatsApp line, or null if none are configured. */
+export function getPrimaryWhatsAppLine(): WhatsAppLine | null {
+  return getWhatsAppLines()[0] ?? null;
 }
 
 export function whatsappChatHref(

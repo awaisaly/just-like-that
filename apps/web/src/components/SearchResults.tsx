@@ -10,6 +10,7 @@ import { airlineDisplayName } from '../lib/airline';
 import type { NormalizedOffer, NormalizedSegment, TravellerSummary } from '../lib/flight';
 import { isMockOfferId } from '../lib/flight';
 import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
+import { InstalmentPhrase } from './InstalmentAccent';
 import {
   flightSearchCacheKey,
   useCheckoutStore,
@@ -941,8 +942,8 @@ export function SearchResults({
       <div className="grid min-w-0 max-w-full gap-3">
         <div className="flights-results-promise">
           <div>
-            <p className="m-0 text-sm font-extrabold text-brand-navy">
-              <span className="text-accent">{instalmentCopy.motto}</span>
+            <p className="m-0 text-base font-extrabold text-brand-navy">
+              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
             </p>
             <p className="m-0 mt-0.5 text-xs text-muted">
               Select a fare, book with a UK agent — pay in instalments before you fly.

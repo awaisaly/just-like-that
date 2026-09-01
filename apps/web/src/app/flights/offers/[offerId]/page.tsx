@@ -10,6 +10,7 @@ import { isMockOfferId } from '../../../../lib/flight';
 import { INSTALMENTS_HREF, instalmentCopy } from '../../../../lib/instalments';
 import { useCheckoutStore } from '../../../../lib/stores';
 import { FlightItinerary } from '../../../../components/FlightItinerary';
+import { InstalmentPhrase } from '../../../../components/InstalmentAccent';
 import { OfferWhatsAppButton } from '../../../../components/OfferWhatsAppButton';
 
 export default function OfferDetailPage() {
@@ -142,7 +143,9 @@ export default function OfferDetailPage() {
             <p className="instalment-price-note mt-1.5">{instalmentCopy.priceNote}</p>
           </div>
           <div className="rounded-xl border border-accent/25 bg-[#fff7f2] px-3 py-2.5">
-            <p className="m-0 text-sm font-bold text-brand-navy">{instalmentCopy.motto}</p>
+            <p className="m-0 text-base font-bold text-brand-navy">
+              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
+            </p>
             <p className="mt-0.5 text-xs text-muted">Our primary way to book</p>
             <Link
               href={INSTALMENTS_HREF}

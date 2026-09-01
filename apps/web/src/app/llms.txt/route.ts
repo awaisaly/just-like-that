@@ -1,5 +1,5 @@
 import { AGENCY_NAME } from '../../lib/brand';
-import { getSupportEmail, getSupportPhone } from '../../lib/contact';
+import { getPrimaryWhatsAppLine, getSupportEmail } from '../../lib/contact';
 import { getSiteUrl } from '../../lib/seo';
 
 export const runtime = 'nodejs';
@@ -13,39 +13,40 @@ export const dynamic = 'force-static';
  */
 export function GET() {
   const base = getSiteUrl().replace(/\/$/, '');
-  const phone = getSupportPhone();
   const email = getSupportEmail();
+  const whatsapp = getPrimaryWhatsAppLine();
+  const whatsappLine = whatsapp ? `WhatsApp +${whatsapp.digits}` : null;
 
   const body = `# ${AGENCY_NAME}
 
-> UK travel agency for cheap flights to Africa and Nigeria (and return). Search live fares on the website, then book with a UK agent — often with instalment plans paid before you fly. The website does not take online payment or issue tickets automatically.
+> UK travel agency for cheap flights from London to Lagos and flights to Nigeria from London (and return). Search tickets from Lagos to London and a flight from Nigeria to London on the website, then book with a UK agent — often with instalment plans paid before you fly. The website does not take online payment or issue tickets automatically.
 
 - Brand: ${AGENCY_NAME}
 - Focus: UK ↔ Nigeria / Africa flights (also selected worldwide routes)
 - Model: Agent-assisted booking after the customer selects a fare
 - Fares on screen are indicative until an agent re-confirms
-- Contact: ${email} · ${phone}
+- Contact: ${email}${whatsappLine ? ` · ${whatsappLine}` : ''}
 
 ## Docs
 
-- [Home](${base}/): Flight search entry and brand overview
+- [Home](${base}/): Cheap flights from London to Lagos and Nigeria
 - [Destinations hub](${base}/destinations): Curated destination guides
 - [About](${base}/about): Who we are and how we book
 - [FAQ](${base}/faq): Booking, instalments, and agent support
-- [Contact](${base}/contact): Phone, WhatsApp, email, and enquiry form
+- [Contact](${base}/contact): Voice call, WhatsApp, email, and enquiry form
 - [Pay in instalments](${base}/guides/paying-for-flights-in-instalments): How book-now instalment plans work
 - [Cheap flights to Africa](${base}/guides/cheap-flights-to-africa): Africa flight guide
-- [UK–Nigeria flights guide](${base}/guides/flights-uk-nigeria): Corridor tips and booking notes
+- [Flights to Nigeria from London](${base}/guides/flights-uk-nigeria): UK–Nigeria corridor, both directions
 - [Tours](${base}/guides/tours): Tours and holiday packages
 - [Sitemap](${base}/sitemap.xml): Full indexable URL list
 - [Robots](${base}/robots.txt): Crawl rules for search and AI bots
 
 ## Popular routes
 
-- [London to Lagos](${base}/flights/london-to-lagos): UK–Nigeria flagship route
-- [Lagos to London](${base}/flights/lagos-to-london): Nigeria–UK return corridor
+- [Cheap flights from London to Lagos](${base}/flights/london-to-lagos): Flight ticket to Nigeria from London
+- [Tickets from Lagos to London](${base}/flights/lagos-to-london): Cheap ticket from Lagos to London
 - [London to Abuja](${base}/flights/london-to-abuja): Flights to Nigeria’s capital
-- [Abuja to London](${base}/flights/abuja-to-london): Abuja–UK flights
+- [Abuja to London](${base}/flights/abuja-to-london): Flight from Nigeria to London via Abuja
 - [Manchester to Lagos](${base}/flights/manchester-to-lagos): North of England–Lagos
 - [London to Accra](${base}/flights/london-to-accra): UK–Ghana flights
 - [London to Nairobi](${base}/flights/london-to-nairobi): UK–Kenya flights
@@ -53,12 +54,12 @@ export function GET() {
 
 ## Popular destinations
 
-- [Lagos](${base}/destinations/lagos): Nigeria’s largest city
+- [Lagos](${base}/destinations/lagos): Cheap flights to Lagos from London
 - [Abuja](${base}/destinations/abuja): Nigeria capital destination guide
 - [Port Harcourt](${base}/destinations/port-harcourt): Port Harcourt travel notes
 - [Accra](${base}/destinations/accra): Ghana destination guide
 - [Nairobi](${base}/destinations/nairobi): Kenya destination guide
-- [London](${base}/destinations/london): London as a UK gateway
+- [London](${base}/destinations/london): Flights from Nigeria to London
 
 ## Optional
 
