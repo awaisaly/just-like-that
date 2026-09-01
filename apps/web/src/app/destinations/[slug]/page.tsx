@@ -14,11 +14,10 @@ import {
   routesToDestination,
 } from '../../../data/destinations';
 import { getSeoPage, getSeoPagesByType, seoPath } from '../../../data/seo-pages';
-import { AGENCY_NAME } from '../../../lib/brand';
 import { instalmentCopy } from '../../../lib/instalments';
 import { markUpFlightMoney } from '../../../lib/pricing';
 import { destinationAboutCopy } from '../../../lib/seo-content';
-import { buildPageMetadata, getSiteUrl } from '../../../lib/seo';
+import { buildPageMetadata, getSiteUrl, landingKeywords } from '../../../lib/seo';
 
 export const revalidate = 3600;
 
@@ -39,13 +38,7 @@ export async function generateMetadata({
     description: page.metaDescription,
     path: seoPath(page),
     ogTitle: page.h1,
-    keywords: [
-      page.title,
-      `flights to ${page.h1}`,
-      'cheap flights to Africa',
-      'cheap flights to Nigeria',
-      AGENCY_NAME,
-    ],
+    keywords: landingKeywords(page.title, page.h1, `flights to ${page.slug}`),
   });
 }
 
@@ -234,7 +227,13 @@ export default async function DestinationPage({
           },
         ].map((item) => (
           <div key={item.title} className="rounded-2xl border border-line bg-white p-5 shadow-sm">
-            <h3 className="m-0 text-base font-bold text-brand-navy">{item.title}</h3>
+            <h3 className="m-0 text-base font-bold text-brand-navy">
+              {item.title === instalmentCopy.short ? (
+                <PayInInstalmentsAccent>{item.title}</PayInInstalmentsAccent>
+              ) : (
+                item.title
+              )}
+            </h3>
             <p className="mt-2 text-sm text-muted">{item.body}</p>
           </div>
         ))}

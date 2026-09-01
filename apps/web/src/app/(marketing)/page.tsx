@@ -20,25 +20,25 @@ import {
 import { getSeoPagesByType, seoPath } from '../../data/seo-pages';
 import { AGENCY_NAME } from '../../lib/brand';
 import {
-  formatSupportPhone,
+  getPrimaryWhatsAppLine,
   getSupportEmail,
-  getSupportPhone,
   supportMailtoHref,
-  supportTelHref,
+  whatsappChatHref,
 } from '../../lib/contact';
 import { markUpFlightMoney } from '../../lib/pricing';
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: `Cheap Flights to Africa & Nigeria from the UK`,
-  description: `Search cheap flights to Africa and Nigeria from the UK — and Nigeria to the UK. London–Lagos, Abuja, Accra and more with ${AGENCY_NAME}. Pay in instalments with a UK agent.`,
+  title: `Cheap Flights from London to Lagos & Nigeria`,
+  description: `Cheap flights from London to Lagos and flights to Nigeria from London. Tickets from Lagos to London and flights from Nigeria to London — book with ${AGENCY_NAME}. Pay in instalments with a UK agent.`,
   path: '/',
-  ogTitle: 'Cheap flights to Africa & Nigeria',
+  ogTitle: 'Cheap flights from London to Lagos',
 });
 
-const supportPhone = getSupportPhone();
 const supportEmail = getSupportEmail();
-const supportPhoneDisplay = formatSupportPhone(supportPhone);
+const whatsapp = getPrimaryWhatsAppLine();
+const whatsappHref = whatsapp ? whatsappChatHref(whatsapp.digits) : '/contact';
+const whatsappDisplay = whatsapp?.display ?? 'WhatsApp';
 
 const steps = [
   {
@@ -72,8 +72,8 @@ const reasons = [
     body: 'Lagos, London, Dubai, Accra, Europe, Asia, and more — search the routes you actually fly.',
   },
   {
-    title: 'Phone & WhatsApp',
-    body: 'Talk to a real person. We stay with you through changes, bags, and travel dates.',
+    title: 'WhatsApp support',
+    body: 'Talk to a real person on WhatsApp. We stay with you through changes, bags, and travel dates.',
   },
 ];
 
@@ -101,10 +101,11 @@ export default function HomePage() {
               <AgencyWordmark size="hero" />
             </p>
             <h1 className="home-hero-line home-hero-title mt-5 max-w-xl text-xl font-semibold leading-snug text-white/95 sm:text-2xl">
-              Cheap flights to Africa &amp; Nigeria
+              Cheap flights from London to Lagos &amp; Nigeria
             </h1>
             <p className="home-hero-line home-hero-copy mt-3 max-w-md text-base text-white/80 sm:text-lg">
-              UK to Nigeria and back — compare live fares, then book now.{' '}
+              Flights to Nigeria from London, or tickets from Lagos to London — compare live fares,
+              then book now.{' '}
               <PayInInstalmentsAccent>Pay in instalments</PayInInstalmentsAccent> with a UK agent.
             </p>
           </div>
@@ -125,8 +126,8 @@ export default function HomePage() {
               Popular Africa &amp; worldwide destinations
             </h2>
             <p className="mt-1 max-w-lg text-sm text-muted sm:text-base">
-              Cheap flights to Nigeria, Ghana, Kenya and beyond — plus Europe, the Middle East, and
-              Asia. Fares update when you search.
+              Cheap flights from London to Lagos, flights to Nigeria from London, and tickets from
+              Lagos to London — plus Ghana, Kenya, Europe, the Middle East, and Asia.
             </p>
           </div>
           <Link
@@ -182,15 +183,19 @@ export default function HomePage() {
             UK ↔ Nigeria &amp; Africa routes
           </h2>
           <p className="mt-1 max-w-lg text-sm text-muted sm:text-base">
-            Cheap flights from the UK to Nigeria and Africa — and Nigeria back to the UK. Open a
-            route guide, search live prices, then book with a callback.
+            Cheap flights from London to Lagos, flights to Nigeria from London, and tickets from
+            Lagos to London — plus Abuja, Accra and Africa returns. Open a route guide, search live
+            prices, then book with a callback.
           </p>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm font-semibold">
-            <Link href="/guides/flights-uk-nigeria" className="text-brand hover:underline">
-              UK–Nigeria flights guide →
+            <Link href="/flights/london-to-lagos" className="text-brand hover:underline">
+              Cheap flights from London to Lagos →
             </Link>
-            <Link href="/guides/cheap-flights-to-africa" className="text-brand hover:underline">
-              Cheap flights to Africa →
+            <Link href="/flights/lagos-to-london" className="text-brand hover:underline">
+              Tickets from Lagos to London →
+            </Link>
+            <Link href="/guides/flights-uk-nigeria" className="text-brand hover:underline">
+              Flights to Nigeria from London →
             </Link>
           </div>
         </div>
@@ -246,7 +251,7 @@ export default function HomePage() {
               How it works
             </p>
             <h2 className="mt-1 text-2xl font-extrabold text-brand-navy sm:text-3xl">
-              Search online. Pay in instalments.
+              Search online. <PayInInstalmentsAccent>Pay in instalments.</PayInInstalmentsAccent>
             </h2>
             <p className="mt-2 text-sm text-muted sm:text-base">
               Live fares online, then a human hand on the booking — with instalments as the primary
@@ -279,7 +284,8 @@ export default function HomePage() {
             Why {AGENCY_NAME}
           </p>
           <h2 className="mt-1 text-2xl font-extrabold sm:text-3xl">
-            The calm way to book now and pay in instalments
+            The calm way to book now and{' '}
+            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent>
           </h2>
         </div>
 
@@ -307,7 +313,13 @@ export default function HomePage() {
             {reasons.map((reason, index) => (
               <HomeStaggerItem key={reason.title} index={index}>
                 <div className="home-reason-card rounded-2xl border border-line bg-white px-5 py-4">
-                  <h3 className="m-0 text-base font-bold text-brand-navy">{reason.title}</h3>
+                  <h3 className="m-0 text-base font-bold text-brand-navy">
+                    {reason.title === 'Pay in instalments' ? (
+                      <PayInInstalmentsAccent>{reason.title}</PayInInstalmentsAccent>
+                    ) : (
+                      reason.title
+                    )}
+                  </h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{reason.body}</p>
                 </div>
               </HomeStaggerItem>
@@ -334,7 +346,7 @@ export default function HomePage() {
               <h2 className="mt-2 text-3xl font-extrabold leading-tight text-white sm:text-4xl">
                 Find your flight.
                 <br />
-                Pay in instalments.
+                <PayInInstalmentsAccent>Pay in instalments.</PayInInstalmentsAccent>
               </h2>
               <p className="mt-3 max-w-md text-base text-white/80">
                 Search now, book with a UK agent, then pay in instalments before you fly.
@@ -348,10 +360,12 @@ export default function HomePage() {
                 Search flights
               </Link>
               <a
-                href={supportTelHref(supportPhone)}
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex rounded-xl border border-white/35 bg-white/10 px-6 py-3.5 text-base font-bold text-white backdrop-blur transition hover:bg-white/20"
               >
-                Call {supportPhoneDisplay}
+                WhatsApp {whatsappDisplay}
               </a>
               <a
                 href={supportMailtoHref(supportEmail)}

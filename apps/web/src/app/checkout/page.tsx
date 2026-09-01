@@ -6,16 +6,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { formatMoney } from '@jlt/shared';
 import { apiFetch } from '../../lib/api';
-import {
-  formatSupportPhone,
-  getSupportPhone,
-  supportTelHref,
-} from '../../lib/contact';
+import { getPrimaryWhatsAppLine, whatsappChatHref } from '../../lib/contact';
 import { INSTALMENTS_HREF, instalmentCopy } from '../../lib/instalments';
 import { useCheckoutStore } from '../../lib/stores';
+import { InstalmentPhrase, PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 
-const supportPhone = getSupportPhone();
-const supportPhoneDisplay = formatSupportPhone(supportPhone);
+const whatsapp = getPrimaryWhatsAppLine();
+const whatsappHref = whatsapp ? whatsappChatHref(whatsapp.digits) : '/contact';
+const whatsappDisplay = whatsapp?.display ?? 'WhatsApp';
 
 type FormValues = {
   firstName: string;
@@ -118,7 +116,9 @@ export default function CheckoutPage() {
 
   return (
     <div className="stack">
-      <h1>Book now · pay in instalments</h1>
+      <h1>
+        <InstalmentPhrase>Book now · pay in instalments</InstalmentPhrase>
+      </h1>
       <p className="muted text-sm">
         No payment is taken online. A UK representative will re-check the fare, book your ticket,
         and set up instalments — all paid before you fly.
@@ -129,9 +129,14 @@ export default function CheckoutPage() {
           <div className="card stack">
             <h2 className="m-0">Talk to a booking agent</h2>
             <p className="text-sm text-muted">
-              Prefer to talk now? Call{' '}
-              <a href={supportTelHref(supportPhone)} className="font-bold text-brand">
-                {supportPhoneDisplay}
+              Prefer to talk now? WhatsApp{' '}
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-brand"
+              >
+                {whatsappDisplay}
               </a>{' '}
               — otherwise leave your details and we&apos;ll call you back.
             </p>
@@ -234,7 +239,13 @@ export default function CheckoutPage() {
                   {...register('paymentPreference')}
                 />
                 <span>
-                  <span className="block font-semibold text-ink">{opt.title}</span>
+                  <span className="block font-semibold text-ink">
+                    {opt.primary ? (
+                      <PayInInstalmentsAccent>{opt.title}</PayInInstalmentsAccent>
+                    ) : (
+                      opt.title
+                    )}
+                  </span>
                   <span className="block text-sm text-muted">{opt.body}</span>
                 </span>
               </label>
@@ -264,7 +275,9 @@ export default function CheckoutPage() {
           style={{ top: 'calc(var(--site-chrome-height, 6.5rem) + 0.75rem)' }}
         >
           <div className="rounded-xl border border-accent/25 bg-[#fff7f2] px-3 py-2.5">
-            <p className="m-0 text-sm font-bold text-brand-navy">{instalmentCopy.motto}</p>
+            <p className="m-0 text-base font-bold text-brand-navy">
+              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
+            </p>
             <p className="mt-0.5 text-xs text-muted">Selected by default below</p>
           </div>
           <h2 className="m-0">Your selection</h2>

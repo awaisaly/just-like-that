@@ -1,17 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 import { Syne } from 'next/font/google';
 import Script from 'next/script';
+import { AdsWhatsAppTracker } from '../components/AdsWhatsAppTracker';
 import { DeferredWhatsAppChatButton } from '../components/DeferredWhatsAppChatButton';
 import { Providers } from '../components/Providers';
 import { SiteChrome } from '../components/SiteChrome';
 import { SiteFooter } from '../components/SiteFooter';
 import { AGENCY_NAME } from '../lib/brand';
-import {
-  ADS_CALL_LINK_CLASS,
-  ADS_CALL_NUMBER_CLASS,
-  getSupportEmail,
-  getSupportPhone,
-} from '../lib/contact';
+import { ADS_CALL_LINK_CLASS, ADS_CALL_NUMBER_CLASS, getSupportEmail } from '../lib/contact';
 import { getSiteUrl, SITE_KEYWORDS } from '../lib/seo';
 import './globals.css';
 
@@ -28,8 +24,8 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
 };
 
-const defaultTitle = `${AGENCY_NAME} — Cheap Flights to Africa & Nigeria | Pay in Instalments`;
-const defaultDescription = `Search cheap flights to Africa and Nigeria from the UK — and Nigeria to the UK. London–Lagos, Abuja, Accra and more. Book with ${AGENCY_NAME}, a UK agent. Pay in instalments before you fly — or in full.`;
+const defaultTitle = `${AGENCY_NAME} — Cheap Flights from London to Lagos & Nigeria`;
+const defaultDescription = `Cheap flights from London to Lagos and flights to Nigeria from London. Tickets from Lagos to London and flights from Nigeria to London — book with ${AGENCY_NAME}, a UK agent. Pay in instalments or in full.`;
 
 export const metadata: Metadata = {
   title: {
@@ -54,10 +50,10 @@ export const metadata: Metadata = {
     url: '/',
     images: [
       {
-        url: `/og?title=${encodeURIComponent('Cheap flights to Africa & Nigeria')}`,
+        url: `/og?title=${encodeURIComponent('Cheap flights from London to Lagos')}`,
         width: 1200,
         height: 630,
-        alt: `${AGENCY_NAME} — cheap flights to Africa and Nigeria`,
+        alt: `${AGENCY_NAME} — cheap flights from London to Lagos and Nigeria`,
       },
     ],
   },
@@ -65,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: defaultTitle,
     description: defaultDescription,
-    images: [`/og?title=${encodeURIComponent('Cheap flights to Africa & Nigeria')}`],
+    images: [`/og?title=${encodeURIComponent('Cheap flights from London to Lagos')}`],
   },
   robots: {
     index: true,
@@ -88,7 +84,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const supportPhone = getSupportPhone();
   const supportEmail = getSupportEmail();
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim();
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
@@ -121,16 +116,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       { '@type': 'Continent', name: 'Africa' },
     ],
     knowsAbout: [
+      'cheap flights from London to Lagos',
+      'flights to Nigeria from London',
+      'flight ticket to Nigeria from London',
+      'tickets from Lagos to London',
+      'cheap ticket from Lagos to London',
+      'flight from Nigeria to London',
       'cheap flights to Africa',
       'flights from UK to Nigeria',
-      'flights from Nigeria to UK',
-      'London to Lagos flights',
       'flight instalment plans',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: supportPhone,
       email: supportEmail,
+      url: `${siteUrl}/contact`,
       contactType: 'customer service',
       areaServed: ['GB', 'NG'],
       availableLanguage: ['English'],
@@ -146,7 +145,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     inLanguage: 'en-GB',
     // Point assistants at indexable hubs — not /flights/search (noindex / robots disallow).
     significantLink: [
+      `${siteUrl}/flights/london-to-lagos`,
+      `${siteUrl}/flights/lagos-to-london`,
       `${siteUrl}/destinations`,
+      `${siteUrl}/destinations/lagos`,
+      `${siteUrl}/destinations/london`,
       `${siteUrl}/guides/cheap-flights-to-africa`,
       `${siteUrl}/guides/flights-uk-nigeria`,
       `${siteUrl}/guides/paying-for-flights-in-instalments`,
@@ -188,6 +191,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
         </Providers>
         <SiteFooter />
+        <AdsWhatsAppTracker />
         <DeferredWhatsAppChatButton />
         {gtmId ? (
           <Script id="gtm" strategy="afterInteractive">

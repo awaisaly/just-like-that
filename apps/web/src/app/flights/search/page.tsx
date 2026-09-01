@@ -204,7 +204,9 @@ export default async function FlightSearchPage({ searchParams }: Props) {
           <div className="flights-promise">
             <div>
               <p className="flights-promise-eyebrow">Primary promise</p>
-              <h2 className="flights-promise-title">{instalmentCopy.spotlightTitle}</h2>
+              <h2 className="flights-promise-title">
+                <InstalmentMottoAccent />
+              </h2>
               <p className="flights-promise-body">{instalmentCopy.tagline}</p>
             </div>
             <Link href={INSTALMENTS_HREF} className="flights-promise-cta">

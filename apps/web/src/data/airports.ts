@@ -78,28 +78,62 @@ function cleanCityLabel(city: string, name: string, iata: string): string {
   return cleaned || city;
 }
 
-export const airports = (rawAirports as Airport[]).map((airport) => {
+type IndexedAirport = Airport & {
+  iataLower: string;
+  cityLower: string;
+  cityNorm: string;
+  nameLower: string;
+  countryLower: string;
+  countryNameLower: string;
+};
+
+const regionNames =
+  typeof Intl !== 'undefined' ? new Intl.DisplayNames(['en'], { type: 'region' }) : null;
+
+const countryNameCache = new Map<string, string>();
+
+export function countryLabel(code: string): string {
+  if (!code) return '';
+  const cached = countryNameCache.get(code);
+  if (cached) return cached;
+  let label = code;
+  try {
+    label = regionNames?.of(code) ?? code;
+  } catch {
+    label = code;
+  }
+  countryNameCache.set(code, label);
+  return label;
+}
+
+export const airports: IndexedAirport[] = (rawAirports as Airport[]).map((airport) => {
   const boost = popularityBoost[airport.iata];
   const city = cleanCityLabel(airport.city, airport.name, airport.iata);
+  const countryName = countryLabel(airport.country);
   return {
     ...airport,
     city,
     popularity: boost ? Math.max(airport.popularity, boost) : airport.popularity,
+    iataLower: airport.iata.toLowerCase(),
+    cityLower: city.toLowerCase(),
+    cityNorm: normalizeCityName(city),
+    nameLower: airport.name.toLowerCase(),
+    countryLower: airport.country.toLowerCase(),
+    countryNameLower: countryName.toLowerCase(),
   };
 });
 
 const byIata = new Map(airports.map((airport) => [airport.iata, airport]));
 
-const regionNames =
-  typeof Intl !== 'undefined' ? new Intl.DisplayNames(['en'], { type: 'region' }) : null;
-
-export function countryLabel(code: string): string {
-  if (!code) return '';
-  try {
-    return regionNames?.of(code) ?? code;
-  } catch {
-    return code;
-  }
+/** Airports eligible for “nearby” suggestions, indexed by country. */
+const nearbyPoolByCountry = new Map<string, IndexedAirport[]>();
+for (const airport of airports) {
+  if (isAllAirportsEntry(airport)) continue;
+  if (airport.lat == null || airport.lon == null) continue;
+  if (airport.popularity < 25) continue;
+  const bucket = nearbyPoolByCountry.get(airport.country);
+  if (bucket) bucket.push(airport);
+  else nearbyPoolByCountry.set(airport.country, [airport]);
 }
 
 export function findAirport(iata: string): Airport | undefined {
@@ -147,12 +181,13 @@ export type AirportPickItem =
 function scoreAirport(airport: Airport, q: string): number {
   if (!q) return airport.popularity;
 
-  const iata = airport.iata.toLowerCase();
-  const city = airport.city.toLowerCase();
-  const cityNorm = normalizeCityName(airport.city);
-  const name = airport.name.toLowerCase();
-  const country = airport.country.toLowerCase();
-  const countryName = countryLabel(airport.country).toLowerCase();
+  const indexed = airport as IndexedAirport;
+  const iata = indexed.iataLower ?? airport.iata.toLowerCase();
+  const city = indexed.cityLower ?? airport.city.toLowerCase();
+  const cityNorm = indexed.cityNorm ?? normalizeCityName(airport.city);
+  const name = indexed.nameLower ?? airport.name.toLowerCase();
+  const country = indexed.countryLower ?? airport.country.toLowerCase();
+  const countryName = indexed.countryNameLower ?? countryLabel(airport.country).toLowerCase();
   const pop = airport.popularity;
 
   // 1) IATA
@@ -218,15 +253,12 @@ function findNearby(
   maxKm = 100,
 ): NearbyAirport[] {
   const found: NearbyAirport[] = [];
-  for (const airport of airports) {
+  const pool = nearbyPoolByCountry.get(country) ?? [];
+  for (const airport of pool) {
     if (excludeIatas.has(airport.iata)) continue;
-    if (isAllAirportsEntry(airport)) continue;
-    if (airport.country !== country) continue;
-    if (airport.lat == null || airport.lon == null) continue;
-    if (airport.popularity < 25) continue;
-    const key = `${normalizeCityName(airport.city)}|${airport.country}`;
+    const key = `${airport.cityNorm}|${airport.country}`;
     if (key === excludeKey) continue;
-    const km = haversineKm(center, { lat: airport.lat, lon: airport.lon });
+    const km = haversineKm(center, { lat: airport.lat!, lon: airport.lon! });
     if (km > maxKm || km < 1) continue;
     found.push({ airport, km: Math.round(km) });
   }
@@ -315,16 +347,23 @@ function sortAirportsForQuery(airportsList: Airport[], q: string): Airport[] {
   );
 }
 
+const emptyGroupsCache = new Map<number, AirportGroup[]>();
+
 export function searchAirportGroups(query: string, maxGroups = 8): AirportGroup[] {
   const q = query.trim().toLowerCase();
 
   if (!q) {
-    const popular = [...airports]
-      .sort((a, b) => b.popularity - a.popularity)
-      .slice(0, 40);
-    return groupAirports(popular)
-      .sort((a, b) => groupScore(b, '') - groupScore(a, ''))
-      .slice(0, maxGroups);
+    let cached = emptyGroupsCache.get(maxGroups);
+    if (!cached) {
+      const popular = [...airports]
+        .sort((a, b) => b.popularity - a.popularity)
+        .slice(0, 40);
+      cached = groupAirports(popular)
+        .sort((a, b) => groupScore(b, '') - groupScore(a, ''))
+        .slice(0, maxGroups);
+      emptyGroupsCache.set(maxGroups, cached);
+    }
+    return cached;
   }
 
   const matched = airports.filter((airport) => scoreAirport(airport, q) > 0);

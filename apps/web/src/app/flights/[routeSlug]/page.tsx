@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatMoney } from '@jlt/shared';
+import { PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
 import { RouteGuideCta } from '../../../components/RouteGuideCta';
 import { SearchForm } from '../../../components/SearchForm';
 import { countryLabel, findAirport } from '../../../data/airports';
@@ -9,7 +10,7 @@ import { getSeoPagesByType, resolveRouteSeoPage, seoPath } from '../../../data/s
 import { AGENCY_NAME } from '../../../lib/brand';
 import { markUpFlightMoney } from '../../../lib/pricing';
 import { routeAboutCopy } from '../../../lib/seo-content';
-import { buildPageMetadata, getSiteUrl } from '../../../lib/seo';
+import { buildPageMetadata, getSiteUrl, landingKeywords } from '../../../lib/seo';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -31,15 +32,13 @@ export async function generateMetadata({
     description: page.metaDescription,
     path: seoPath(page),
     ogTitle: page.h1,
-    keywords: [
+    keywords: landingKeywords(
       page.title,
+      page.h1,
       `flights ${page.route?.originIata} to ${page.route?.destinationIata}`,
       'cheap flights to Africa',
       'cheap flights to Nigeria',
-      'flights from UK to Nigeria',
-      'flights from Nigeria to UK',
-      AGENCY_NAME,
-    ],
+    ),
   });
 }
 
@@ -198,7 +197,7 @@ export default async function RouteLandingPage({
           Our primary promise
         </p>
         <h2 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">
-          Book now. Pay in instalments.
+          Book now. <PayInInstalmentsAccent>Pay in instalments.</PayInInstalmentsAccent>
         </h2>
         <p className="mt-2 max-w-xl text-sm text-white/80 sm:text-base">
           Instalment plans are how most of our travellers book {fromCity}–{toCity}. Search live
@@ -229,7 +228,13 @@ export default async function RouteLandingPage({
           },
         ].map((item) => (
           <div key={item.title} className="rounded-2xl border border-line bg-white p-5 shadow-sm">
-            <h3 className="m-0 text-base font-bold text-brand-navy">{item.title}</h3>
+            <h3 className="m-0 text-base font-bold text-brand-navy">
+              {item.title === 'Pay in instalments' ? (
+                <PayInInstalmentsAccent>{item.title}</PayInInstalmentsAccent>
+              ) : (
+                item.title
+              )}
+            </h3>
             <p className="mt-2 text-sm text-muted">{item.body}</p>
           </div>
         ))}
@@ -242,7 +247,15 @@ export default async function RouteLandingPage({
         <p className="mt-3 text-sm">
           Related guides:{' '}
           <Link href="/guides/flights-uk-nigeria" className="font-semibold text-brand hover:underline">
-            UK ↔ Nigeria flights
+            Flights to Nigeria from London
+          </Link>
+          {' · '}
+          <Link href="/flights/london-to-lagos" className="font-semibold text-brand hover:underline">
+            Cheap flights from London to Lagos
+          </Link>
+          {' · '}
+          <Link href="/flights/lagos-to-london" className="font-semibold text-brand hover:underline">
+            Tickets from Lagos to London
           </Link>
           {' · '}
           <Link

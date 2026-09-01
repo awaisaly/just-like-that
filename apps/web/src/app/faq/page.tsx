@@ -2,11 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
-  formatSupportPhone,
+  getPrimaryWhatsAppLine,
   getSupportEmail,
-  getSupportPhone,
   supportMailtoHref,
-  supportTelHref,
+  whatsappChatHref,
 } from '../../lib/contact';
 import { buildPageMetadata } from '../../lib/seo';
 import { TOURS_HREF } from '../../lib/tours';
@@ -14,7 +13,7 @@ import { TOURS_HREF } from '../../lib/tours';
 export const metadata = buildPageMetadata({
   title: 'FAQs',
   description:
-    'Answers about Elca Airbridge flight search, callbacks, instalments, baggage, and agent-assisted booking.',
+    'Answers about cheap flights from London to Lagos, flights to Nigeria from London, tickets from Lagos to London, instalments, and booking with a UK agent.',
   path: '/faq',
   ogTitle: 'Elca Airbridge FAQs',
 });
@@ -94,12 +93,34 @@ const faqGroups: { title: string; items: FaqItem[] }[] = [
       },
     ],
   },
+  {
+    title: 'London, Lagos & Nigeria',
+    items: [
+      {
+        q: 'Do you sell cheap flights from London to Lagos?',
+        a: 'Yes. Search cheap flights from London to Lagos on our London to Lagos page, then request a callback. A UK agent re-confirms the fare and books your ticket — pay in instalments or in full.',
+      },
+      {
+        q: 'Where can I buy a flight ticket to Nigeria from London?',
+        a: 'Search a flight ticket to Nigeria from London for Lagos, Abuja or Port Harcourt. Most travellers start with flights to Nigeria from London via Heathrow or Gatwick, then book with our UK desk.',
+      },
+      {
+        q: 'Can I buy tickets from Lagos to London?',
+        a: 'Yes. Compare tickets from Lagos to London and a cheap ticket from Lagos to London on our Lagos to London page. We also book a flight from Nigeria to London from Abuja and other Nigerian cities.',
+      },
+      {
+        q: 'How do I book a flight from Nigeria to London?',
+        a: 'Search a flight from Nigeria to London, pick a fare, then request a callback. Your agent confirms seats, bags, and payment before ticketing.',
+      },
+    ],
+  },
 ];
 
 export default function FaqPage() {
-  const phone = getSupportPhone();
   const email = getSupportEmail();
-  const phoneDisplay = formatSupportPhone(phone);
+  const whatsapp = getPrimaryWhatsAppLine();
+  const whatsappHref = whatsapp ? whatsappChatHref(whatsapp.digits) : '/contact';
+  const whatsappDisplay = whatsapp?.display ?? 'WhatsApp';
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
@@ -168,12 +189,14 @@ export default function FaqPage() {
           </nav>
           <div className="mt-8 rounded-2xl border border-line bg-chip px-4 py-4">
             <p className="m-0 text-sm font-bold text-brand-navy">Still unsure?</p>
-            <p className="mt-1 text-xs text-muted">Call or email the UK desk.</p>
+            <p className="mt-1 text-xs text-muted">WhatsApp or email the UK desk.</p>
             <a
-              href={supportTelHref(phone)}
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-3 block text-sm font-bold text-brand hover:underline"
             >
-              {phoneDisplay}
+              WhatsApp {whatsappDisplay}
             </a>
             <a
               href={supportMailtoHref(email)}
@@ -209,7 +232,9 @@ export default function FaqPage() {
               Ready to find a fare?
             </h2>
             <p className="mt-2 max-w-lg text-white/80">
-              Search flights, request a callback, and pay in instalments — or speak with us now.
+              Search flights, request a callback, and{' '}
+              <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> — or speak with us
+              now.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link

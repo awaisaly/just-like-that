@@ -9,18 +9,11 @@ import {
   NAV_WORDMARK_VARIANTS,
   type NavWordmarkVariant,
 } from '../lib/brand';
-import {
-  ADS_CALL_LINK_CLASS,
-  ADS_CALL_NUMBER_CLASS,
-  formatSupportPhone,
-  getAdsTrackingPhoneDisplay,
-  getAdsTrackingPhoneIfDistinct,
-  getSupportPhone,
-  supportTelHref,
-} from '../lib/contact';
+import { getPrimaryWhatsAppLine, whatsappChatHref } from '../lib/contact';
 import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
 import { TOURS_HREF } from '../lib/tours';
 import { AgencyWordmark } from './AgencyWordmark';
+import { InstalmentPhrase } from './InstalmentAccent';
 
 function resolveNavMark(raw: string | null): NavWordmarkVariant {
   if (raw && (NAV_WORDMARK_VARIANTS as readonly string[]).includes(raw)) {
@@ -29,10 +22,11 @@ function resolveNavMark(raw: string | null): NavWordmarkVariant {
   return NAV_WORDMARK_VARIANT;
 }
 
-const supportPhone = getSupportPhone();
-const phoneDisplay = formatSupportPhone(supportPhone);
-const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
-const adsTrackingDisplay = adsTrackingPhone ? getAdsTrackingPhoneDisplay() : null;
+const whatsapp = getPrimaryWhatsAppLine();
+const whatsappHref = whatsapp
+  ? whatsappChatHref(whatsapp.digits)
+  : '/contact';
+const whatsappDisplay = whatsapp?.display ?? 'WhatsApp';
 
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '/flights/search', label: 'Flights' },
@@ -152,7 +146,9 @@ export function SiteHeader() {
             onClick={() => setOpen(false)}
           >
             <span className="nav-drawer-promise-eyebrow">Our primary promise</span>
-            <span className="nav-drawer-promise-title">{instalmentCopy.motto}</span>
+            <span className="nav-drawer-promise-title">
+              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
+            </span>
             <span className="nav-drawer-promise-cta">How it works →</span>
           </Link>
 
@@ -172,23 +168,17 @@ export function SiteHeader() {
           </nav>
 
           <div className="nav-drawer-footer">
-            <a href={supportTelHref(supportPhone)} className="nav-drawer-call">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-drawer-call"
+            >
               <span className="nav-call-flag" aria-hidden="true">
                 🇬🇧
               </span>
-              Call {phoneDisplay}
+              WhatsApp {whatsappDisplay}
             </a>
-            {adsTrackingPhone && adsTrackingDisplay ? (
-              <a
-                href={supportTelHref(adsTrackingPhone)}
-                className={`nav-drawer-call ${ADS_CALL_LINK_CLASS}`}
-              >
-                <span className="nav-call-flag" aria-hidden="true">
-                  🇬🇧
-                </span>
-                Call <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
-              </a>
-            ) : null}
             <Link
               href="/flights/search"
               className="nav-drawer-search"
@@ -229,39 +219,31 @@ export function SiteHeader() {
             </Link>
           ))}
           <a
-            href={supportTelHref(supportPhone)}
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="nav-call"
-            aria-label={`Call ${phoneDisplay}`}
+            aria-label={`WhatsApp ${whatsappDisplay}`}
           >
             <span className="nav-call-flag" aria-hidden="true">
               🇬🇧
             </span>
-            {phoneDisplay}
+            {whatsappDisplay}
           </a>
-          {adsTrackingPhone && adsTrackingDisplay ? (
-            <a
-              href={supportTelHref(adsTrackingPhone)}
-              className={`nav-call ${ADS_CALL_LINK_CLASS}`}
-              aria-label={`Call ${adsTrackingDisplay}`}
-            >
-              <span className="nav-call-flag" aria-hidden="true">
-                🇬🇧
-              </span>
-              <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
-            </a>
-          ) : null}
         </nav>
 
         <div className="nav-mobile-actions">
           <a
-            href={supportTelHref(supportPhone)}
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="nav-call-icon"
-            aria-label={`Call ${phoneDisplay}`}
+            aria-label={`WhatsApp ${whatsappDisplay}`}
           >
             <span className="nav-call-flag" aria-hidden="true">
               🇬🇧
             </span>
-            <span className="nav-call-icon-label">Call</span>
+            <span className="nav-call-icon-label">WhatsApp</span>
           </a>
           <button
             ref={menuButtonRef}

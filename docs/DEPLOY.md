@@ -82,13 +82,14 @@ Copy from [`.env.example`](../apps/web/.env.example). Values are currently the s
 |----------|----------|-------|
 | `NEXT_PUBLIC_APP_ENV` | Recommended | `development` or `production` |
 | `NEXT_PUBLIC_SITE_URL` | Yes | That deployment’s public URL |
-| `NEXT_PUBLIC_SUPPORT_PHONE` | Recommended | e.g. `+442079935216` |
+| `NEXT_PUBLIC_SUPPORT_PHONE` | Optional | WhatsApp line e.g. `+442080901460` — not used for `tel:` CTAs |
 | `NEXT_PUBLIC_SUPPORT_EMAIL` | Recommended | e.g. `Info@nobletravel.co.uk` |
 | `NEXT_PUBLIC_GTM_ID` | Recommended | e.g. `GTM-WGQLWH3J` (site-wide Tag Manager) |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Direct GA4 only — leave empty if GA4 is configured in GTM |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Recommended | e.g. `AW-18381676468` (Google Ads gtag) |
-| `NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_ID` | Optional | Phone conversion ID, e.g. `AW-…/label` |
-| `NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_NUMBER` | Optional | Number shown for call tracking, e.g. `02080901460` |
+| `NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_ID` | Optional | Website-call conversion ID (`tel:`). Not used for WhatsApp CTAs |
+| `NEXT_PUBLIC_GOOGLE_ADS_PHONE_CONVERSION_NUMBER` | Optional | Number for call tracking, e.g. `02080901460` |
+| `NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_CONVERSION_ID` | Optional | Click conversion ID for WhatsApp, e.g. `AW-…/label`. Fired once from the site — do not also fire it from GTM |
 | `DUFFEL_USE_MOCK` | Dev / fallback | `true` for mock fares |
 | `DUFFEL_ACCESS_TOKEN` | For live search | Server-only |
 | `DUFFEL_SUPPLIER_TIMEOUT_MS` | Optional | Default `15000`. Must stay below the search route timeout. |
@@ -114,4 +115,5 @@ Public content pages (home, destinations, routes, guides, about, FAQ, contact) a
 - Callback requests are emailed to `LEADS_EMAIL_TO`. They are **not** stored in a database.
 - On Vercel when `VERCEL_ENV=production`, Resend must be configured or `/api/leads` / `/api/contact` fail. Local/preview builds accept requests without sending mail when Resend env vars are empty.
 - WhatsApp uses a prefilled `wa.me` link the customer opens manually — no WhatsApp Business API.
+- WhatsApp clicks fire one Google Ads conversion via gtag (`NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_CONVERSION_ID`). Do not add a GTM Google Ads conversion tag for WhatsApp, or the same click will count twice.
 - Flight offers live only in the browser session until the customer submits a callback request.

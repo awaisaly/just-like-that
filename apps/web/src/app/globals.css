@@ -24,7 +24,7 @@
 
 @layer base {
   :root {
-    --site-instalment-h: 2.25rem;
+    --site-instalment-h: 2.5rem;
     --site-header-h: 3.5rem;
     /* Sticky side panels sit under the sticky nav (promo strip scrolls away). */
     --site-chrome-height: var(--site-header-h);
@@ -625,7 +625,7 @@
   }
 
   .nav-drawer-promise-title {
-    @apply mt-1 block text-lg font-extrabold leading-snug;
+    @apply mt-1 block text-xl font-extrabold leading-snug;
   }
 
   .nav-drawer-promise-cta {
@@ -670,7 +670,7 @@
   }
 
   .instalment-bar-text {
-    @apply m-0 flex min-w-0 items-center gap-x-1.5 truncate text-[12px] font-semibold leading-none sm:gap-x-2 sm:text-sm;
+    @apply m-0 flex min-w-0 items-center gap-x-1.5 truncate text-[13px] font-semibold leading-none sm:gap-x-2 sm:text-[15px];
   }
 
   .instalment-bar-lead {
@@ -682,7 +682,7 @@
   }
 
   .instalment-bar-action {
-    @apply font-extrabold tracking-tight text-accent;
+    @apply text-[1.12em] font-extrabold tracking-tight text-accent;
   }
 
   .instalment-bar-cta {
@@ -690,7 +690,7 @@
   }
 
   .instalment-mark {
-    @apply relative inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.06em] text-accent;
+    @apply relative inline-flex items-center gap-1.5 text-[12px] font-extrabold uppercase tracking-[0.06em] text-accent sm:text-[13px];
   }
 
   .instalment-mark-pulse {
@@ -700,7 +700,7 @@
   }
 
   .instalment-price-note {
-    @apply m-0 text-[11px] font-semibold text-accent;
+    @apply m-0 text-[13px] font-extrabold text-accent;
   }
 
   .instalment-spotlight {
@@ -769,7 +769,7 @@
   }
 
   .instalment-footer-motto {
-    @apply m-0 text-base font-extrabold tracking-tight sm:text-lg;
+    @apply m-0 text-lg font-extrabold tracking-tight sm:text-xl;
   }
 
   .instalment-footer-link {
@@ -1435,7 +1435,7 @@
   }
 
   .flights-summary-link.is-accent {
-    @apply border-accent/30 bg-[#fff7f2] text-accent hover:border-accent hover:bg-[#ffefe6];
+    @apply border-accent/30 bg-[#fff7f2] text-base text-accent hover:border-accent hover:bg-[#ffefe6];
   }
 
   .flights-explore {

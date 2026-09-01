@@ -3,12 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { InstalmentSpotlight } from '../../../components/Instalments';
-import { PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
+import { InstalmentPhrase, PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
 import { findAirport } from '../../../data/airports';
 import { getSeoPage, getSeoPagesByType, seoPath } from '../../../data/seo-pages';
 import { AGENCY_NAME } from '../../../lib/brand';
 import { INSTALMENTS_FAQ_HREF, INSTALMENTS_HREF, instalmentCopy } from '../../../lib/instalments';
-import { buildPageMetadata } from '../../../lib/seo';
+import { buildPageMetadata, CAMPAIGN_SEARCH_TERMS } from '../../../lib/seo';
 import { TOURS_SLUG, tourCopy } from '../../../lib/tours';
 
 export const revalidate = 3600;
@@ -30,6 +30,7 @@ export async function generateMetadata({
     description: page.metaDescription,
     path: seoPath(page),
     ogTitle: page.h1,
+    keywords: [...CAMPAIGN_SEARCH_TERMS, page.title, AGENCY_NAME],
   });
 }
 
@@ -128,6 +129,7 @@ function AfricaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
         </p>
         <ul className="m-0 grid list-none gap-2 p-0 sm:grid-cols-2">
           {[
+            { href: '/flights/london-to-lagos', label: 'Cheap flights from London to Lagos' },
             { href: '/destinations/lagos', label: 'Lagos, Nigeria' },
             { href: '/destinations/abuja', label: 'Abuja, Nigeria' },
             { href: '/destinations/accra', label: 'Accra, Ghana' },
@@ -203,20 +205,22 @@ function UkNigeriaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
       <section className="stack max-w-2xl">
         <p className="m-0 text-xs font-bold uppercase tracking-[0.14em] text-accent">Travel guide</p>
         <h1 className="m-0 text-4xl font-extrabold leading-tight text-brand-navy sm:text-5xl">
-          Flights between the UK and Nigeria
+          Flights to Nigeria from London &amp; Nigeria to London
         </h1>
         <p className="text-lg text-muted">
-          Book cheap flights from the UK to Nigeria and from Nigeria to the UK with {AGENCY_NAME}.
-          London–Lagos, Abuja, Port Harcourt, Manchester, Birmingham and reverse routes — confirmed
-          by a UK agent, with instalments available.
+          Book flights to Nigeria from London and a flight from Nigeria to London with {AGENCY_NAME}.
+          Cheap flights from London to Lagos, tickets from Lagos to London, a flight ticket to
+          Nigeria from London, Abuja, Port Harcourt, Manchester and Birmingham — confirmed by a UK
+          agent, with instalments available.
         </p>
       </section>
 
       <section className="stack max-w-2xl">
         <h2 className="m-0 text-2xl font-extrabold text-brand-navy">Both directions, one agency</h2>
         <p className="m-0 text-muted">
-          Whether you are flying out for a family visit, returning to London, or booking a student or
-          business trip, we handle UK → Nigeria and Nigeria → UK with the same callback booking flow.
+          Search a flight ticket to Nigeria from London, or tickets from Lagos to London if you are
+          heading the other way. Family visits, student travel, and business trips use the same
+          callback booking flow.
         </p>
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-muted">
           <li>Search live fares for your dates and travellers</li>
@@ -253,13 +257,13 @@ function UkNigeriaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
           href="/flights/london-to-lagos"
           className="inline-flex rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white hover:bg-accent-dark"
         >
-          London to Lagos
+          Cheap flights from London to Lagos
         </Link>
         <Link
           href="/flights/lagos-to-london"
           className="inline-flex rounded-xl border border-line px-5 py-3 text-sm font-bold text-brand-navy hover:border-brand/40"
         >
-          Lagos to London
+          Tickets from Lagos to London
         </Link>
         <Link
           href="/guides/cheap-flights-to-africa"
@@ -280,7 +284,7 @@ function InstalmentsGuide() {
           Our primary promise
         </p>
         <h1 className="m-0 text-4xl font-extrabold leading-tight text-brand-navy sm:text-5xl">
-          {instalmentCopy.motto}
+          <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
         </h1>
         <p className="text-lg text-muted">
           Instalment plans are how most {AGENCY_NAME} travellers book. Search live fares, book with

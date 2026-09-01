@@ -24,6 +24,9 @@ type DestinationSeoSeed = {
   iata: string;
   /** Phrase after "from" / "to" in titles, e.g. "the UK" or "Nigeria". */
   market: 'the UK' | 'Nigeria';
+  title?: string;
+  h1?: string;
+  metaDescription?: string;
   faq?: SeoPage['faq'];
 };
 
@@ -61,21 +64,27 @@ function destinationSeoPage(seed: DestinationSeoSeed): SeoPage {
   let h1: string;
 
   if (seed.market === 'Nigeria') {
-    title = `Flights to ${seed.city} from Nigeria`;
-    metaDescription = `Book flights to ${seed.city} (${seed.iata}) from Nigeria with ${AGENCY_NAME}. Compare Nigeria to UK fares and finalise with a UK agent — instalments available.`;
-    h1 = `Flights to ${seed.city} from Nigeria`;
+    title = seed.title ?? `Flights to ${seed.city} from Nigeria`;
+    metaDescription =
+      seed.metaDescription ??
+      `Book flights to ${seed.city} (${seed.iata}) from Nigeria with ${AGENCY_NAME}. Compare Nigeria to UK fares and finalise with a UK agent — instalments available.`;
+    h1 = seed.h1 ?? `Flights to ${seed.city} from Nigeria`;
   } else if (isNigeriaCity) {
-    title = `Cheap Flights to ${seed.city}, Nigeria from the UK`;
-    metaDescription = `Search cheap flights to ${seed.city}, Nigeria (${seed.iata}) from the UK. Compare London, Manchester and more with ${AGENCY_NAME} — book with a UK agent, pay in instalments or in full.`;
-    h1 = `Cheap flights to ${seed.city}, Nigeria`;
+    title = seed.title ?? `Cheap Flights to ${seed.city}, Nigeria from the UK`;
+    metaDescription =
+      seed.metaDescription ??
+      `Search cheap flights to ${seed.city}, Nigeria (${seed.iata}) from the UK. Compare London, Manchester and more with ${AGENCY_NAME} — book with a UK agent, pay in instalments or in full.`;
+    h1 = seed.h1 ?? `Cheap flights to ${seed.city}, Nigeria`;
   } else if (isAfricaCity) {
     title = `Cheap Flights to ${seed.city}, Africa from the UK`;
     metaDescription = `Find cheap flights to ${seed.city}, Africa (${seed.iata}) from the UK. Compare live fares with ${AGENCY_NAME} and book through a UK travel agent.`;
     h1 = `Cheap flights to ${seed.city}`;
   } else {
-    title = `Cheap Flights to ${seed.city} from the UK`;
-    metaDescription = `Find cheap flights to ${seed.city} (${seed.iata}) from the UK. Search live fares with ${AGENCY_NAME} and request a callback to book with a UK agent.`;
-    h1 = `Cheap flights to ${seed.city}`;
+    title = seed.title ?? `Cheap Flights to ${seed.city} from the UK`;
+    metaDescription =
+      seed.metaDescription ??
+      `Find cheap flights to ${seed.city} (${seed.iata}) from the UK. Search live fares with ${AGENCY_NAME} and request a callback to book with a UK agent.`;
+    h1 = seed.h1 ?? `Cheap flights to ${seed.city}`;
   }
 
   return {
@@ -96,7 +105,7 @@ function destinationSeoPage(seed: DestinationSeoSeed): SeoPage {
           a: 'Yes — instalment plans are our primary way of helping travellers book. After you select a fare and request a callback, your agent will set up a plan that suits you. You can also pay in full if you prefer.',
         },
       ],
-    updatedAt: '2026-07-26T00:00:00.000Z',
+    updatedAt: '2026-09-02T00:00:00.000Z',
   };
 }
 
@@ -107,10 +116,21 @@ const destinationSeoPages: SeoPage[] = (
       city: 'Lagos',
       iata: 'LOS',
       market: 'the UK',
+      title: 'Cheap Flights to Lagos from London',
+      h1: 'Cheap flights to Lagos from London',
+      metaDescription: `Search cheap flights from London to Lagos and flights to Nigeria from London. Compare Heathrow and Gatwick to LOS with ${AGENCY_NAME} — a UK agent. Pay in instalments or in full.`,
       faq: [
         {
-          q: 'How do I find cheap flights to Lagos from the UK?',
-          a: `Search live fares on ${AGENCY_NAME} for London, Manchester, Birmingham and other UK cities to Lagos (LOS). Select an offer, then request a callback — a UK agent confirms the price before you book.`,
+          q: 'How do I find cheap flights from London to Lagos?',
+          a: `Search live fares on ${AGENCY_NAME} for cheap flights from London to Lagos (Heathrow, Gatwick, Manchester and more to LOS). Select an offer, then request a callback — a UK agent confirms the price before you book.`,
+        },
+        {
+          q: 'Where can I buy a flight ticket to Nigeria from London?',
+          a: 'A flight ticket to Nigeria from London is usually booked London to Lagos or London to Abuja. Search live fares, then request a callback so a UK agent can ticket it for you.',
+        },
+        {
+          q: 'Where can I find flights to Nigeria from London?',
+          a: 'Flights to Nigeria from London typically leave Heathrow (LHR) or Gatwick (LGW). Start with London to Lagos, or search Abuja, Port Harcourt and other Nigerian cities.',
         },
         {
           q: 'Can I pay for Lagos flights in instalments?',
@@ -121,8 +141,8 @@ const destinationSeoPages: SeoPage[] = (
           a: 'Most travellers search Heathrow (LHR), Gatwick (LGW), Manchester (MAN) or Birmingham (BHX) to Lagos (LOS). An agent can check other UK departure options for your dates.',
         },
         {
-          q: 'Do you also book Lagos to London flights?',
-          a: 'Yes — we book both UK to Nigeria and Nigeria to UK. See our Lagos to London route guide or search LOS to LHR for return or one-way travel.',
+          q: 'Do you also book tickets from Lagos to London?',
+          a: 'Yes — we book both directions. See our Lagos to London route for tickets from Lagos to London, or search LOS to LHR for return or one-way travel.',
         },
       ],
     },
@@ -173,7 +193,22 @@ const destinationSeoPages: SeoPage[] = (
       city: 'London',
       iata: 'LHR',
       market: 'Nigeria',
+      title: 'Flights from Nigeria to London',
+      h1: 'Flights from Nigeria to London',
+      metaDescription: `Book a flight from Nigeria to London. Find tickets from Lagos to London and a cheap ticket from Lagos to London with ${AGENCY_NAME} — a UK agent. Pay in instalments or in full.`,
       faq: [
+        {
+          q: 'How do I book a flight from Nigeria to London?',
+          a: `Search live fares for a flight from Nigeria to London — Lagos (LOS), Abuja (ABV) or Port Harcourt (PHC) to Heathrow or Gatwick — then request a callback. A UK agent confirms the ticket.`,
+        },
+        {
+          q: 'Where can I buy tickets from Lagos to London?',
+          a: `Compare tickets from Lagos to London on ${AGENCY_NAME}, then request a callback. We check Heathrow, Gatwick and other UK arrivals for your dates.`,
+        },
+        {
+          q: 'How do I find a cheap ticket from Lagos to London?',
+          a: 'Search flexible dates and both direct and one-stop options for a cheap ticket from Lagos to London. Your agent re-confirms the live fare before you pay.',
+        },
         {
           q: 'Which London airport should I fly into?',
           a: 'Heathrow (LHR) is the most common London arrival. Tell your agent if Gatwick (LGW) or another airport suits your onward plans better.',
@@ -215,6 +250,15 @@ const destinationSeoPages: SeoPage[] = (
     { slug: 'frankfurt', city: 'Frankfurt', iata: 'FRA', market: 'the UK' },
     // Asia
     { slug: 'delhi', city: 'New Delhi', iata: 'DEL', market: 'the UK' },
+    {
+      slug: 'islamabad',
+      city: 'Islamabad',
+      iata: 'ISB',
+      market: 'the UK',
+      title: 'Cheap Flights to Islamabad, Pakistan from the UK',
+      h1: 'Cheap flights to Islamabad, Pakistan',
+      metaDescription: `Search cheap flights to Islamabad, Pakistan (ISB) from the UK. Compare live fares with ${AGENCY_NAME} and book through a UK agent — instalments available.`,
+    },
     { slug: 'mumbai', city: 'Mumbai', iata: 'BOM', market: 'the UK' },
     { slug: 'bangkok', city: 'Bangkok', iata: 'BKK', market: 'the UK' },
     { slug: 'singapore', city: 'Singapore', iata: 'SIN', market: 'the UK' },
@@ -232,12 +276,13 @@ function routePage(input: {
   originIata: string;
   destinationIata: string;
   metaExtra: string;
+  title?: string;
   h1?: string;
   amount: number;
   redirectsFrom?: string[];
   faq?: SeoPage['faq'];
 }): SeoPage {
-  const title = `Cheap Flights from ${input.fromCity} to ${input.toCity}`;
+  const title = input.title ?? `Cheap Flights from ${input.fromCity} to ${input.toCity}`;
   return {
     type: 'route',
     slug: input.slug,
@@ -248,7 +293,7 @@ function routePage(input: {
     route: { originIata: input.originIata, destinationIata: input.destinationIata },
     indicativePrices: [{ month: thisMonth, from: { amount: input.amount, currency: 'GBP' } }],
     redirectsFrom: input.redirectsFrom,
-    updatedAt: '2026-07-26T00:00:00.000Z',
+    updatedAt: '2026-09-02T00:00:00.000Z',
   };
 }
 
@@ -259,14 +304,30 @@ const curatedRoutes: SeoPage[] = [
     toCity: 'Lagos',
     originIata: 'LHR',
     destinationIata: 'LOS',
+    title: 'Cheap Flights from London to Lagos',
+    h1: 'Cheap flights from London to Lagos',
     metaExtra:
-      'Compare cheap flights from London to Lagos, Nigeria. Search Heathrow & Gatwick fares to LOS.',
+      'Compare cheap flights from London to Lagos. Search a flight ticket to Nigeria from London — Heathrow and Gatwick to LOS — plus flights to Nigeria from London.',
     amount: 48900,
-    redirectsFrom: ['london-lagos', 'lhr-los', 'cheap-flights-london-lagos'],
+    redirectsFrom: [
+      'london-lagos',
+      'lhr-los',
+      'cheap-flights-london-lagos',
+      'cheap-flights-from-london-to-lagos',
+      'flight-ticket-to-nigeria-from-london',
+    ],
     faq: [
       {
         q: 'How much are cheap flights from London to Lagos?',
         a: 'Indicative fares often start from a few hundred pounds depending on season, airline, and how early you book. Search live prices for your dates — an agent re-confirms before you pay.',
+      },
+      {
+        q: 'How do I buy a flight ticket to Nigeria from London?',
+        a: `Search live fares for a flight ticket to Nigeria from London — most travellers fly London to Lagos (LOS). Select an offer, then request a callback so a UK agent can ticket it.`,
+      },
+      {
+        q: 'Where can I find flights to Nigeria from London?',
+        a: 'Flights to Nigeria from London usually depart Heathrow or Gatwick. This London to Lagos page is the busiest corridor; we also book London to Abuja and other Nigerian cities.',
       },
       {
         q: 'Can I pay for London–Lagos flights in instalments?',
@@ -284,14 +345,31 @@ const curatedRoutes: SeoPage[] = [
     toCity: 'London',
     originIata: 'LOS',
     destinationIata: 'LHR',
+    title: 'Cheap Tickets from Lagos to London',
+    h1: 'Cheap tickets from Lagos to London',
     metaExtra:
-      'Find cheap flights from Lagos, Nigeria to London, UK. Compare LOS to Heathrow fares for family and business travel.',
+      'Find a cheap ticket from Lagos to London. Compare tickets from Lagos to London and a flight from Nigeria to London — LOS to Heathrow or Gatwick.',
     amount: 49900,
-    redirectsFrom: ['lagos-london', 'los-lhr', 'flights-nigeria-to-uk'],
+    redirectsFrom: [
+      'lagos-london',
+      'los-lhr',
+      'flights-nigeria-to-uk',
+      'tickets-from-lagos-to-london',
+      'cheap-ticket-from-lagos-to-london',
+      'flight-from-nigeria-to-london',
+    ],
     faq: [
       {
-        q: 'How do I book Lagos to London flights from Nigeria?',
-        a: `Search live fares on ${AGENCY_NAME}, select an offer, then request a callback. A UK agent confirms availability, bags, and your payment plan.`,
+        q: 'Where can I buy tickets from Lagos to London?',
+        a: `Search live fares on ${AGENCY_NAME} for tickets from Lagos to London (LOS to Heathrow or Gatwick), then request a callback. A UK agent confirms availability, bags, and your payment plan.`,
+      },
+      {
+        q: 'How do I find a cheap ticket from Lagos to London?',
+        a: 'Compare a cheap ticket from Lagos to London by searching flexible dates and both direct and one-stop options. Your agent re-confirms the live price before you pay.',
+      },
+      {
+        q: 'Can I book a flight from Nigeria to London with you?',
+        a: 'Yes — a flight from Nigeria to London is one of our core routes. We also book Abuja, Port Harcourt and other Nigerian cities to the UK.',
       },
       {
         q: 'Can I fly Lagos to Gatwick instead of Heathrow?',
@@ -446,13 +524,25 @@ export const seoPages: SeoPage[] = [
   {
     type: 'guide',
     slug: 'flights-uk-nigeria',
-    title: 'Flights from UK to Nigeria & Nigeria to UK',
-    metaDescription: `Book cheap flights from the UK to Nigeria and Nigeria to the UK with ${AGENCY_NAME}. London–Lagos, Abuja, Port Harcourt and reverse routes — UK agent booking & instalments.`,
-    h1: 'Flights between the UK and Nigeria',
+    title: 'Flights to Nigeria from London & Nigeria to London',
+    metaDescription: `Flights to Nigeria from London and a flight from Nigeria to London. Cheap flights from London to Lagos, tickets from Lagos to London, and a flight ticket to Nigeria from London — book with ${AGENCY_NAME}.`,
+    h1: 'Flights to Nigeria from London & Nigeria to London',
     faq: [
       {
+        q: 'Where can I find flights to Nigeria from London?',
+        a: `Flights to Nigeria from London typically leave Heathrow or Gatwick for Lagos, Abuja or Port Harcourt. Search live fares on ${AGENCY_NAME}, then request a callback to book with a UK agent.`,
+      },
+      {
+        q: 'How do I buy a flight ticket to Nigeria from London?',
+        a: 'Search a flight ticket to Nigeria from London for your dates, pick a fare, then request a callback. A UK agent re-confirms the price and tickets the booking — pay in instalments or in full.',
+      },
+      {
+        q: 'How do I book a flight from Nigeria to London?',
+        a: 'Search a flight from Nigeria to London (Lagos, Abuja or Port Harcourt to Heathrow or Gatwick), then request a callback. We also sell tickets from Lagos to London one-way or return.',
+      },
+      {
         q: 'Do you book both UK to Nigeria and Nigeria to UK flights?',
-        a: `Yes. ${AGENCY_NAME} regularly books both directions — London to Lagos, Lagos to London, Abuja, Port Harcourt, Manchester, Birmingham and more.`,
+        a: `Yes. ${AGENCY_NAME} regularly books both directions — cheap flights from London to Lagos, tickets from Lagos to London, Abuja, Port Harcourt, Manchester, Birmingham and more.`,
       },
       {
         q: 'What is the cheapest way to fly from the UK to Nigeria?',
@@ -468,8 +558,9 @@ export const seoPages: SeoPage[] = [
       'nigeria-uk-flights',
       'flights-to-nigeria',
       'cheap-flights-to-nigeria',
+      'flights-to-nigeria-from-london',
     ],
-    updatedAt: '2026-07-26T00:00:00.000Z',
+    updatedAt: '2026-09-02T00:00:00.000Z',
   },
   {
     type: 'guide',

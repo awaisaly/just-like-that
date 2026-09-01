@@ -4,13 +4,9 @@ import { ContactForm } from '../../components/ContactForm';
 import { PhoneCallIcon, WhatsAppChannelIcon } from '../../components/ContactChannelIcons';
 import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
-  formatSupportPhone,
-  ADS_CALL_LINK_CLASS,
-  ADS_CALL_NUMBER_CLASS,
-  getAdsTrackingPhoneDisplay,
-  getAdsTrackingPhoneIfDistinct,
+  getContactCallDisplay,
+  getContactCallPhone,
   getSupportEmail,
-  getSupportPhone,
   getWhatsAppLines,
   supportMailtoHref,
   supportTelHref,
@@ -28,11 +24,9 @@ export const metadata = buildPageMetadata({
 });
 
 export default function ContactPage() {
-  const supportPhone = getSupportPhone();
+  const callPhone = getContactCallPhone();
+  const callDisplay = getContactCallDisplay();
   const supportEmail = getSupportEmail();
-  const phoneDisplay = formatSupportPhone(supportPhone);
-  const adsTrackingPhone = getAdsTrackingPhoneIfDistinct(supportPhone);
-  const adsTrackingDisplay = adsTrackingPhone ? getAdsTrackingPhoneDisplay() : null;
   const whatsappLines = getWhatsAppLines();
   const whatsappMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 
@@ -76,24 +70,11 @@ export default function ContactPage() {
                 <p className="m-0 text-xs font-semibold uppercase tracking-wide text-muted">
                   Phone
                 </p>
-                <a
-                  href={supportTelHref(supportPhone)}
-                  className="contact-channel-link mt-1"
-                >
+                <a href={supportTelHref(callPhone)} className="contact-channel-link mt-1">
                   <PhoneCallIcon />
                   <span aria-hidden="true">🇬🇧</span>
-                  <span>{phoneDisplay}</span>
+                  <span>{callDisplay}</span>
                 </a>
-                {adsTrackingPhone && adsTrackingDisplay ? (
-                  <a
-                    href={supportTelHref(adsTrackingPhone)}
-                    className={`contact-channel-link mt-2 ${ADS_CALL_LINK_CLASS}`}
-                  >
-                    <PhoneCallIcon />
-                    <span aria-hidden="true">🇬🇧</span>
-                    <span className={ADS_CALL_NUMBER_CLASS}>{adsTrackingDisplay}</span>
-                  </a>
-                ) : null}
               </li>
               <li>
                 <p className="m-0 text-xs font-semibold uppercase tracking-wide text-muted">
@@ -159,12 +140,12 @@ export default function ContactPage() {
           <p className="mb-5 text-sm text-muted">
             Tell us what you need and we’ll get back to you. For urgent bookings, call{' '}
             <a
-              href={supportTelHref(supportPhone)}
+              href={supportTelHref(callPhone)}
               className="contact-channel-link !mt-0 align-middle text-base"
             >
               <PhoneCallIcon />
               <span aria-hidden="true">🇬🇧</span>
-              {phoneDisplay}
+              {callDisplay}
             </a>{' '}
             or email{' '}
             <a
