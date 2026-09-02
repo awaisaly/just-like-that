@@ -164,13 +164,6 @@ export default function OfferDetailPage() {
             <Row label="Base fare" value={formatMoney(offer.price.base)} />
             <Row label="Taxes" value={formatMoney(offer.price.taxes)} />
           </div>
-          <button
-            type="button"
-            className="w-full rounded-xl bg-accent py-3.5 text-base font-bold text-white transition hover:bg-accent-dark"
-            onClick={() => router.push('/checkout')}
-          >
-            {instalmentCopy.ctaPrimary}
-          </button>
           <OfferWhatsAppButton offer={offer} travellers={selection?.travellers} />
           <p className="text-center text-xs text-muted">{instalmentCopy.offerNote}</p>
         </aside>
