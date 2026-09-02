@@ -1,5 +1,4 @@
 import { formatMoney } from '@jlt/shared';
-import { markUpFlightAmount } from '../lib/pricing';
 import { getSeoPagesByType, seoPath, type SeoPage } from './seo-pages';
 
 export type DestinationCard = {
@@ -456,7 +455,7 @@ function priceForDestination(iata: string): number | undefined {
     .map((p) => p.indicativePrices?.[0]?.from.amount)
     .filter((n): n is number => typeof n === 'number');
   if (amounts.length === 0) return undefined;
-  return markUpFlightAmount(Math.min(...amounts));
+  return Math.min(...amounts);
 }
 
 function titleFromSlug(slug: string): string {

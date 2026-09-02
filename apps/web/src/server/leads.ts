@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import { formatMoney } from '@jlt/shared';
 import type { CallbackLeadInput } from '../lib/lead';
+import { payableFare } from '../lib/pricing';
 
 export async function sendCallbackEmail(
   lead: CallbackLeadInput,
@@ -57,7 +58,7 @@ function createTextEmail(lead: CallbackLeadInput, reference: string): string {
     `Route: ${first?.origin ?? '—'} to ${last?.destination ?? '—'}`,
     `Travellers: ${lead.travellers.adults} adult(s), ${lead.travellers.children} child(ren), ${lead.travellers.infants} infant(s)`,
     `Cabin: ${lead.travellers.cabin}`,
-    `Displayed fare: ${formatMoney(lead.offer.price.total)}`,
+    ...leadPriceLines(lead),
     `Provider offer: ${lead.offer.providerOfferId}`,
     `Offer expires: ${lead.offer.expiresAt}`,
     '',
@@ -99,7 +100,7 @@ function createHtmlEmail(lead: CallbackLeadInput, reference: string): string {
           `${lead.travellers.adults} adult(s), ${lead.travellers.children} child(ren), ${lead.travellers.infants} infant(s)`,
         )}
         ${row('Cabin', lead.travellers.cabin)}
-        ${row('Displayed fare', formatMoney(lead.offer.price.total))}
+        ${leadPriceRows(lead)}
         ${row('Provider offer', lead.offer.providerOfferId)}
       </table>
       ${itinerary}
@@ -109,6 +110,32 @@ function createHtmlEmail(lead: CallbackLeadInput, reference: string): string {
       </p>
     </div>
   `;
+}
+
+function leadPriceLines(lead: CallbackLeadInput): string[] {
+  const fare = formatMoney(lead.offer.price.total);
+  const fee = lead.offer.price.serviceFee;
+  if (lead.paymentPreference === 'installments' && fee && fee.amount > 0) {
+    return [
+      `Listed fare: ${fare}`,
+      `Instalment service fee: ${formatMoney(fee)}`,
+      `Instalment total: ${formatMoney(payableFare(lead.offer.price, 'installments'))}`,
+    ];
+  }
+  return [`Displayed fare: ${fare}`];
+}
+
+function leadPriceRows(lead: CallbackLeadInput): string {
+  const fare = formatMoney(lead.offer.price.total);
+  const fee = lead.offer.price.serviceFee;
+  if (lead.paymentPreference === 'installments' && fee && fee.amount > 0) {
+    return [
+      row('Listed fare', fare),
+      row('Instalment service fee', formatMoney(fee)),
+      row('Instalment total', formatMoney(payableFare(lead.offer.price, 'installments'))),
+    ].join('');
+  }
+  return row('Displayed fare', fare);
 }
 
 function routeLabel(lead: CallbackLeadInput): string {

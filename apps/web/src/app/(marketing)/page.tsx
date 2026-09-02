@@ -25,7 +25,6 @@ import {
   supportMailtoHref,
   whatsappChatHref,
 } from '../../lib/contact';
-import { markUpFlightMoney } from '../../lib/pricing';
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
@@ -206,9 +205,7 @@ export default function HomePage() {
             const destination = route.route?.destinationIata ?? '';
             const fromCity = findAirport(origin)?.city ?? origin;
             const toCity = findAirport(destination)?.city ?? destination;
-            const fromPrice = route.indicativePrices?.[0]?.from
-              ? markUpFlightMoney(route.indicativePrices[0].from)
-              : undefined;
+            const fromPrice = route.indicativePrices?.[0]?.from;
             return (
               <HomeStaggerItem key={route.slug} index={index}>
                 <Link

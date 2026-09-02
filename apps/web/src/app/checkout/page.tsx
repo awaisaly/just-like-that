@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { formatMoney } from '@jlt/shared';
 import { apiFetch } from '../../lib/api';
+import { FareBreakdown } from '../../components/FareBreakdown';
 import { getPrimaryWhatsAppLine, whatsappChatHref } from '../../lib/contact';
 import { INSTALMENTS_HREF, instalmentCopy } from '../../lib/instalments';
 import { useCheckoutStore } from '../../lib/stores';
@@ -299,11 +299,12 @@ export default function CheckoutPage() {
             </div>
           ) : null}
           <div className="border-t border-line pt-3">
-            <div className="flex items-center justify-between">
-              <span className="text-muted">Displayed fare</span>
-              <span className="price">{formatMoney(offer.price.total)}</span>
-            </div>
-            <p className="mt-1 text-xs text-muted">
+            <FareBreakdown
+              price={offer.price}
+              payment={pref === 'installments' ? 'installments' : 'full'}
+              headline
+            />
+            <p className="mt-2 text-xs text-muted">
               Indicative only — confirmed on the call before any payment.
             </p>
           </div>

@@ -15,7 +15,6 @@ import {
 } from '../../../data/destinations';
 import { getSeoPage, getSeoPagesByType, seoPath } from '../../../data/seo-pages';
 import { instalmentCopy } from '../../../lib/instalments';
-import { markUpFlightMoney } from '../../../lib/pricing';
 import { destinationAboutCopy } from '../../../lib/seo-content';
 import { buildPageMetadata, getSiteUrl, landingKeywords } from '../../../lib/seo';
 
@@ -178,9 +177,7 @@ export default async function DestinationPage({
               const destination = route.route?.destinationIata ?? '';
               const fromCity = findAirport(origin)?.city ?? origin;
               const toCity = findAirport(destination)?.city ?? destination;
-              const amount = route.indicativePrices?.[0]?.from
-                ? markUpFlightMoney(route.indicativePrices[0].from)
-                : undefined;
+              const amount = route.indicativePrices?.[0]?.from;
               return (
                 <Link
                   key={route.slug}

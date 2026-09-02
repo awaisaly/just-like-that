@@ -4,14 +4,16 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { formatMoney } from '@jlt/shared';
+import { FareBreakdown } from '../../../../components/FareBreakdown';
+import { FlightItinerary } from '../../../../components/FlightItinerary';
+import { InstalmentPhrase } from '../../../../components/InstalmentAccent';
+import { OfferWhatsAppButton } from '../../../../components/OfferWhatsAppButton';
 import { apiFetch } from '../../../../lib/api';
 import type { NormalizedOffer } from '../../../../lib/flight';
 import { isMockOfferId } from '../../../../lib/flight';
 import { INSTALMENTS_HREF, instalmentCopy } from '../../../../lib/instalments';
+import { payableFare } from '../../../../lib/pricing';
 import { useCheckoutStore } from '../../../../lib/stores';
-import { FlightItinerary } from '../../../../components/FlightItinerary';
-import { InstalmentPhrase } from '../../../../components/InstalmentAccent';
-import { OfferWhatsAppButton } from '../../../../components/OfferWhatsAppButton';
 
 export default function OfferDetailPage() {
   const { offerId } = useParams<{ offerId: string }>();
@@ -138,8 +140,12 @@ export default function OfferDetailPage() {
           style={{ top: 'calc(var(--site-chrome-height, 6.5rem) + 0.75rem)' }}
         >
           <div>
-            <div className="price">{formatMoney(offer.price.total)}</div>
-            <p className="text-xs text-muted">indicative fare · incl. taxes and fees</p>
+            <FareBreakdown price={offer.price} payment="installments" headline />
+            {offer.price.serviceFee && offer.price.serviceFee.amount > 0 ? (
+              <p className="mt-2 text-xs text-muted">
+                Pay in full: {formatMoney(payableFare(offer.price, 'full'))} (no service fee)
+              </p>
+            ) : null}
             <p className="instalment-price-note mt-1.5">{instalmentCopy.priceNote}</p>
           </div>
           <div className="rounded-xl border border-accent/25 bg-[#fff7f2] px-3 py-2.5">
@@ -156,7 +162,7 @@ export default function OfferDetailPage() {
           </div>
           <div className="grid gap-1 border-t border-line pt-3 text-sm">
             <Row label="Base fare" value={formatMoney(offer.price.base)} />
-            <Row label="Taxes & fees" value={formatMoney(offer.price.taxes)} />
+            <Row label="Taxes" value={formatMoney(offer.price.taxes)} />
           </div>
           <button
             type="button"

@@ -8,7 +8,6 @@ import { SearchForm } from '../../../components/SearchForm';
 import { countryLabel, findAirport } from '../../../data/airports';
 import { getSeoPagesByType, resolveRouteSeoPage, seoPath } from '../../../data/seo-pages';
 import { AGENCY_NAME } from '../../../lib/brand';
-import { markUpFlightMoney } from '../../../lib/pricing';
 import { routeAboutCopy } from '../../../lib/seo-content';
 import { buildPageMetadata, getSiteUrl, landingKeywords } from '../../../lib/seo';
 
@@ -59,9 +58,7 @@ export default async function RouteLandingPage({
   const toCity = toAirport?.city ?? destination;
   const fromCountry = fromAirport ? countryLabel(fromAirport.country) : '';
   const toCountry = toAirport ? countryLabel(toAirport.country) : '';
-  const price = page.indicativePrices?.[0]?.from
-    ? markUpFlightMoney(page.indicativePrices[0].from)
-    : undefined;
+  const price = page.indicativePrices?.[0]?.from;
 
   const faq =
     page.faq.length > 0

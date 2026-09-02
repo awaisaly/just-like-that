@@ -14,7 +14,6 @@ import { getHomeDestinationCards } from '../../../data/destinations';
 import { getSeoPagesByType, routeGuidePath, seoPath } from '../../../data/seo-pages';
 import type { TravellerSummary } from '../../../lib/flight';
 import { INSTALMENTS_HREF, instalmentCopy } from '../../../lib/instalments';
-import { markUpFlightMoney } from '../../../lib/pricing';
 
 export const metadata: Metadata = {
   title: 'Search flights',
@@ -267,9 +266,7 @@ export default async function FlightSearchPage({ searchParams }: Props) {
                 const destination = route.route?.destinationIata ?? '';
                 const originCity = findAirport(origin)?.city ?? origin;
                 const destinationCity = findAirport(destination)?.city ?? destination;
-                const fromPrice = route.indicativePrices?.[0]?.from
-                  ? markUpFlightMoney(route.indicativePrices[0].from)
-                  : undefined;
+                const fromPrice = route.indicativePrices?.[0]?.from;
                 return (
                   <Link
                     key={route.slug}

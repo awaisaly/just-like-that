@@ -81,6 +81,8 @@ export const normalizedOfferSchema = z.object({
     base: moneySchema,
     taxes: moneySchema,
     source: moneySchema,
+    /** Instalment-only service fee; not included in `total` (listed fare). */
+    serviceFee: moneySchema.optional(),
     fxRate: z.number().positive().optional(),
     convertedAt: isoDateTime.optional(),
   }),

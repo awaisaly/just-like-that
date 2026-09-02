@@ -37,9 +37,9 @@ export const instalmentCopy = {
   ],
   checkoutPrimary: 'Pay in instalments',
   checkoutPrimaryBody:
-    'Book now, then pay on a schedule. Every instalment must be paid before you fly.',
+    'Book now, then pay on a schedule. An instalment service fee is added to the listed fare. Every instalment must be paid before you fly.',
   checkoutFull: 'Pay in full',
-  checkoutFullBody: 'Settle the full fare by phone with your agent if you prefer.',
+  checkoutFullBody: 'Settle the listed fare by phone with your agent — no instalment service fee.',
   footerLine: 'Book now · Pay in instalments',
   ctaPrimary: 'Book now · pay in instalments',
   offerNote:
