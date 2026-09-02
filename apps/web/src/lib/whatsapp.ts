@@ -1,4 +1,5 @@
 import { formatMoney } from '@jlt/shared';
+import { payableFare } from './pricing';
 import { AGENCY_NAME } from './brand';
 import { getWhatsAppChatUrl, getWhatsAppLines, whatsappChatHref } from './contact';
 import type { NormalizedOffer, TravellerSummary } from './flight';
@@ -54,7 +55,13 @@ export function buildSelectedOfferWhatsAppMessage(
     `Hi, I’m interested in this flight on ${AGENCY_NAME}.`,
     '',
     `Route: ${route}`,
-    `Displayed fare: ${formatMoney(offer.price.total)} (indicative)`,
+    `Listed fare: ${formatMoney(offer.price.total)} (indicative)`,
+    ...(offer.price.serviceFee && offer.price.serviceFee.amount > 0
+      ? [
+          `Instalment service fee: ${formatMoney(offer.price.serviceFee)}`,
+          `Total with instalments: ${formatMoney(payableFare(offer.price, 'installments'))}`,
+        ]
+      : []),
     `Cabin: ${cabinLabel(offer.cabin)}`,
   ];
 
@@ -97,7 +104,13 @@ export function buildWhatsAppUrl(reference: string, offer: NormalizedOffer): str
     `Hi, I requested a callback on ${AGENCY_NAME}.`,
     `Reference: ${reference}`,
     `Route: ${route}`,
-    `Displayed fare: ${formatMoney(offer.price.total)}`,
+    `Listed fare: ${formatMoney(offer.price.total)}`,
+    ...(offer.price.serviceFee && offer.price.serviceFee.amount > 0
+      ? [
+          `Instalment service fee: ${formatMoney(offer.price.serviceFee)}`,
+          `Total with instalments: ${formatMoney(payableFare(offer.price, 'installments'))}`,
+        ]
+      : []),
     `Please call me back to confirm availability and booking.`,
   ].join('\n');
 

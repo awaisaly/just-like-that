@@ -72,7 +72,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - **Live flights:** `DUFFEL_ACCESS_TOKEN` + `DUFFEL_USE_MOCK=false`
 - **Emails (callback + contact):** `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEADS_EMAIL_TO`  
   Locally, requests succeed without sending mail when Resend is not configured. Production on Vercel requires these vars.
-- **Displayed fares:** `FLIGHT_PRICE_MARKUP_PERCENT` (default 5)
+- **Instalment service fee:** `FLIGHT_PRICE_MARKUP_PERCENT` (default 5) — added when a ticket is selected for instalments, not on search listings
 
 ## Scripts
 

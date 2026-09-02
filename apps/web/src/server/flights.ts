@@ -4,7 +4,7 @@ import { money } from '@jlt/shared';
 import type { NormalizedOffer, NormalizedSegment, SegmentAmenities } from '../lib/flight';
 import { isMockOfferId, seatTypeLabel } from '../lib/flight';
 import { airlineDisplayName } from '../lib/airline';
-import { markUpFlightAmount } from '../lib/pricing';
+import { flightServiceFeeAmount } from '../lib/pricing';
 
 const DUFFEL_API = 'https://api.duffel.com/air';
 
@@ -261,14 +261,13 @@ function normalizeDuffelOffer(
 ): NormalizedOffer {
   const currency = offer.total_currency.toUpperCase();
   const sourceAmount = toMinorUnits(offer.total_amount);
-  const totalAmount = markUpFlightAmount(sourceAmount, currency);
-  const markup = totalAmount - sourceAmount;
+  const serviceFeeAmount = flightServiceFeeAmount(sourceAmount, currency);
   const baseAmount = offer.base_amount
     ? toMinorUnits(offer.base_amount)
     : Math.round(sourceAmount * 0.85);
   const taxAmount = offer.tax_amount
-    ? toMinorUnits(offer.tax_amount) + markup
-    : totalAmount - baseAmount;
+    ? toMinorUnits(offer.tax_amount)
+    : sourceAmount - baseAmount;
 
   const firstPassenger = offer.slices[0]?.segments[0]?.passengers?.[0];
   const cabin =
@@ -300,10 +299,11 @@ function normalizeDuffelOffer(
       changeable: Boolean(offer.conditions?.change_before_departure?.allowed),
     },
     price: {
-      total: money(totalAmount, currency),
+      total: money(sourceAmount, currency),
       base: money(baseAmount, currency),
       taxes: money(taxAmount, currency),
       source: money(sourceAmount, currency),
+      serviceFee: money(serviceFeeAmount, currency),
     },
     expiresAt: offer.expires_at,
   };
@@ -579,13 +579,14 @@ function mockSearch(input: FlightSearchInput): NormalizedOffer[] {
       },
       price: (() => {
         const sourceAmount = amount;
-        const totalAmount = markUpFlightAmount(sourceAmount, 'GBP');
+        const serviceFeeAmount = flightServiceFeeAmount(sourceAmount, 'GBP');
         const baseAmount = Math.round(sourceAmount * 0.85);
         return {
-          total: money(totalAmount, 'GBP'),
+          total: money(sourceAmount, 'GBP'),
           base: money(baseAmount, 'GBP'),
-          taxes: money(totalAmount - baseAmount, 'GBP'),
+          taxes: money(sourceAmount - baseAmount, 'GBP'),
           source: money(sourceAmount, 'GBP'),
+          serviceFee: money(serviceFeeAmount, 'GBP'),
         };
       })(),
       expiresAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),

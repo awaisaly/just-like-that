@@ -93,7 +93,7 @@ Copy from [`.env.example`](../apps/web/.env.example). Values are currently the s
 | `DUFFEL_USE_MOCK` | Dev / fallback | `true` for mock fares |
 | `DUFFEL_ACCESS_TOKEN` | For live search | Server-only |
 | `DUFFEL_SUPPLIER_TIMEOUT_MS` | Optional | Default `15000`. Must stay below the search route timeout. |
-| `FLIGHT_PRICE_MARKUP_PERCENT` | Optional | Default `5` |
+| `FLIGHT_PRICE_MARKUP_PERCENT` | Optional | Default `5`. Instalment service fee only — not added to search listings |
 | `FLIGHT_SEARCH_CACHE_TTL_SECONDS` | Optional | Default `600` |
 | `FLIGHT_CALENDAR_CACHE_TTL_SECONDS` | Optional | Default `1800` |
 | `RESEND_API_KEY` | Prod callbacks | Server-only |
@@ -117,3 +117,4 @@ Public content pages (home, destinations, routes, guides, about, FAQ, contact) a
 - WhatsApp uses a prefilled `wa.me` link the customer opens manually — no WhatsApp Business API.
 - WhatsApp clicks fire one Google Ads conversion via gtag (`NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_CONVERSION_ID`). Do not add a GTM Google Ads conversion tag for WhatsApp, or the same click will count twice.
 - Flight offers live only in the browser session until the customer submits a callback request.
+- Search listings show provider fares. `FLIGHT_PRICE_MARKUP_PERCENT` is an instalment service fee added after the customer selects a ticket (not when they pay in full).

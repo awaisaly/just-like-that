@@ -1,12 +1,12 @@
-import { applyMarkup, money, type Money } from '@jlt/shared';
+import { addMoney, applyMarkup, money, type Money } from '@jlt/shared';
 
 /**
- * Single place to configure flight price markup (percent).
+ * Instalment service fee (percent of the listed fare).
  *
- * Default: 5
- * Override via env: FLIGHT_PRICE_MARKUP_PERCENT=5  (use 0 to show provider prices as-is)
+ * Not applied to search listings or pay-in-full. Added only when the customer
+ * selects a ticket and chooses instalments.
  *
- * Applied to every live/mock flight offer total shown in search, offer details, and checkout.
+ * Override via env: FLIGHT_PRICE_MARKUP_PERCENT=5  (use 0 for no fee)
  */
 export const FLIGHT_PRICE_MARKUP_PERCENT = parseMarkupPercent(
   process.env.FLIGHT_PRICE_MARKUP_PERCENT,
@@ -28,4 +28,26 @@ export function markUpFlightMoney(value: Money): Money {
 /** Mark up an integer minor-unit amount (same currency). */
 export function markUpFlightAmount(amountMinor: number, currency = 'GBP'): number {
   return markUpFlightMoney(money(amountMinor, currency)).amount;
+}
+
+/** Service fee in minor units for an instalment booking of this listed fare. */
+export function flightServiceFeeAmount(listedMinor: number, currency = 'GBP'): number {
+  return markUpFlightAmount(listedMinor, currency) - listedMinor;
+}
+
+export type OfferPrice = {
+  total: Money;
+  serviceFee?: Money;
+};
+
+export function instalmentServiceFee(price: OfferPrice): Money {
+  return price.serviceFee ?? money(0, price.total.currency);
+}
+
+/** Listed fare, plus instalment service fee when that payment option is selected. */
+export function payableFare(price: OfferPrice, payment: 'full' | 'installments'): Money {
+  if (payment !== 'installments') return price.total;
+  const fee = instalmentServiceFee(price);
+  if (fee.amount === 0) return price.total;
+  return addMoney(price.total, fee);
 }
