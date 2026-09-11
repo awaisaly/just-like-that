@@ -34,7 +34,7 @@ Pending confirmation (/checkout/pending)
 2. **Results** (`/flights/search`) — Live offers with Best / Cheapest / Fastest, sort, filters (stops, times, airlines, bags, price), and a flexible-dates bar that shows cached nearby fares (a live search runs when you tap a day).
 3. **Offer** (`/flights/offers/[offerId]`) — Full itinerary; selection is stored in session (`jlt-flight-selection`).
 4. **Callback** (`/checkout`) — Contact details, preferred time, full vs instalments. Posts the selected offer + travellers to `/api/leads`; agent receives the itinerary by email.
-5. **Contact** (`/contact`) — Separate general enquiry form (`/api/contact`); not tied to a selected fare.
+5. **Contact** (`/contact`) — WhatsApp, UK voice line, and email. No public enquiry form.
 
 Instalments are the primary booking message; payment is arranged offline with the agent after re-price.
 
