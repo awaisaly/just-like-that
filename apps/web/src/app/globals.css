@@ -1955,6 +1955,201 @@
     color: #fff;
   }
 
+  .offer-page {
+    padding-bottom: 5.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .offer-page {
+      padding-bottom: 0;
+    }
+  }
+
+  .offer-page-kicker {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .offer-page-title {
+    margin: 0.35rem 0 0;
+    font-size: clamp(1.65rem, 3.4vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--color-brand-navy);
+  }
+
+  .offer-page-lead {
+    margin: 0.45rem 0 0;
+    max-width: 36rem;
+    font-size: 0.98rem;
+    color: var(--color-muted);
+  }
+
+  .offer-booking {
+    display: grid;
+    gap: 1rem;
+    padding: 1.2rem 1.15rem 1.25rem;
+    border-radius: 1.45rem;
+    border: 1px solid color-mix(in oklab, var(--color-accent) 28%, var(--color-line));
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--color-accent) 8%, white) 0%, #fff 7.5rem);
+    box-shadow: 0 16px 36px rgb(16 25 58 / 8%);
+  }
+
+  .offer-booking-eyebrow {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .offer-booking-route {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--color-brand-navy);
+  }
+
+  .offer-booking-meta {
+    margin: -0.35rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .offer-booking-cta {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .offer-booking-cta-note {
+    margin: 0;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+  }
+
+  .offer-booking-steps {
+    margin: 0;
+    padding: 0.15rem 0 0;
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .offer-booking-step {
+    display: grid;
+    grid-template-columns: 1.55rem 1fr;
+    gap: 0.65rem;
+    align-items: start;
+  }
+
+  .offer-booking-step-n {
+    display: grid;
+    place-items: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, #25d366 16%, white);
+    color: #128c7e;
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .offer-booking-step-title {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: var(--color-brand-navy);
+  }
+
+  .offer-booking-step-body {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+  }
+
+  .offer-booking-instalment {
+    display: grid;
+    gap: 0.2rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .offer-booking-instalment-link {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .offer-booking-instalment-link:hover {
+    color: var(--color-accent-dark);
+  }
+
+  .offer-booking-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem calc(0.7rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--color-line);
+    background: rgb(255 255 255 / 94%);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -10px 28px rgb(16 25 58 / 10%);
+  }
+
+  .offer-booking-bar-price {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .offer-booking-bar-amount {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--color-brand-navy);
+  }
+
+  .offer-booking-bar-route {
+    margin: 0.05rem 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .offer-booking-bar .offer-whatsapp,
+  .offer-booking-bar .offer-whatsapp-btn {
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  @media (min-width: 1024px) {
+    .offer-booking-bar {
+      display: none;
+    }
+  }
+
   .offer-whatsapp {
     position: relative;
   }
@@ -1963,28 +2158,124 @@
     display: inline-flex;
     width: 100%;
     align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    min-height: 3.15rem;
+    gap: 0.7rem;
+    min-height: 3.55rem;
+    padding: 0.65rem 0.9rem 0.65rem 0.7rem;
     border: 0;
-    border-radius: 0.85rem;
-    background: #128c7e;
+    border-radius: 1rem;
+    background: #25d366;
     color: #fff;
     font-size: 0.95rem;
     font-weight: 800;
+    text-align: left;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    box-shadow:
+      0 10px 22px rgb(37 211 102 / 32%),
+      0 2px 6px rgb(16 25 58 / 10%);
+    transition:
+      background-color 0.15s ease,
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
   }
 
   .offer-whatsapp-btn:hover {
-    background: #075e54;
+    background: #1ebe57;
+    transform: translateY(-1px);
+    box-shadow:
+      0 14px 26px rgb(37 211 102 / 38%),
+      0 4px 10px rgb(16 25 58 / 12%);
+  }
+
+  .offer-whatsapp-btn:focus-visible {
+    outline: 2px solid #075e54;
+    outline-offset: 3px;
+  }
+
+  .offer-whatsapp-btn-icon-wrap {
+    display: grid;
+    place-items: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 18%);
   }
 
   .offer-whatsapp-btn-icon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.3rem;
+    height: 1.3rem;
     flex-shrink: 0;
+  }
+
+  .offer-whatsapp-btn-copy {
+    display: grid;
+    min-width: 0;
+    flex: 1;
+    gap: 0.05rem;
+  }
+
+  .offer-whatsapp-btn-title {
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .offer-whatsapp-btn-hint {
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.92;
+  }
+
+  .offer-whatsapp-btn-arrow {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+
+  .offer-whatsapp-btn.is-bar {
+    min-height: 2.85rem;
+    width: auto;
+    max-width: 100%;
+    padding: 0.55rem 0.85rem 0.55rem 0.55rem;
+    border-radius: 0.9rem;
+    gap: 0.5rem;
+  }
+
+  .offer-whatsapp-btn.is-bar .offer-whatsapp-btn-icon-wrap {
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+
+  .offer-whatsapp-btn.is-bar .offer-whatsapp-btn-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .offer-whatsapp-btn.is-bar .offer-whatsapp-btn-title {
+    font-size: 0.88rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .offer-whatsapp-btn:not(.is-bar) {
+      animation: offer-whatsapp-pulse 2.8s ease-in-out infinite;
+    }
+  }
+
+  @keyframes offer-whatsapp-pulse {
+    0%,
+    100% {
+      box-shadow:
+        0 10px 22px rgb(37 211 102 / 32%),
+        0 2px 6px rgb(16 25 58 / 10%);
+    }
+    50% {
+      box-shadow:
+        0 10px 22px rgb(37 211 102 / 32%),
+        0 2px 6px rgb(16 25 58 / 10%),
+        0 0 0 7px rgb(37 211 102 / 16%);
+    }
   }
 
   .offer-whatsapp-menu {

@@ -4,8 +4,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef, useState } from 'react';
 import { AGENCY_NAME } from '../lib/brand';
 import { getWhatsAppLines, whatsappChatHref } from '../lib/contact';
-import { useCheckoutStore } from '../lib/stores';
-import { buildSelectedOfferWhatsAppMessage } from '../lib/whatsapp';
 
 function WhatsAppIcon() {
   return (
@@ -23,17 +21,10 @@ const defaultMessage = `Hi, I have a question about flights on ${AGENCY_NAME}.`;
 /** Fixed WhatsApp button — opens a chat (or a choice when multiple numbers are configured). */
 export function WhatsAppChatButton() {
   const pathname = usePathname();
-  const selection = useCheckoutStore((state) => state.selection);
   const lines = getWhatsAppLines();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
-
-  const onOfferPage = pathname.startsWith('/flights/offers/');
-  const message =
-    onOfferPage && selection
-      ? buildSelectedOfferWhatsAppMessage(selection.offer, selection.travellers)
-      : defaultMessage;
 
   useEffect(() => {
     if (!open) return;
@@ -51,7 +42,7 @@ export function WhatsAppChatButton() {
     };
   }, [open]);
 
-  if (!lines.length) return null;
+  if (!lines.length || pathname.startsWith('/flights/offers/')) return null;
 
   const primary = lines[0]!;
   const hasMultiple = lines.length > 1;
@@ -59,7 +50,7 @@ export function WhatsAppChatButton() {
   if (!hasMultiple) {
     return (
       <a
-        href={whatsappChatHref(primary.digits, message)}
+        href={whatsappChatHref(primary.digits, defaultMessage)}
         className="whatsapp-fab"
         target="_blank"
         rel="noopener noreferrer"
@@ -78,7 +69,7 @@ export function WhatsAppChatButton() {
           {lines.map((line) => (
             <a
               key={line.digits}
-              href={whatsappChatHref(line.digits, message)}
+              href={whatsappChatHref(line.digits, defaultMessage)}
               className="whatsapp-fab-option"
               target="_blank"
               rel="noopener noreferrer"

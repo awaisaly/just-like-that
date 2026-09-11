@@ -3,16 +3,12 @@
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { formatMoney } from '@jlt/shared';
-import { FareBreakdown } from '../../../../components/FareBreakdown';
+import { findAirport } from '../../../../data/airports';
 import { FlightItinerary } from '../../../../components/FlightItinerary';
-import { InstalmentPhrase } from '../../../../components/InstalmentAccent';
-import { OfferWhatsAppButton } from '../../../../components/OfferWhatsAppButton';
+import { OfferBookingBar, OfferBookingCard } from '../../../../components/OfferBookingCard';
 import { apiFetch } from '../../../../lib/api';
 import type { NormalizedOffer } from '../../../../lib/flight';
 import { isMockOfferId } from '../../../../lib/flight';
-import { INSTALMENTS_HREF, instalmentCopy } from '../../../../lib/instalments';
-import { payableFare } from '../../../../lib/pricing';
 import { useCheckoutStore } from '../../../../lib/stores';
 
 export default function OfferDetailPage() {
@@ -82,8 +78,14 @@ export default function OfferDetailPage() {
     );
   }
 
+  const outbound = offer.slices[0]?.segments ?? [];
+  const first = outbound[0];
+  const lastOut = outbound[outbound.length - 1];
+  const origin = cityName(first?.origin ?? '');
+  const destination = cityName(lastOut?.destination ?? '');
+
   return (
-    <div className="stack">
+    <div className="offer-page stack">
       <button
         type="button"
         onClick={() => router.back()}
@@ -91,14 +93,23 @@ export default function OfferDetailPage() {
       >
         ← Back to results
       </button>
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <h1 className="m-0">Flight details</h1>
-        {refreshing ? (
-          <p className="m-0 text-xs font-semibold text-muted">Refreshing live fare details…</p>
-        ) : null}
-      </div>
 
-      <div className="grid gap-5 lg:grid-cols-[1fr_320px] lg:items-start">
+      <header className="offer-page-header">
+        <p className="offer-page-kicker">Your selected flight</p>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <h1 className="offer-page-title">
+            {origin} <span aria-hidden="true">→</span> {destination}
+          </h1>
+          {refreshing ? (
+            <p className="m-0 text-xs font-semibold text-muted">Refreshing live fare details…</p>
+          ) : null}
+        </div>
+        <p className="offer-page-lead">
+          Review the itinerary, then WhatsApp a UK agent to book — instalments or pay in full.
+        </p>
+      </header>
+
+      <div className="grid gap-5 lg:grid-cols-[1fr_minmax(20rem,22.5rem)] lg:items-start">
         <div className="card stack">
           {offer.slices.map((slice, sliceIndex) => (
             <section key={sliceIndex}>
@@ -135,44 +146,27 @@ export default function OfferDetailPage() {
           </div>
         </div>
 
-        <aside
-          className="card stack lg:sticky"
+        <div
+          className="offer-booking-sticky lg:sticky"
           style={{ top: 'calc(var(--site-chrome-height, 6.5rem) + 0.75rem)' }}
         >
-          <div>
-            <FareBreakdown price={offer.price} payment="installments" headline />
-            {offer.price.serviceFee && offer.price.serviceFee.amount > 0 ? (
-              <p className="mt-2 text-xs text-muted">
-                Pay in full: {formatMoney(payableFare(offer.price, 'full'))} (no service fee)
-              </p>
-            ) : null}
-            <p className="instalment-price-note mt-1.5">{instalmentCopy.priceNote}</p>
-          </div>
-          <div className="rounded-xl border border-accent/25 bg-[#fff7f2] px-3 py-2.5">
-            <p className="m-0 text-base font-bold text-brand-navy">
-              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
-            </p>
-            <p className="mt-0.5 text-xs text-muted">Our primary way to book</p>
-            <Link
-              href={INSTALMENTS_HREF}
-              className="mt-1 inline-block text-xs font-bold text-accent hover:text-accent-dark"
-            >
-              How instalments work →
-            </Link>
-          </div>
-          <div className="grid gap-1 border-t border-line pt-3 text-sm">
-            <Row label="Base fare" value={formatMoney(offer.price.base)} />
-            <Row label="Taxes" value={formatMoney(offer.price.taxes)} />
-          </div>
-          <OfferWhatsAppButton offer={offer} travellers={selection?.travellers} />
-          <p className="text-center text-xs text-muted">{instalmentCopy.offerNote}</p>
-        </aside>
+          <OfferBookingCard offer={offer} travellers={selection?.travellers} />
+        </div>
       </div>
+
+      <OfferBookingBar offer={offer} travellers={selection?.travellers} />
     </div>
   );
 }
 
-function cabinLabel(cabin: string): string {
+function cityName(code: string) {
+  if (!code) return '—';
+  const airport = findAirport(code);
+  const city = airport?.city.replace(/\(.*?\)/g, '').trim();
+  return city || code;
+}
+
+function cabinLabel(cabin: string) {
   return cabin
     .split('_')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
@@ -184,15 +178,6 @@ function Info({ label, value }: { label: string; value: string }) {
     <div>
       <div className="field-label">{label}</div>
       <div className="text-sm font-semibold text-ink">{value}</div>
-    </div>
-  );
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between">
-      <span className="text-muted">{label}</span>
-      <span className="font-semibold text-ink">{value}</span>
     </div>
   );
 }
