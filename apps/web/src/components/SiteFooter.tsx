@@ -335,8 +335,8 @@ export function SiteFooter() {
               </a>
             ))}
             <Link href="/contact" className="footer-contact-action is-form">
-              <span className="footer-contact-action-label">Send a message</span>
-              <span className="footer-contact-action-value">Contact form →</span>
+              <span className="footer-contact-action-label">Talk to us</span>
+              <span className="footer-contact-action-value">Phone, WhatsApp &amp; email →</span>
             </Link>
           </div>
         </section>

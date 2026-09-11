@@ -33,7 +33,7 @@ export function GET() {
 - [Destinations hub](${base}/destinations): Curated destination guides
 - [About](${base}/about): Who we are and how we book
 - [FAQ](${base}/faq): Booking, instalments, and agent support
-- [Contact](${base}/contact): Voice call, WhatsApp, email, and enquiry form
+- [Contact](${base}/contact): Voice call, WhatsApp, and email
 - [Pay in instalments](${base}/guides/paying-for-flights-in-instalments): How book-now instalment plans work
 - [Cheap flights to Africa](${base}/guides/cheap-flights-to-africa): Africa flight guide
 - [Flights to Nigeria from London](${base}/guides/flights-uk-nigeria): UK–Nigeria corridor, both directions

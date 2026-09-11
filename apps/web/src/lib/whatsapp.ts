@@ -46,10 +46,10 @@ export function buildSelectedOfferWhatsAppMessage(
   offer: NormalizedOffer,
   travellers?: TravellerSummary,
 ): string {
-  const first = offer.slices[0]?.segments[0];
-  const lastSlice = offer.slices[offer.slices.length - 1];
-  const last = lastSlice?.segments[lastSlice.segments.length - 1];
-  const route = `${first?.origin ?? '—'} → ${last?.destination ?? '—'}`;
+  const outbound = offer.slices[0]?.segments ?? [];
+  const first = outbound[0];
+  const lastOut = outbound[outbound.length - 1];
+  const route = `${first?.origin ?? '—'} → ${lastOut?.destination ?? '—'}`;
 
   const lines = [
     `Hi, I’m interested in this flight on ${AGENCY_NAME}.`,
