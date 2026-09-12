@@ -52,6 +52,7 @@ export function WhatsAppChatButton() {
       <a
         href={whatsappChatHref(primary.digits, defaultMessage)}
         className="whatsapp-fab"
+        data-whatsapp-cta="float"
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Chat with ${AGENCY_NAME} on WhatsApp`}
@@ -71,6 +72,7 @@ export function WhatsAppChatButton() {
               key={line.digits}
               href={whatsappChatHref(line.digits, defaultMessage)}
               className="whatsapp-fab-option"
+              data-whatsapp-cta="float"
               target="_blank"
               rel="noopener noreferrer"
               role="menuitem"

@@ -115,6 +115,6 @@ Public content pages (home, destinations, routes, guides, about, FAQ, contact) a
 - Callback requests are emailed to `LEADS_EMAIL_TO`. They are **not** stored in a database.
 - On Vercel when `VERCEL_ENV=production`, Resend must be configured or `/api/leads` / `/api/contact` fail. Local/preview builds accept requests without sending mail when Resend env vars are empty.
 - WhatsApp uses a prefilled `wa.me` link the customer opens manually — no WhatsApp Business API.
-- WhatsApp clicks fire one Google Ads conversion via gtag (`NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_CONVERSION_ID`). Do not add a GTM Google Ads conversion tag for WhatsApp, or the same click will count twice.
+- WhatsApp clicks fire `generate_lead` to the Ads tag (`AW-18381676468`) and, when set, one click conversion via `NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_CONVERSION_ID`. Do not also add a GTM Google Ads conversion tag for WhatsApp, or the same click will count twice. Page view and Calls from ads cannot record WhatsApp.
 - Flight offers live only in the browser session until the customer submits a callback request.
 - Search listings show provider fares. `FLIGHT_PRICE_MARKUP_PERCENT` is an instalment service fee added after the customer selects a ticket (not when they pay in full).

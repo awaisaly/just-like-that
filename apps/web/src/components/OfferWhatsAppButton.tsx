@@ -65,7 +65,13 @@ export function OfferWhatsAppButton({
 
   if (lines.length === 1) {
     return (
-      <a href={primaryHref} target="_blank" rel="noopener noreferrer" className={btnClass}>
+      <a
+        href={primaryHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={btnClass}
+        data-whatsapp-cta="booking"
+      >
         {label}
       </a>
     );
@@ -95,6 +101,7 @@ export function OfferWhatsAppButton({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="offer-whatsapp-option"
+                data-whatsapp-cta="booking"
                 role="menuitem"
                 onClick={() => setOpen(false)}
               >
