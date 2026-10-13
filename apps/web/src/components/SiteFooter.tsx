@@ -355,9 +355,16 @@ export function SiteFooter() {
               </Link>
             </p>
           </div>
-          <p className="m-0 text-xs text-muted">
-            © {new Date().getFullYear()} {AGENCY_NAME}. All rights reserved.
-          </p>
+          <div className="grid gap-2 sm:justify-items-end">
+            <nav className="footer-legal" aria-label="Policies">
+              <Link href="/terms">Terms of service</Link>
+              <Link href="/privacy">Privacy policy</Link>
+              <Link href="/returns">Return policy</Link>
+            </nav>
+            <p className="m-0 text-xs text-muted">
+              © {new Date().getFullYear()} {AGENCY_NAME}. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

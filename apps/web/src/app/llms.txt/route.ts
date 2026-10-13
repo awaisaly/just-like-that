@@ -34,6 +34,9 @@ export function GET() {
 - [About](${base}/about): Who we are and how we book
 - [FAQ](${base}/faq): Booking, instalments, and agent support
 - [Contact](${base}/contact): Voice call, WhatsApp, and email
+- [Terms of service](${base}/terms): Website and agent-booking terms
+- [Privacy policy](${base}/privacy): How personal information is used
+- [Return policy](${base}/returns): Flight changes, cancellations, and refunds
 - [Pay in instalments](${base}/guides/paying-for-flights-in-instalments): How book-now instalment plans work
 - [Cheap flights to Africa](${base}/guides/cheap-flights-to-africa): Africa flight guide
 - [Flights to Nigeria from London](${base}/guides/flights-uk-nigeria): UK–Nigeria corridor, both directions
