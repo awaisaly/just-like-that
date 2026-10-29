@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Syne } from 'next/font/google';
+import localFont from 'next/font/local';
 import Script from 'next/script';
 import { AdsWhatsAppTracker } from '../components/AdsWhatsAppTracker';
 import { DeferredWhatsAppChatButton } from '../components/DeferredWhatsAppChatButton';
@@ -11,11 +11,11 @@ import { ADS_CALL_LINK_CLASS, ADS_CALL_NUMBER_CLASS, getSupportEmail } from '../
 import { getSiteUrl, SITE_KEYWORDS } from '../lib/seo';
 import './globals.css';
 
-const brandFont = Syne({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-brand',
+const brandFont = localFont({
+  src: './fonts/syne-latin.woff2',
+  weight: '400 800',
   display: 'swap',
+  variable: '--font-brand',
 });
 
 export const viewport: Viewport = {
