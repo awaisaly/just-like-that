@@ -2,12 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { InstalmentSpotlight } from '../../../components/Instalments';
-import { InstalmentPhrase, PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
 import { findAirport } from '../../../data/airports';
 import { getSeoPage, getSeoPagesByType, seoPath } from '../../../data/seo-pages';
 import { AGENCY_NAME } from '../../../lib/brand';
-import { INSTALMENTS_FAQ_HREF, INSTALMENTS_HREF, instalmentCopy } from '../../../lib/instalments';
 import { buildPageMetadata, CAMPAIGN_SEARCH_TERMS } from '../../../lib/seo';
 import { TOURS_SLUG, tourCopy } from '../../../lib/tours';
 
@@ -39,10 +36,6 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   const page = getSeoPage(slug);
   if (!page || page.type !== 'guide') notFound();
 
-  if (slug === 'paying-for-flights-in-instalments') {
-    return <InstalmentsGuide />;
-  }
-
   if (slug === TOURS_SLUG) {
     return <ToursGuide faq={page.faq} />;
   }
@@ -59,7 +52,6 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     <div className="stack">
       <h1>{page.h1}</h1>
       <p>{page.metaDescription}</p>
-      <InstalmentSpotlight compact />
     </div>
   );
 }
@@ -116,8 +108,7 @@ function AfricaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
         </h1>
         <p className="text-lg text-muted">
           {AGENCY_NAME} helps UK travellers find cheap flights to Africa — Nigeria, Ghana, Kenya,
-          South Africa and more. Search live fares online, then book with a UK agent. Instalments are
-          our primary way to pay.
+          South Africa and more. Search live fares online, then book with a UK agent.
         </p>
       </section>
 
@@ -169,7 +160,6 @@ function AfricaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
         </div>
       </section>
 
-      <InstalmentSpotlight compact />
       <GuideFaq faq={faq} />
 
       <section className="flex flex-wrap gap-3">
@@ -211,7 +201,7 @@ function UkNigeriaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
           Book flights to Nigeria from London and a flight from Nigeria to London with {AGENCY_NAME}.
           Cheap flights from London to Lagos, tickets from Lagos to London, a flight ticket to
           Nigeria from London, Abuja, Port Harcourt, Manchester and Birmingham — confirmed by a UK
-          agent, with instalments available.
+          agent.
         </p>
       </section>
 
@@ -225,7 +215,7 @@ function UkNigeriaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-muted">
           <li>Search live fares for your dates and travellers</li>
           <li>Request a callback — no online payment on this site</li>
-          <li>Your UK agent re-confirms price, bags, seats, and instalments</li>
+          <li>Your UK agent re-confirms price, bags, and seats</li>
         </ul>
       </section>
 
@@ -249,7 +239,6 @@ function UkNigeriaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
         </div>
       </section>
 
-      <InstalmentSpotlight compact />
       <GuideFaq faq={faq} />
 
       <section className="flex flex-wrap gap-3">
@@ -271,65 +260,6 @@ function UkNigeriaFlightsGuide({ faq }: { faq: { q: string; a: string }[] }) {
         >
           More Africa flights
         </Link>
-      </section>
-    </div>
-  );
-}
-
-function InstalmentsGuide() {
-  return (
-    <div className="stack">
-      <section className="stack max-w-2xl">
-        <p className="m-0 text-xs font-bold uppercase tracking-[0.14em] text-accent">
-          Our primary promise
-        </p>
-        <h1 className="m-0 text-4xl font-extrabold leading-tight text-brand-navy sm:text-5xl">
-          <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
-        </h1>
-        <p className="text-lg text-muted">
-          Instalment plans are how most {AGENCY_NAME} travellers book. Search live fares, book with
-          a UK agent, and pay on a schedule — every instalment must be paid before you fly. Or pay
-          in full if you prefer.
-        </p>
-      </section>
-
-      <InstalmentSpotlight compact />
-
-      <section className="stack max-w-2xl">
-        <h2 className="m-0 text-2xl font-extrabold">How instalments work with us</h2>
-        <div className="grid gap-4">
-          {instalmentCopy.steps.map((step) => (
-            <div key={step.n} className="border-l-2 border-accent pl-4">
-              <p className="m-0 text-[11px] font-bold tracking-[0.14em] text-muted">{step.n}</p>
-              <h3 className="mt-1 text-lg font-bold text-brand-navy">{step.title}</h3>
-              <p className="mt-1 text-sm text-muted">{step.body}</p>
-            </div>
-          ))}
-        </div>
-        <p className="text-sm text-muted">
-          Exact terms depend on the airline, fare rules, and how soon you travel. Your agent
-          confirms everything before you commit — nothing is ticketed until the plan is clear.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/flights/search"
-            className="inline-flex rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white hover:bg-accent-dark"
-          >
-            Search flights
-          </Link>
-          <Link
-            href={INSTALMENTS_FAQ_HREF}
-            className="inline-flex rounded-xl border border-line px-5 py-3 text-sm font-bold text-brand-navy hover:border-brand/40"
-          >
-            More FAQs
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex rounded-xl border border-line px-5 py-3 text-sm font-bold text-brand-navy hover:border-brand/40"
-          >
-            Contact us
-          </Link>
-        </div>
       </section>
     </div>
   );
@@ -376,9 +306,7 @@ function ToursGuide({ faq }: { faq: { q: string; a: string }[] }) {
             {tourCopy.motto}
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/85">
-            {tourCopy.heroSupport} Or{' '}
-            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> on the flights
-            that get you there.
+            {tourCopy.heroSupport}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -411,7 +339,7 @@ function ToursGuide({ faq }: { faq: { q: string; a: string }[] }) {
           </p>
           <p className="m-0 text-base leading-relaxed text-muted">
             Nothing is ticketed on the website. A UK agent re-confirms availability, explains what is
-            included, and sets up instalments or full payment before you commit.
+            included, and confirms payment with you before you commit.
           </p>
         </div>
         <div className="relative min-h-[240px] overflow-hidden rounded-3xl">
@@ -462,8 +390,6 @@ function ToursGuide({ faq }: { faq: { q: string; a: string }[] }) {
         </div>
       </section>
 
-      <InstalmentSpotlight compact />
-
       <section className="flex flex-col gap-4 rounded-3xl border border-line bg-surface px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-7">
         <div>
           <p className="m-0 text-xs font-bold uppercase tracking-[0.14em] text-accent">Next step</p>
@@ -487,12 +413,6 @@ function ToursGuide({ faq }: { faq: { q: string; a: string }[] }) {
             className="inline-flex rounded-xl border border-line bg-white px-5 py-3 text-sm font-bold text-brand-navy hover:border-brand/40"
           >
             Search flights
-          </Link>
-          <Link
-            href={INSTALMENTS_HREF}
-            className="inline-flex rounded-xl border border-line bg-white px-5 py-3 text-sm font-bold text-brand-navy hover:border-brand/40"
-          >
-            Instalments
           </Link>
         </div>
       </section>

@@ -1,25 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  InstalmentMottoAccent,
-  PayInInstalmentsAccent,
-} from '../../components/InstalmentAccent';
-import { InstalmentSpotlight } from '../../components/Instalments';
 import { getPrimaryWhatsAppLine, whatsappChatHref } from '../../lib/contact';
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata = buildPageMetadata({
   title: 'About us',
   description:
-    'Elca Airbridge helps travellers book cheap flights from London to Lagos and flights to Nigeria from London — plus tickets from Lagos to London. Book now, pay in instalments, with a UK agent.',
+    'Elca Airbridge helps travellers book cheap flights from London to Lagos and flights to Nigeria from London — plus tickets from Lagos to London. Book with a UK agent.',
   path: '/about',
   ogTitle: 'About Elca Airbridge',
 });
 
 const pillars = [
   {
-    title: 'Book now. Pay in instalments.',
-    body: 'Instalment plans are our primary way to book. Search live fares, book with a UK agent, and pay on a schedule — every instalment must be paid before you fly. Or settle in full if you prefer.',
+    title: 'Book with a UK agent.',
+    body: 'Search live fares, then a UK agent re-checks the ticket and books it with you. Nothing is charged on this website.',
   },
   {
     title: 'Airline access that matters',
@@ -27,7 +22,7 @@ const pillars = [
   },
   {
     title: 'People on the booking',
-    body: 'Search online, then speak with a UK agent who re-checks the fare, bags, and seats, books your ticket, and sets up instalments — all paid before you fly.',
+    body: 'Search online, then speak with a UK agent who re-checks the fare, bags, and seats, and books your ticket.',
   },
 ];
 
@@ -73,9 +68,8 @@ export default function AboutPage() {
             <span className="text-accent">Booked with people.</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/85">
-            A UK travel desk built so you can book now and{' '}
-            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> — with a real
-            consultant when the details matter.
+            A UK travel desk for comparing fares online, then booking with a real consultant when
+            the details matter.
           </p>
         </div>
       </section>
@@ -133,13 +127,7 @@ export default function AboutPage() {
         <div className="mx-auto grid w-[min(1200px,calc(100%-2rem))] gap-8 py-12 sm:grid-cols-3 sm:gap-6 sm:py-16">
           {pillars.map((pillar) => (
             <div key={pillar.title}>
-              <h3 className="m-0 text-lg font-extrabold text-brand-navy">
-                {pillar.title === 'Book now. Pay in instalments.' ? (
-                  <InstalmentMottoAccent />
-                ) : (
-                  pillar.title
-                )}
-              </h3>
+              <h3 className="m-0 text-lg font-extrabold text-brand-navy">{pillar.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{pillar.body}</p>
             </div>
           ))}
@@ -177,8 +165,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <InstalmentSpotlight compact />
-
       <section className="grid gap-8 overflow-hidden rounded-3xl bg-brand-navy text-white lg:grid-cols-[1fr_1.1fr]">
         <div className="relative min-h-[240px] lg:min-h-full">
           <Image
@@ -197,8 +183,8 @@ export default function AboutPage() {
             Prefer a person to a form?
           </h2>
           <p className="mt-3 max-w-md text-base text-white/80">
-            Message us on WhatsApp. That is still the fastest way to set up an instalment plan —
-            our primary promise — or to sort groups and sold-out dates.
+            Message us on WhatsApp. That is still the fastest way to ask about a fare, a group, or
+            a sold-out date.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a

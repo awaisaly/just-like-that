@@ -4,9 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatMoney } from '@jlt/shared';
 import { SearchForm } from '../../../components/SearchForm';
-import { PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
 import { findAirport } from '../../../data/airports';
-import { InstalmentSpotlight } from '../../../components/Instalments';
 import {
   formatFromPrice,
   getDestinationCard,
@@ -14,7 +12,6 @@ import {
   routesToDestination,
 } from '../../../data/destinations';
 import { getSeoPage, getSeoPagesByType, seoPath } from '../../../data/seo-pages';
-import { instalmentCopy } from '../../../lib/instalments';
 import { destinationAboutCopy } from '../../../lib/seo-content';
 import { buildPageMetadata, getSiteUrl, landingKeywords } from '../../../lib/seo';
 
@@ -64,10 +61,6 @@ export default async function DestinationPage({
           {
             q: `How do I book flights to ${dest.city}?`,
             a: 'Search live fares, select an offer, then request a callback. A UK agent confirms availability and booking by phone or WhatsApp.',
-          },
-          {
-            q: 'Can I pay in instalments?',
-            a: 'Yes — instalment plans are our primary way of helping travellers book. After you select a fare and request a callback, your agent will set up a plan that suits you.',
           },
         ];
 
@@ -133,8 +126,7 @@ export default async function DestinationPage({
               {page.h1}
             </h1>
             <p className="mt-2 max-w-xl text-base text-white/90">
-              {dest.blurb} Book with a UK agent and{' '}
-              <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent>.
+              {dest.blurb} Book with a UK agent.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               {priceLabel ? (
@@ -206,31 +198,19 @@ export default async function DestinationPage({
         </section>
       ) : null}
 
-      <InstalmentSpotlight compact />
-
-      <section className="grid gap-4 sm:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-2">
         {[
-          {
-            title: instalmentCopy.short,
-            body: 'Book now with a UK agent, then pay in instalments — all paid before you fly.',
-          },
           {
             title: 'Live fares, then confirmed',
             body: `See indicative prices for ${dest.city}, then let a UK agent confirm the live fare before you book.`,
           },
           {
             title: 'Agent-assisted booking',
-            body: 'No online payment here. We finalise seats, bags, and your instalment plan with you.',
+            body: 'No online payment here. We finalise seats and bags with you.',
           },
         ].map((item) => (
           <div key={item.title} className="rounded-2xl border border-line bg-white p-5 shadow-sm">
-            <h3 className="m-0 text-base font-bold text-brand-navy">
-              {item.title === instalmentCopy.short ? (
-                <PayInInstalmentsAccent>{item.title}</PayInInstalmentsAccent>
-              ) : (
-                item.title
-              )}
-            </h3>
+            <h3 className="m-0 text-base font-bold text-brand-navy">{item.title}</h3>
             <p className="mt-2 text-sm text-muted">{item.body}</p>
           </div>
         ))}

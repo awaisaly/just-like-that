@@ -1,8 +1,17 @@
 import type { Metadata } from 'next';
 import { AGENCY_NAME } from './brand';
 
+/** Public production origin. Replaces a stale or local site URL on production builds. */
+const PRODUCTION_SITE_URL = 'https://www.elcaairbridge.com';
+
 export function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, '') ?? '';
+  const stale =
+    !configured || /localhost|127\.0\.0\.1|cheapnigeriaflights\.org/i.test(configured);
+  const production =
+    process.env.NEXT_PUBLIC_APP_ENV === 'production' || process.env.VERCEL_ENV === 'production';
+  if (stale && production) return PRODUCTION_SITE_URL;
+  return configured || 'http://localhost:3000';
 }
 
 /**
@@ -32,7 +41,6 @@ export const SITE_KEYWORDS = [
   'flights to Accra from UK',
   'UK to Africa flights',
   'Nigeria to UK flights',
-  'pay for flights in instalments',
   AGENCY_NAME,
 ] as const;
 

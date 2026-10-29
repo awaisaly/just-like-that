@@ -7,9 +7,7 @@ import { useForm } from 'react-hook-form';
 import { apiFetch } from '../../lib/api';
 import { FareBreakdown } from '../../components/FareBreakdown';
 import { getPrimaryWhatsAppLine, whatsappChatHref } from '../../lib/contact';
-import { INSTALMENTS_HREF, instalmentCopy } from '../../lib/instalments';
 import { useCheckoutStore } from '../../lib/stores';
-import { InstalmentPhrase, PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 
 const whatsapp = getPrimaryWhatsAppLine();
 const whatsappHref = whatsapp ? whatsappChatHref(whatsapp.digits) : '/contact';
@@ -21,7 +19,6 @@ type FormValues = {
   email: string;
   phone: string;
   preferredTime: string;
-  paymentPreference: 'full' | 'installments';
   consent: boolean;
   company: string;
 };
@@ -35,7 +32,6 @@ export default function CheckoutPage() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     defaultValues: {
@@ -44,13 +40,10 @@ export default function CheckoutPage() {
       email: '',
       phone: '',
       preferredTime: 'Weekday mornings',
-      paymentPreference: 'installments',
       consent: false,
       company: '',
     },
   });
-
-  const pref = watch('paymentPreference');
 
   async function onSubmit(values: FormValues) {
     if (!selection) {
@@ -74,7 +67,7 @@ export default function CheckoutPage() {
             phone: values.phone,
           },
           preferredTime: values.preferredTime,
-          paymentPreference: values.paymentPreference,
+          paymentPreference: 'full',
           travellers: selection.travellers,
           offer: selection.offer,
           consent: true,
@@ -116,12 +109,10 @@ export default function CheckoutPage() {
 
   return (
     <div className="stack">
-      <h1>
-        <InstalmentPhrase>Book now · pay in instalments</InstalmentPhrase>
-      </h1>
+      <h1>Request a callback</h1>
       <p className="muted text-sm">
-        No payment is taken online. A UK representative will re-check the fare, book your ticket,
-        and set up instalments — all paid before you fly.
+        No payment is taken online. A UK representative will re-check the fare and book your ticket
+        with you.
       </p>
 
       <div className="grid gap-5 lg:grid-cols-[1fr_340px] lg:items-start">
@@ -193,65 +184,6 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="card stack">
-            <h2 className="m-0">Payment preference</h2>
-            <p className="m-0 text-sm text-muted">
-              Instalments are our primary way to book.{' '}
-              <Link href={INSTALMENTS_HREF} className="font-semibold text-accent hover:underline">
-                How it works →
-              </Link>
-            </p>
-            {(
-              [
-                {
-                  key: 'installments' as const,
-                  title: instalmentCopy.checkoutPrimary,
-                  body: instalmentCopy.checkoutPrimaryBody,
-                  primary: true,
-                },
-                {
-                  key: 'full' as const,
-                  title: instalmentCopy.checkoutFull,
-                  body: instalmentCopy.checkoutFullBody,
-                  primary: false,
-                },
-              ] as const
-            ).map((opt) => (
-              <label
-                key={opt.key}
-                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition ${
-                  opt.primary ? 'instalment-option-primary' : ''
-                } ${
-                  pref === opt.key
-                    ? opt.primary
-                      ? 'border-accent'
-                      : 'border-brand bg-chip'
-                    : 'border-line hover:border-brand/50'
-                }`}
-              >
-                {opt.primary ? (
-                  <span className="instalment-option-badge">Most popular</span>
-                ) : null}
-                <input
-                  type="radio"
-                  value={opt.key}
-                  className="mt-1 accent-[var(--color-accent)]"
-                  {...register('paymentPreference')}
-                />
-                <span>
-                  <span className="block font-semibold text-ink">
-                    {opt.primary ? (
-                      <PayInInstalmentsAccent>{opt.title}</PayInInstalmentsAccent>
-                    ) : (
-                      opt.title
-                    )}
-                  </span>
-                  <span className="block text-sm text-muted">{opt.body}</span>
-                </span>
-              </label>
-            ))}
-          </div>
-
           <label className="flex items-start gap-3 text-sm">
             <input type="checkbox" className="mt-1 accent-brand" {...register('consent')} />
             <span>
@@ -274,12 +206,6 @@ export default function CheckoutPage() {
           className="card stack lg:sticky"
           style={{ top: 'calc(var(--site-chrome-height, 6.5rem) + 0.75rem)' }}
         >
-          <div className="rounded-xl border border-accent/25 bg-[#fff7f2] px-3 py-2.5">
-            <p className="m-0 text-base font-bold text-brand-navy">
-              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
-            </p>
-            <p className="mt-0.5 text-xs text-muted">Selected by default below</p>
-          </div>
           <h2 className="m-0">Your selection</h2>
           {seg ? (
             <div className="text-sm">
@@ -301,7 +227,7 @@ export default function CheckoutPage() {
           <div className="border-t border-line pt-3">
             <FareBreakdown
               price={offer.price}
-              payment={pref === 'installments' ? 'installments' : 'full'}
+              payment="full"
               headline
             />
             <p className="mt-2 text-xs text-muted">

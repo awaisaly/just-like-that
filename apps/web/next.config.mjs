@@ -13,6 +13,15 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/guides/paying-for-flights-in-instalments',
+        destination: '/contact',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

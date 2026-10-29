@@ -1,4 +1,4 @@
-import { AGENCY_NAME, AGENCY_NAME_POSSESSIVE } from '../lib/brand';
+import { AGENCY_NAME } from '../lib/brand';
 import { findAirport } from './airports';
 
 export type SeoPageType = 'route' | 'destination' | 'guide' | 'airline' | 'custom';
@@ -67,13 +67,13 @@ function destinationSeoPage(seed: DestinationSeoSeed): SeoPage {
     title = seed.title ?? `Flights to ${seed.city} from Nigeria`;
     metaDescription =
       seed.metaDescription ??
-      `Book flights to ${seed.city} (${seed.iata}) from Nigeria with ${AGENCY_NAME}. Compare Nigeria to UK fares and finalise with a UK agent — instalments available.`;
+      `Book flights to ${seed.city} (${seed.iata}) from Nigeria with ${AGENCY_NAME}. Compare Nigeria to UK fares and finalise with a UK agent.`;
     h1 = seed.h1 ?? `Flights to ${seed.city} from Nigeria`;
   } else if (isNigeriaCity) {
     title = seed.title ?? `Cheap Flights to ${seed.city}, Nigeria from the UK`;
     metaDescription =
       seed.metaDescription ??
-      `Search cheap flights to ${seed.city}, Nigeria (${seed.iata}) from the UK. Compare London, Manchester and more with ${AGENCY_NAME} — book with a UK agent, pay in instalments or in full.`;
+      `Search cheap flights to ${seed.city}, Nigeria (${seed.iata}) from the UK. Compare London, Manchester and more with ${AGENCY_NAME} — book with a UK agent.`;
     h1 = seed.h1 ?? `Cheap flights to ${seed.city}, Nigeria`;
   } else if (isAfricaCity) {
     title = `Cheap Flights to ${seed.city}, Africa from the UK`;
@@ -100,10 +100,6 @@ function destinationSeoPage(seed: DestinationSeoSeed): SeoPage {
           q: `How do I book flights to ${seed.city}?`,
           a: 'Search live fares, select an offer, then request a callback. A UK agent confirms availability and completes your booking by phone or WhatsApp.',
         },
-        {
-          q: 'Can I pay in instalments?',
-          a: 'Yes — instalment plans are our primary way of helping travellers book. After you select a fare and request a callback, your agent will set up a plan that suits you. You can also pay in full if you prefer.',
-        },
       ],
     updatedAt: '2026-09-02T00:00:00.000Z',
   };
@@ -118,7 +114,7 @@ const destinationSeoPages: SeoPage[] = (
       market: 'the UK',
       title: 'Cheap Flights to Lagos from London',
       h1: 'Cheap flights to Lagos from London',
-      metaDescription: `Search cheap flights from London to Lagos and flights to Nigeria from London. Compare Heathrow and Gatwick to LOS with ${AGENCY_NAME} — a UK agent. Pay in instalments or in full.`,
+      metaDescription: `Search cheap flights from London to Lagos and flights to Nigeria from London. Compare Heathrow and Gatwick to LOS with ${AGENCY_NAME} — a UK agent.`,
       faq: [
         {
           q: 'How do I find cheap flights from London to Lagos?',
@@ -131,10 +127,6 @@ const destinationSeoPages: SeoPage[] = (
         {
           q: 'Where can I find flights to Nigeria from London?',
           a: 'Flights to Nigeria from London typically leave Heathrow (LHR) or Gatwick (LGW). Start with London to Lagos, or search Abuja, Port Harcourt and other Nigerian cities.',
-        },
-        {
-          q: 'Can I pay for Lagos flights in instalments?',
-          a: 'Yes — instalments are our primary way to book. After you request a callback, your UK agent will set up a plan that suits you. You can also pay in full if you prefer.',
         },
         {
           q: 'Which UK airports fly to Lagos?',
@@ -172,10 +164,6 @@ const destinationSeoPages: SeoPage[] = (
           q: 'Do flights to Port Harcourt go via Lagos?',
           a: 'Many itineraries connect via Lagos or another hub. Search live fares first; your agent will confirm the best option for your dates.',
         },
-        {
-          q: 'Can I book Port Harcourt flights with an instalment plan?',
-          a: 'Yes — instalments are our primary way to book. Request a callback after selecting a fare and your UK agent will set up a plan for your itinerary.',
-        },
       ],
     },
     { slug: 'enugu', city: 'Enugu', iata: 'ENU', market: 'the UK' },
@@ -195,7 +183,7 @@ const destinationSeoPages: SeoPage[] = (
       market: 'Nigeria',
       title: 'Flights from Nigeria to London',
       h1: 'Flights from Nigeria to London',
-      metaDescription: `Book a flight from Nigeria to London. Find tickets from Lagos to London and a cheap ticket from Lagos to London with ${AGENCY_NAME} — a UK agent. Pay in instalments or in full.`,
+      metaDescription: `Book a flight from Nigeria to London. Find tickets from Lagos to London and a cheap ticket from Lagos to London with ${AGENCY_NAME} — a UK agent.`,
       faq: [
         {
           q: 'How do I book a flight from Nigeria to London?',
@@ -257,7 +245,7 @@ const destinationSeoPages: SeoPage[] = (
       market: 'the UK',
       title: 'Cheap Flights to Islamabad, Pakistan from the UK',
       h1: 'Cheap flights to Islamabad, Pakistan',
-      metaDescription: `Search cheap flights to Islamabad, Pakistan (ISB) from the UK. Compare live fares with ${AGENCY_NAME} and book through a UK agent — instalments available.`,
+      metaDescription: `Search cheap flights to Islamabad, Pakistan (ISB) from the UK. Compare live fares with ${AGENCY_NAME} and book through a UK agent.`,
     },
     { slug: 'mumbai', city: 'Mumbai', iata: 'BOM', market: 'the UK' },
     { slug: 'bangkok', city: 'Bangkok', iata: 'BKK', market: 'the UK' },
@@ -287,7 +275,7 @@ function routePage(input: {
     type: 'route',
     slug: input.slug,
     title,
-    metaDescription: `${input.metaExtra} Book with ${AGENCY_NAME} — a UK agent. Pay in instalments or in full.`,
+    metaDescription: `${input.metaExtra} Book with ${AGENCY_NAME} — a UK agent.`,
     h1: input.h1 ?? `Cheap flights from ${input.fromCity} to ${input.toCity}`,
     faq: input.faq ?? [],
     route: { originIata: input.originIata, destinationIata: input.destinationIata },
@@ -330,10 +318,6 @@ const curatedRoutes: SeoPage[] = [
         a: 'Flights to Nigeria from London usually depart Heathrow or Gatwick. This London to Lagos page is the busiest corridor; we also book London to Abuja and other Nigerian cities.',
       },
       {
-        q: 'Can I pay for London–Lagos flights in instalments?',
-        a: 'Yes — instalments are our primary way to book. After you request a callback, your UK agent will set up a plan that suits you.',
-      },
-      {
         q: 'Are London to Lagos flights direct?',
         a: 'Direct and one-stop options both appear depending on the airline and dates. Filter results for fewer stops, then ask your agent to confirm the best itinerary.',
       },
@@ -361,7 +345,7 @@ const curatedRoutes: SeoPage[] = [
     faq: [
       {
         q: 'Where can I buy tickets from Lagos to London?',
-        a: `Search live fares on ${AGENCY_NAME} for tickets from Lagos to London (LOS to Heathrow or Gatwick), then request a callback. A UK agent confirms availability, bags, and your payment plan.`,
+        a: `Search live fares on ${AGENCY_NAME} for tickets from Lagos to London (LOS to Heathrow or Gatwick), then request a callback. A UK agent confirms availability, bags, and the fare.`,
       },
       {
         q: 'How do I find a cheap ticket from Lagos to London?',
@@ -502,7 +486,7 @@ export const seoPages: SeoPage[] = [
     type: 'guide',
     slug: 'cheap-flights-to-africa',
     title: 'Cheap Flights to Africa from the UK',
-    metaDescription: `Find cheap flights to Africa from the UK with ${AGENCY_NAME}. Compare fares to Nigeria, Ghana, Kenya, South Africa and more — book with a UK agent, pay in instalments.`,
+    metaDescription: `Find cheap flights to Africa from the UK with ${AGENCY_NAME}. Compare fares to Nigeria, Ghana, Kenya, South Africa and more — book with a UK agent.`,
     h1: 'Cheap flights to Africa from the UK',
     faq: [
       {
@@ -512,10 +496,6 @@ export const seoPages: SeoPage[] = [
       {
         q: 'Which African destinations are most popular from the UK?',
         a: 'Lagos and Abuja (Nigeria), Accra (Ghana), Nairobi (Kenya), and Johannesburg are among the most searched. Browse our Africa destination pages or search any city pair.',
-      },
-      {
-        q: 'Can I pay for Africa flights in instalments?',
-        a: 'Yes — instalments are our primary way to book. After you select a fare and request a callback, your agent sets up a schedule that fits your travel dates.',
       },
     ],
     redirectsFrom: ['africa-flights', 'flights-to-africa', 'cheap-africa-flights'],
@@ -534,7 +514,7 @@ export const seoPages: SeoPage[] = [
       },
       {
         q: 'How do I buy a flight ticket to Nigeria from London?',
-        a: 'Search a flight ticket to Nigeria from London for your dates, pick a fare, then request a callback. A UK agent re-confirms the price and tickets the booking — pay in instalments or in full.',
+        a: 'Search a flight ticket to Nigeria from London for your dates, pick a fare, then request a callback. A UK agent re-confirms the price and tickets the booking.',
       },
       {
         q: 'How do I book a flight from Nigeria to London?',
@@ -549,8 +529,8 @@ export const seoPages: SeoPage[] = [
         a: 'Flexible dates, early booking, and comparing direct vs one-stop itineraries usually help. Search live fares for your dates; your agent will highlight the best value option before you book.',
       },
       {
-        q: 'Can families book Nigeria flights with instalments?',
-        a: 'Yes. Add adults, children, and infants in search, then request a callback. We check baggage and seating needs and can set up an instalment plan.',
+        q: 'Can families book Nigeria flights together?',
+        a: 'Yes. Add adults, children, and infants in search, then request a callback. We check baggage and seating needs before the ticket is confirmed.',
       },
     ],
     redirectsFrom: [
@@ -564,15 +544,6 @@ export const seoPages: SeoPage[] = [
   },
   {
     type: 'guide',
-    slug: 'paying-for-flights-in-instalments',
-    title: 'Book Now, Pay in Instalments',
-    metaDescription: `Instalment plans are ${AGENCY_NAME_POSSESSIVE} primary way to book cheap flights to Africa and Nigeria. Book with a UK agent, then pay in instalments — all paid before you fly.`,
-    h1: 'Book now. Pay in instalments.',
-    faq: [],
-    updatedAt: '2026-07-26T00:00:00.000Z',
-  },
-  {
-    type: 'guide',
     slug: 'tours',
     title: 'Tours & Holiday Packages',
     metaDescription: `Plan inclusive tours and holiday packages with ${AGENCY_NAME} — including Africa and Nigeria travel. Flights, hotels, and tailor-made itineraries with a UK agent.`,
@@ -581,10 +552,6 @@ export const seoPages: SeoPage[] = [
       {
         q: 'Do you arrange tours as well as flights?',
         a: `Yes. ${AGENCY_NAME} can help with inclusive tours and holiday packages — flights plus hotels and other arrangements — as well as flight-only bookings.`,
-      },
-      {
-        q: 'Can I pay for a tour in instalments?',
-        a: 'Yes — instalments are our primary way to book. After you request a callback, your agent will discuss a schedule that suits your travel dates. You can also pay in full if you prefer.',
       },
       {
         q: 'How do I start planning a tour?',
@@ -657,7 +624,7 @@ export function resolveRouteSeoPage(slug: string): SeoPage | undefined {
     type: 'route',
     slug: `${origin}-to-${destination}`.toLowerCase(),
     title: `Cheap Flights from ${fromAirport.city} to ${toAirport.city}`,
-    metaDescription: `Compare cheap flights from ${fromAirport.city} (${origin}) to ${toAirport.city} (${destination}). Book with ${AGENCY_NAME} — a UK agent. Instalments available.`,
+    metaDescription: `Compare cheap flights from ${fromAirport.city} (${origin}) to ${toAirport.city} (${destination}). Book with ${AGENCY_NAME} — a UK agent.`,
     h1: `Cheap flights from ${fromAirport.city} to ${toAirport.city}`,
     faq: [
       {

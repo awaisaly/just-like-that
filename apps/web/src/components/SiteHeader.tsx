@@ -10,10 +10,8 @@ import {
   type NavWordmarkVariant,
 } from '../lib/brand';
 import { getPrimaryWhatsAppLine, whatsappChatHref } from '../lib/contact';
-import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
 import { TOURS_HREF } from '../lib/tours';
 import { AgencyWordmark } from './AgencyWordmark';
-import { InstalmentPhrase } from './InstalmentAccent';
 
 function resolveNavMark(raw: string | null): NavWordmarkVariant {
   if (raw && (NAV_WORDMARK_VARIANTS as readonly string[]).includes(raw)) {
@@ -32,7 +30,6 @@ const navLinks: Array<{ href: string; label: string }> = [
   { href: '/flights/search', label: 'Flights' },
   { href: '/destinations', label: 'Destinations' },
   { href: TOURS_HREF, label: 'Tours' },
-  { href: INSTALMENTS_HREF, label: 'Instalments' },
   { href: '/about', label: 'About' },
   { href: '/faq', label: 'FAQs' },
   { href: '/contact', label: 'Contact' },
@@ -139,18 +136,6 @@ export function SiteHeader() {
               ✕
             </button>
           </div>
-
-          <Link
-            href={INSTALMENTS_HREF}
-            className="nav-drawer-promise"
-            onClick={() => setOpen(false)}
-          >
-            <span className="nav-drawer-promise-eyebrow">Our primary promise</span>
-            <span className="nav-drawer-promise-title">
-              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
-            </span>
-            <span className="nav-drawer-promise-cta">How it works →</span>
-          </Link>
 
           <nav className="nav-drawer-links" aria-label="Mobile primary">
             {navLinks.map((link) => (

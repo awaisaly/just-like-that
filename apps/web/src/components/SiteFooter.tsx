@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { InstalmentFooterBand } from './Instalments';
-import { PayInInstalmentsAccent } from './InstalmentAccent';
 import {
   destinationHref,
   destinationRegionOrder,
@@ -15,7 +13,6 @@ import {
   supportMailtoHref,
   whatsappChatHref,
 } from '../lib/contact';
-import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
 import { TOURS_HREF } from '../lib/tours';
 import { AgencyWordmark } from './AgencyWordmark';
 import { WhatsAppChannelIcon } from './ContactChannelIcons';
@@ -242,11 +239,6 @@ export function SiteFooter() {
                 <Link href={TOURS_HREF}>Tours & packages</Link>
               </li>
               <li>
-                <Link href={INSTALMENTS_HREF}>
-                  <PayInInstalmentsAccent>Pay in instalments</PayInInstalmentsAccent>
-                </Link>
-              </li>
-              <li>
                 <Link href="/about">About us</Link>
               </li>
               <li>
@@ -259,10 +251,7 @@ export function SiteFooter() {
                 <Link href="/contact">Contact us</Link>
               </li>
               {guides
-                .filter(
-                  (guide) =>
-                    guide.slug !== 'paying-for-flights-in-instalments' && guide.slug !== 'tours',
-                )
+                .filter((guide) => guide.slug !== 'tours')
                 .map((guide) => (
                   <li key={guide.slug}>
                     <Link href={seoPath(guide)}>{guide.h1}</Link>
@@ -271,8 +260,6 @@ export function SiteFooter() {
             </ul>
           </div>
         </div>
-
-        <InstalmentFooterBand />
 
         <div className="footer-trust">
           <div>
@@ -305,8 +292,7 @@ export function SiteFooter() {
               Talk to a booking agent
             </h2>
             <p className="footer-contact-text">
-              Prefer to speak with someone? WhatsApp or email — we help with fares, instalments,
-              and callbacks.
+              Prefer to speak with someone? WhatsApp or email — we help with fares and callbacks.
             </p>
           </div>
           <div className="footer-contact-actions">
@@ -346,14 +332,7 @@ export function SiteFooter() {
             <p className="m-0">
               <AgencyWordmark size="footer" />
             </p>
-            <p className="mt-1 text-xs text-muted">
-              {instalmentCopy.footerLine} · agent-assisted
-            </p>
-            <p className="mt-1 text-xs">
-              <Link href={INSTALMENTS_HREF} className="font-semibold text-accent hover:underline">
-                How instalments work →
-              </Link>
-            </p>
+            <p className="mt-1 text-xs text-muted">UK travel desk · agent-assisted</p>
           </div>
           <div className="grid gap-2 sm:justify-items-end">
             <nav className="footer-legal" aria-label="Policies">

@@ -105,7 +105,7 @@ export default function OfferDetailPage() {
           ) : null}
         </div>
         <p className="offer-page-lead">
-          Review the itinerary, then WhatsApp a UK agent to book — instalments or pay in full.
+          Review the itinerary, then WhatsApp a UK agent to book. Nothing is charged on this website.
         </p>
       </header>
 

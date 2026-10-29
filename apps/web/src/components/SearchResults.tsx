@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as Popover from '@radix-ui/react-popover';
 import { formatMoney } from '@jlt/shared';
@@ -9,8 +8,6 @@ import { apiFetch } from '../lib/api';
 import { airlineDisplayName } from '../lib/airline';
 import type { NormalizedOffer, NormalizedSegment, TravellerSummary } from '../lib/flight';
 import { isMockOfferId } from '../lib/flight';
-import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
-import { InstalmentPhrase } from './InstalmentAccent';
 import {
   flightSearchCacheKey,
   useCheckoutStore,
@@ -626,7 +623,6 @@ function OfferCard({
           <div className="text-right">
             <div className="price">{formatMoney(detailsOffer.price.total)}</div>
             <div className="text-xs text-muted">per adult · incl. taxes</div>
-            <p className="instalment-price-note mt-1">or pay in instalments</p>
           </div>
           <button
             type="button"
@@ -940,20 +936,6 @@ export function SearchResults({
       </div>
 
       <div className="grid min-w-0 max-w-full gap-3">
-        <div className="flights-results-promise">
-          <div>
-            <p className="m-0 text-base font-extrabold text-brand-navy">
-              <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
-            </p>
-            <p className="m-0 mt-0.5 text-xs text-muted">
-              Select a fare, book with a UK agent — pay in instalments before you fly.
-            </p>
-          </div>
-          <Link href={INSTALMENTS_HREF} className="flights-results-promise-cta">
-            How it works →
-          </Link>
-        </div>
-
         {depart ? (
           <FlexibleDatesBar
             from={from}

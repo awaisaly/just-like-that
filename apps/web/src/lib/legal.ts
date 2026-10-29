@@ -41,7 +41,7 @@ export const legalPages: LegalPage[] = [
     navLabel: 'Terms of service',
     title: 'Terms of service',
     kicker: 'Website and booking terms',
-    description: `Terms for using the ${AGENCY_NAME} website and booking flights with a UK agent, including indicative fares and instalments.`,
+    description: `Terms for using the ${AGENCY_NAME} website and booking flights with a UK agent, including indicative fares.`,
     updated: '13 October 2026',
     sections: [
       {
@@ -85,7 +85,7 @@ export const legalPages: LegalPage[] = [
             'Prices, baggage, seats, and timings on search results are indicative. They come from airline distribution systems and can change or sell out before an agent re-checks them.',
           ),
           p(
-            'A listed fare is the price to pay in full, unless we tell you otherwise. If you choose to pay in instalments, an instalment service fee may be added. That fee is explained before you agree to pay.',
+            'A listed fare is the price to pay in full. Your agent confirms that amount before you pay.',
           ),
           p(
             'Taxes and carrier charges included in a quoted total can still change if the airline reprices the ticket. We will not ask you to pay a higher fare without telling you first and getting your agreement.',
@@ -106,23 +106,6 @@ export const legalPages: LegalPage[] = [
           ]),
           p(
             'Until the agent confirms the booking and payment is agreed, you do not have a confirmed ticket. Selecting a flight on the site does not hold a seat with the airline.',
-          ),
-        ],
-      },
-      {
-        id: 'instalments',
-        title: 'Paying in instalments',
-        blocks: [
-          p(
-            'Instalments are our usual way to book. You can also pay in full. The plan, dates, and amounts are agreed with your agent before the first payment.',
-          ),
-          p(
-            'Every instalment must be paid before you fly. If a payment is late, the airline or we may cancel the reservation, and any refund then follows the fare rules and our ',
-            { label: 'Return policy', href: '/returns' },
-            '.',
-          ),
-          p(
-            'The dates and amounts are a schedule for paying the ticket and any instalment service fee. We agree that schedule with you before the first payment. This website does not describe the schedule as a loan, and it does not show an interest rate.',
           ),
         ],
       },
@@ -267,7 +250,7 @@ export const legalPages: LegalPage[] = [
           p('We use personal information to:'),
           ul([
             ['show live or cached fares and the flight you selected;'],
-            ['reply on WhatsApp, email, or the phone and set up a booking or instalment plan;'],
+            ['reply on WhatsApp, email, or the phone and set up a booking;'],
             ['issue tickets through airline systems and send you confirmation;'],
             ['handle changes, refunds, and complaints;'],
             ['measure advertising (for example Google Ads clicks on WhatsApp) and keep the site secure;'],
@@ -403,7 +386,7 @@ export const legalPages: LegalPage[] = [
         title: 'What this policy covers',
         blocks: [
           p(
-            'Flight tickets are a service, not goods you can post back. This return policy explains when money can be refunded, when a date or name can be changed, and what happens to instalments.',
+            'Flight tickets are a service, not goods you can post back. This return policy explains when money can be refunded and when a date or name can be changed.',
           ),
           p(
             'The airline fare rules on your ticket decide most outcomes. Those rules are part of the contract once the ticket is issued. Where this page and the fare rules differ, the fare rules control the airline’s charges, and this page controls how we handle our own service fee.',
@@ -415,7 +398,7 @@ export const legalPages: LegalPage[] = [
         title: 'Before you pay',
         blocks: [
           p(
-            'Nothing is charged on this website. Your agent confirms the fare, whether it is refundable or changeable, and the instalment dates before you pay. Please do not pay until you have heard that explanation.',
+            'Nothing is charged on this website. Your agent confirms the fare and whether it is refundable or changeable before you pay. Please do not pay until you have heard that explanation.',
           ),
           p(
             'If you decide not to go ahead before any payment is taken and before a ticket is issued, there is nothing to refund.',
@@ -469,26 +452,14 @@ export const legalPages: LegalPage[] = [
         ],
       },
       {
-        id: 'instalments',
-        title: 'Instalments',
+        id: 'if-you-cancel',
+        title: 'If you cancel',
         blocks: [
           p(
-            'If you are paying in instalments, every instalment still due must be paid before departure unless the booking is cancelled under the fare rules and the agent confirms the plan has stopped.',
+            'If you cancel, the refund is the amount the airline actually returns, after any airline penalty. Amounts you have already paid are set against that calculation. If the airline’s non-refundable charges are higher than what you have paid, the agent tells you the shortfall and asks you to agree it before taking anything further.',
           ),
           p(
-            'If you cancel, the refund is the amount the airline actually returns, after any airline penalty, and after any part of our service fee already earned for work done. Amounts you have already paid are set against that calculation. If the airline’s non-refundable charges are higher than what you have paid, the agent tells you the shortfall and asks you to agree it before taking anything further.',
-          ),
-        ],
-      },
-      {
-        id: 'service-fee',
-        title: 'Our service fee',
-        blocks: [
-          p(
-            'The instalment service fee covers setting up and managing the plan. Once we have booked the ticket and started the plan, that fee is not refundable, except where we are at fault or the law requires a refund.',
-          ),
-          p(
-            'If you pay the listed fare in full, there is no instalment service fee. Airline penalties are separate and are set by the fare rules, not by us.',
+            'Airline penalties are set by the fare rules, not by us.',
           ),
         ],
       },

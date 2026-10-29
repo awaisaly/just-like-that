@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import {
   getPrimaryWhatsAppLine,
   getSupportEmail,
@@ -13,7 +12,7 @@ import { TOURS_HREF } from '../../lib/tours';
 export const metadata = buildPageMetadata({
   title: 'FAQs',
   description:
-    'Answers about cheap flights from London to Lagos, flights to Nigeria from London, tickets from Lagos to London, instalments, and booking with a UK agent.',
+    'Answers about cheap flights from London to Lagos, flights to Nigeria from London, tickets from Lagos to London, and booking with a UK agent.',
   path: '/faq',
   ogTitle: 'Elca Airbridge FAQs',
 });
@@ -22,12 +21,8 @@ type FaqItem = { q: string; a: string };
 
 const faqGroups: { title: string; items: FaqItem[] }[] = [
   {
-    title: 'Payment & instalments',
+    title: 'Payment',
     items: [
-      {
-        q: 'Can I pay for flights in instalments?',
-        a: 'Yes — instalment plans are our primary way of helping travellers book. You book the ticket with a UK agent, then pay in instalments. Every instalment must be paid before you fly. You can also pay in full if you prefer. Exact terms depend on the airline, fare rules, and how soon you travel.',
-      },
       {
         q: 'Which cards do you accept?',
         a: 'When you book with an agent, Visa, Mastercard, and American Express are commonly accepted. Card details are never collected through the public website checkout.',
@@ -47,7 +42,7 @@ const faqGroups: { title: string; items: FaqItem[] }[] = [
       },
       {
         q: 'Why book with an agent instead of only using an airline website?',
-        a: 'Our consultants work with IATA-accredited airline access, hotels, and partners worldwide. That means sharper comparisons, help when inventory looks sold out, and a person who stays with you through bags, changes, and instalments.',
+        a: 'Our consultants work with IATA-accredited airline access, hotels, and partners worldwide. That means sharper comparisons, help when inventory looks sold out, and a person who stays with you through bags and changes.',
       },
       {
         q: 'Are you a UK travel agency?',
@@ -98,7 +93,7 @@ const faqGroups: { title: string; items: FaqItem[] }[] = [
     items: [
       {
         q: 'Do you sell cheap flights from London to Lagos?',
-        a: 'Yes. Search cheap flights from London to Lagos on our London to Lagos page, then request a callback. A UK agent re-confirms the fare and books your ticket — pay in instalments or in full.',
+        a: 'Yes. Search cheap flights from London to Lagos on our London to Lagos page, then request a callback. A UK agent re-confirms the fare and books your ticket.',
       },
       {
         q: 'Where can I buy a flight ticket to Nigeria from London?',
@@ -162,8 +157,7 @@ export default function FaqPage() {
             Questions, answered clearly
           </h1>
           <p className="mt-4 max-w-lg text-lg text-white/85">
-            How Elca Airbridge works — from searching fares to{' '}
-            <PayInInstalmentsAccent>paying in instalments</PayInInstalmentsAccent> with a UK agent.
+            How Elca Airbridge works — from searching fares to booking with a UK agent.
           </p>
         </div>
       </section>
@@ -232,9 +226,7 @@ export default function FaqPage() {
               Ready to find a fare?
             </h2>
             <p className="mt-2 max-w-lg text-white/80">
-              Search flights, request a callback, and{' '}
-              <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> — or speak with us
-              now.
+              Search flights, request a callback, or speak with us now.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link

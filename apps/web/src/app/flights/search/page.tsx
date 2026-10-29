@@ -5,20 +5,15 @@ import { formatMoney } from '@jlt/shared';
 import { SearchForm } from '../../../components/SearchForm';
 import { SearchResults } from '../../../components/SearchResults';
 import { SearchScrollTarget } from '../../../components/SearchScrollTarget';
-import {
-  InstalmentMottoAccent,
-  PayInInstalmentsAccent,
-} from '../../../components/InstalmentAccent';
 import { findAirport, formatAirportPlace } from '../../../data/airports';
 import { getHomeDestinationCards } from '../../../data/destinations';
 import { getSeoPagesByType, routeGuidePath, seoPath } from '../../../data/seo-pages';
 import type { TravellerSummary } from '../../../lib/flight';
-import { INSTALMENTS_HREF, instalmentCopy } from '../../../lib/instalments';
 
 export const metadata: Metadata = {
   title: 'Search flights',
   description:
-    'Search worldwide flights and pay in instalments with a UK agent. Compare live fares, then finalise with a callback.',
+    'Search worldwide flights with a UK agent. Compare live fares, then finalise with a callback.',
   robots: { index: false, follow: false },
 };
 
@@ -115,21 +110,17 @@ export default async function FlightSearchPage({ searchParams }: Props) {
                   </span>
                 </>
               ) : (
-                <InstalmentMottoAccent />
+                <>Search flights</>
               )}
             </h1>
             <p className="flights-hero-support">
               {hasRoute ? (
                 <>
-                  Book with a UK agent, then{' '}
-                  <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> — all paid
-                  before you fly.
+                  Book with a UK agent. Nothing is charged on this website.
                 </>
               ) : (
                 <>
-                  Compare live fares, then book with a UK agent —{' '}
-                  <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> is our primary
-                  way to fly.
+                  Compare live fares, then book with a UK agent.
                 </>
               )}
             </p>
@@ -192,27 +183,11 @@ export default async function FlightSearchPage({ searchParams }: Props) {
               <Link href={canonicalPath} className="flights-summary-link">
                 About this route
               </Link>
-              <Link href={INSTALMENTS_HREF} className="flights-summary-link is-accent">
-                Pay in instalments
-              </Link>
             </div>
           </div>
         </>
       ) : (
         <section className="flights-explore stack">
-          <div className="flights-promise">
-            <div>
-              <p className="flights-promise-eyebrow">Primary promise</p>
-              <h2 className="flights-promise-title">
-                <InstalmentMottoAccent />
-              </h2>
-              <p className="flights-promise-body">{instalmentCopy.tagline}</p>
-            </div>
-            <Link href={INSTALMENTS_HREF} className="flights-promise-cta">
-              How instalments work →
-            </Link>
-          </div>
-
           <div>
             <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
               <div>

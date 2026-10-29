@@ -25,12 +25,12 @@ export const viewport: Viewport = {
 };
 
 const defaultTitle = `${AGENCY_NAME} — Cheap Flights from London to Lagos & Nigeria`;
-const defaultDescription = `Cheap flights from London to Lagos and flights to Nigeria from London. Tickets from Lagos to London and flights from Nigeria to London — book with ${AGENCY_NAME}, a UK agent. Pay in instalments or in full.`;
+const defaultDescription = `Cheap flights from London to Lagos and flights to Nigeria from London. Tickets from Lagos to London and flights from Nigeria to London — book with ${AGENCY_NAME}, a UK agent.`;
 
 export const metadata: Metadata = {
   title: {
     default: defaultTitle,
-    template: `%s | ${AGENCY_NAME}`,
+    template: `${AGENCY_NAME} | %s`,
   },
   description: defaultDescription,
   keywords: [...SITE_KEYWORDS],
@@ -124,7 +124,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       'flight from Nigeria to London',
       'cheap flights to Africa',
       'flights from UK to Nigeria',
-      'flight instalment plans',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
@@ -152,7 +151,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       `${siteUrl}/destinations/london`,
       `${siteUrl}/guides/cheap-flights-to-africa`,
       `${siteUrl}/guides/flights-uk-nigeria`,
-      `${siteUrl}/guides/paying-for-flights-in-instalments`,
       `${siteUrl}/faq`,
       `${siteUrl}/contact`,
       `${siteUrl}/llms.txt`,

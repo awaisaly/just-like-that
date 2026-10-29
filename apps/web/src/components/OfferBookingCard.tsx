@@ -1,13 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { formatMoney } from '@jlt/shared';
 import { findAirport } from '../data/airports';
 import type { NormalizedOffer, TravellerSummary } from '../lib/flight';
-import { INSTALMENTS_HREF, instalmentCopy } from '../lib/instalments';
 import { payableFare } from '../lib/pricing';
 import { FareBreakdown } from './FareBreakdown';
-import { InstalmentPhrase } from './InstalmentAccent';
 import { OfferWhatsAppButton } from './OfferWhatsAppButton';
 
 const STEPS = [
@@ -23,8 +20,8 @@ const STEPS = [
   },
   {
     n: '3',
-    title: 'Pay before you fly',
-    body: 'Instalments or in full — every payment before departure.',
+    title: 'Pay with your agent',
+    body: 'Nothing is charged on this website. Your agent confirms the fare before you pay.',
   },
 ] as const;
 
@@ -46,13 +43,7 @@ export function OfferBookingCard({
       <p className="offer-booking-meta">{summary.meta}</p>
 
       <div className="offer-booking-price">
-        <FareBreakdown price={offer.price} payment="installments" headline />
-        {offer.price.serviceFee && offer.price.serviceFee.amount > 0 ? (
-          <p className="mt-2 text-xs text-muted">
-            Pay in full: {formatMoney(payableFare(offer.price, 'full'))} (no service fee)
-          </p>
-        ) : null}
-        <p className="instalment-price-note mt-1.5">{instalmentCopy.priceNote}</p>
+        <FareBreakdown price={offer.price} payment="full" headline />
       </div>
 
       <div className="offer-booking-cta">
@@ -76,14 +67,6 @@ export function OfferBookingCard({
         ))}
       </ol>
 
-      <div className="offer-booking-instalment">
-        <p className="m-0 text-sm font-extrabold text-brand-navy">
-          <InstalmentPhrase>{instalmentCopy.motto}</InstalmentPhrase>
-        </p>
-        <Link href={INSTALMENTS_HREF} className="offer-booking-instalment-link">
-          How instalments work →
-        </Link>
-      </div>
     </aside>
   );
 }
@@ -96,7 +79,7 @@ export function OfferBookingBar({
   travellers?: TravellerSummary;
 }) {
   const summary = routeSummary(offer, travellers);
-  const total = formatMoney(payableFare(offer.price, 'installments'));
+  const total = formatMoney(payableFare(offer.price, 'full'));
 
   return (
     <div className="offer-booking-bar" role="region" aria-label="Book this flight on WhatsApp">

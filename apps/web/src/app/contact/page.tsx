@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { InstalmentMottoAccent, PayInInstalmentsAccent } from '../../components/InstalmentAccent';
-import { InstalmentSpotlight } from '../../components/Instalments';
 import {
   EmailChannelIcon,
   PhoneCallIcon,
@@ -17,13 +15,12 @@ import {
   whatsappChatHref,
 } from '../../lib/contact';
 import { AGENCY_NAME } from '../../lib/brand';
-import { INSTALMENTS_HREF, instalmentCopy } from '../../lib/instalments';
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata = buildPageMetadata({
   title: 'Contact us',
   description:
-    'Talk to Elca Airbridge about flying now and paying in instalments — UK support by phone, WhatsApp, or email.',
+    'Talk to Elca Airbridge about a flight — UK support by phone, WhatsApp, or email.',
   path: '/contact',
   ogTitle: 'Contact Elca Airbridge',
 });
@@ -58,12 +55,9 @@ export default function ContactPage() {
           </p>
           <h1 className="mt-4 max-w-3xl text-[clamp(2.4rem,6vw,4.1rem)] font-extrabold leading-[0.95] tracking-tight text-white">
             Talk to a UK agent.
-            <br />
-            <InstalmentMottoAccent />
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/85">
-            WhatsApp or call to confirm your fare. Instalments are how most travellers book — every
-            payment complete before you fly.
+            WhatsApp or call to confirm your fare. Nothing is charged on this website.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {whatsappHref ? (
@@ -92,14 +86,11 @@ export default function ContactPage() {
         <div className="contact-instalment-copy-wrap">
           <p className="contact-instalment-eyebrow">How most travellers book</p>
           <h2 id="contact-instalment-title" className="contact-instalment-title">
-            Pay in instalments
+            Talk to a UK agent
           </h2>
           <p className="contact-instalment-copy">
-            {instalmentCopy.tagline} WhatsApp or call and we’ll set the plan up with you.
+            WhatsApp or call and we’ll confirm the fare with you.
           </p>
-          <Link href={INSTALMENTS_HREF} className="contact-instalment-link">
-            How instalments work →
-          </Link>
         </div>
         <div className="contact-instalment-actions">
           {whatsappHref ? (
@@ -110,7 +101,7 @@ export default function ContactPage() {
               className="contact-instalment-cta is-whatsapp"
             >
               <WhatsAppChannelIcon className="h-5 w-5" />
-              WhatsApp to set up a plan
+              WhatsApp us
             </a>
           ) : null}
           <a href={supportTelHref(callPhone)} className="contact-instalment-cta is-call">
@@ -138,8 +129,7 @@ export default function ContactPage() {
               <span aria-hidden="true">🇬🇧</span> {line.display}
             </p>
             <p className="contact-method-hint">
-              Fastest way to set up{' '}
-              <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent>.
+              Fastest way to ask about a fare.
             </p>
           </a>
         ))}
@@ -154,7 +144,7 @@ export default function ContactPage() {
             <span aria-hidden="true">🇬🇧</span> {callDisplay}
           </p>
           <p className="contact-method-hint">
-            Ask about instalments on the call — or settle in full if you prefer.
+            Speak with the UK desk about your route and fare.
           </p>
         </a>
 
@@ -178,8 +168,7 @@ export default function ContactPage() {
         <div className="contact-search">
           <p className="m-0 text-base font-bold text-brand-navy">Already found a fare?</p>
           <p className="mt-1 text-sm text-muted">
-            Search live prices, then WhatsApp the offer — we’ll re-price, book it, and set up{' '}
-            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent>.
+            Search live prices, then WhatsApp the offer — we’ll re-price it and book it with you.
           </p>
           <Link
             href="/flights/search"
@@ -189,8 +178,6 @@ export default function ContactPage() {
           </Link>
         </div>
       </section>
-
-      <InstalmentSpotlight compact />
 
       <section className="relative overflow-hidden rounded-3xl bg-brand-navy text-white">
         <div className="absolute inset-0">
@@ -205,16 +192,16 @@ export default function ContactPage() {
         </div>
         <div className="relative px-6 py-12 sm:px-10 sm:py-16">
           <p className="m-0 text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
-            {instalmentCopy.motto}
+            UK travel desk
           </p>
           <h2 className="mt-2 max-w-xl text-3xl font-extrabold leading-tight text-white sm:text-4xl">
             Compare fares online.
             <br />
-            <PayInInstalmentsAccent>Pay in instalments</PayInInstalmentsAccent> with us.
+            Book with us.
           </h2>
           <p className="mt-3 max-w-lg text-base text-white/80">
             London to Lagos, Nigeria to London, and routes worldwide — a UK agent stays with you
-            through bags, dates, and every instalment before you fly.
+            through bags and dates.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Link

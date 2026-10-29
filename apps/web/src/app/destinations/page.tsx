@@ -2,10 +2,6 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  InstalmentMottoAccent,
-  PayInInstalmentsAccent,
-} from '../../components/InstalmentAccent';
-import {
   destinationHref,
   destinationRegionOrder,
   formatFromPrice,
@@ -116,8 +112,8 @@ export default function DestinationsIndexPage() {
           </h1>
           <p className="mt-3 max-w-xl text-base text-white/90 sm:text-lg">
             {destinations.length} cities — flights to Nigeria from London, tickets from Lagos to
-            London, Accra, Europe, the Middle East, Asia, and the Americas. Compare fares, then{' '}
-            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent> with a UK agent.
+            London, Accra, Europe, the Middle East, Asia, and the Americas. Compare fares, then
+            book with a UK agent.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -162,12 +158,10 @@ export default function DestinationsIndexPage() {
       ))}
 
       <section className="overflow-hidden rounded-3xl bg-brand-navy px-5 py-8 text-white sm:px-8 sm:py-10">
-        <h2 className="m-0 text-2xl font-extrabold text-white">
-          <InstalmentMottoAccent />
-        </h2>
+        <h2 className="m-0 text-2xl font-extrabold text-white">Book with a UK agent</h2>
         <p className="mt-2 max-w-xl text-white/80">
-          Search London–Lagos, Dubai, Accra, Paris, New York, and more — then book with a UK agent
-          and pay in instalments. Every instalment must be paid before you fly.
+          Search London–Lagos, Dubai, Accra, Paris, New York, and more — then book with a UK agent.
+          Nothing is charged on this website.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link

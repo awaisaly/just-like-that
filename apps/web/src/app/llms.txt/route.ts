@@ -19,7 +19,7 @@ export function GET() {
 
   const body = `# ${AGENCY_NAME}
 
-> UK travel agency for cheap flights from London to Lagos and flights to Nigeria from London (and return). Search tickets from Lagos to London and a flight from Nigeria to London on the website, then book with a UK agent — often with instalment plans paid before you fly. The website does not take online payment or issue tickets automatically.
+> UK travel agency for cheap flights from London to Lagos and flights to Nigeria from London (and return). Search tickets from Lagos to London and a flight from Nigeria to London on the website, then book with a UK agent. The website does not take online payment or issue tickets automatically.
 
 - Brand: ${AGENCY_NAME}
 - Focus: UK ↔ Nigeria / Africa flights (also selected worldwide routes)
@@ -32,12 +32,11 @@ export function GET() {
 - [Home](${base}/): Cheap flights from London to Lagos and Nigeria
 - [Destinations hub](${base}/destinations): Curated destination guides
 - [About](${base}/about): Who we are and how we book
-- [FAQ](${base}/faq): Booking, instalments, and agent support
+- [FAQ](${base}/faq): Booking and agent support
 - [Contact](${base}/contact): Voice call, WhatsApp, and email
 - [Terms of service](${base}/terms): Website and agent-booking terms
 - [Privacy policy](${base}/privacy): How personal information is used
 - [Return policy](${base}/returns): Flight changes, cancellations, and refunds
-- [Pay in instalments](${base}/guides/paying-for-flights-in-instalments): How book-now instalment plans work
 - [Cheap flights to Africa](${base}/guides/cheap-flights-to-africa): Africa flight guide
 - [Flights to Nigeria from London](${base}/guides/flights-uk-nigeria): UK–Nigeria corridor, both directions
 - [Tours](${base}/guides/tours): Tours and holiday packages

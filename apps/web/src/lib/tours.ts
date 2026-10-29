@@ -44,7 +44,7 @@ export const tourCopy = {
     {
       n: '03',
       title: 'Confirm & travel',
-      body: 'Agree the plan (instalments or pay in full), then we finalise tickets and any package elements with you.',
+      body: 'Agree the plan with your agent, then we finalise tickets and any package elements with you.',
     },
   ],
 } as const;

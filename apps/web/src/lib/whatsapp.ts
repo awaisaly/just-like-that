@@ -1,5 +1,4 @@
 import { formatMoney } from '@jlt/shared';
-import { payableFare } from './pricing';
 import { AGENCY_NAME } from './brand';
 import { getWhatsAppChatUrl, getWhatsAppLines, whatsappChatHref } from './contact';
 import type { NormalizedOffer, TravellerSummary } from './flight';
@@ -56,12 +55,6 @@ export function buildSelectedOfferWhatsAppMessage(
     '',
     `Route: ${route}`,
     `Listed fare: ${formatMoney(offer.price.total)} (indicative)`,
-    ...(offer.price.serviceFee && offer.price.serviceFee.amount > 0
-      ? [
-          `Instalment service fee: ${formatMoney(offer.price.serviceFee)}`,
-          `Total with instalments: ${formatMoney(payableFare(offer.price, 'installments'))}`,
-        ]
-      : []),
     `Cabin: ${cabinLabel(offer.cabin)}`,
   ];
 
@@ -79,7 +72,7 @@ export function buildSelectedOfferWhatsAppMessage(
     if (summary) lines.push(summary, '');
   });
   lines.push(
-    'Please help me confirm availability and booking — I’d like to book now and pay in instalments (all paid before I fly), or pay in full.',
+    'Please help me confirm availability and booking.',
   );
 
   return lines.filter((line, index, all) => !(line === '' && all[index - 1] === '')).join('\n');
@@ -105,12 +98,6 @@ export function buildWhatsAppUrl(reference: string, offer: NormalizedOffer): str
     `Reference: ${reference}`,
     `Route: ${route}`,
     `Listed fare: ${formatMoney(offer.price.total)}`,
-    ...(offer.price.serviceFee && offer.price.serviceFee.amount > 0
-      ? [
-          `Instalment service fee: ${formatMoney(offer.price.serviceFee)}`,
-          `Total with instalments: ${formatMoney(payableFare(offer.price, 'installments'))}`,
-        ]
-      : []),
     `Please call me back to confirm availability and booking.`,
   ].join('\n');
 

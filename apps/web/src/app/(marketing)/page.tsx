@@ -8,9 +8,7 @@ import {
   HomeInView,
   HomeStaggerItem,
 } from '../../components/HomeMotion';
-import { InstalmentSpotlight } from '../../components/Instalments';
 import { HomeSearchForm } from '../../components/HomeSearchForm';
-import { PayInInstalmentsAccent } from '../../components/InstalmentAccent';
 import { findAirport } from '../../data/airports';
 import {
   destinationHref,
@@ -29,7 +27,7 @@ import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
   title: `Cheap Flights from London to Lagos & Nigeria`,
-  description: `Cheap flights from London to Lagos and flights to Nigeria from London. Tickets from Lagos to London and flights from Nigeria to London — book with ${AGENCY_NAME}. Pay in instalments with a UK agent.`,
+  description: `Cheap flights from London to Lagos and flights to Nigeria from London. Tickets from Lagos to London and flights from Nigeria to London — book with ${AGENCY_NAME}, a UK agent.`,
   path: '/',
   ogTitle: 'Cheap flights from London to Lagos',
 });
@@ -52,15 +50,15 @@ const steps = [
   },
   {
     n: '03',
-    title: 'Pay before you fly',
-    body: 'Spread the cost in instalments. All payments must be complete before departure.',
+    title: 'Pay when you book',
+    body: 'Your agent confirms the fare with you. Nothing is charged on this website.',
   },
 ];
 
 const reasons = [
   {
-    title: 'Pay in instalments',
-    body: 'Book now, then pay on a schedule — every instalment must be paid before you fly.',
+    title: 'UK agents',
+    body: 'A person re-checks the fare, bags, and seats before anything is ticketed.',
   },
   {
     title: 'Agent-confirmed fares',
@@ -104,8 +102,7 @@ export default function HomePage() {
             </h1>
             <p className="home-hero-line home-hero-copy mt-3 max-w-md text-base text-white/80 sm:text-lg">
               Flights to Nigeria from London, or tickets from Lagos to London — compare live fares,
-              then book now.{' '}
-              <PayInInstalmentsAccent>Pay in instalments</PayInInstalmentsAccent> with a UK agent.
+              then book with a UK agent.
             </p>
           </div>
         </section>
@@ -237,10 +234,6 @@ export default function HomePage() {
         </HomeInView>
       </HomeInView>
 
-      <HomeInView>
-        <InstalmentSpotlight />
-      </HomeInView>
-
       <HomeInView className="home-band full-bleed-x">
         <div className="mx-auto w-[min(1200px,calc(100%-2rem))] py-12 sm:py-16">
           <div className="max-w-xl">
@@ -248,11 +241,11 @@ export default function HomePage() {
               How it works
             </p>
             <h2 className="mt-1 text-2xl font-extrabold text-brand-navy sm:text-3xl">
-              Search online. <PayInInstalmentsAccent>Pay in instalments.</PayInInstalmentsAccent>
+              Search online. Book with a UK agent.
             </h2>
             <p className="mt-2 text-sm text-muted sm:text-base">
-              Live fares online, then a human hand on the booking — with instalments as the primary
-              way most of our travellers fly.
+              Live fares online, then a person confirms the ticket with you. Nothing is charged on
+              this website.
             </p>
           </div>
 
@@ -281,8 +274,7 @@ export default function HomePage() {
             Why {AGENCY_NAME}
           </p>
           <h2 className="mt-1 text-2xl font-extrabold sm:text-3xl">
-            The calm way to book now and{' '}
-            <PayInInstalmentsAccent>pay in instalments</PayInInstalmentsAccent>
+            The calm way to book with a UK agent
           </h2>
         </div>
 
@@ -310,13 +302,7 @@ export default function HomePage() {
             {reasons.map((reason, index) => (
               <HomeStaggerItem key={reason.title} index={index}>
                 <div className="home-reason-card rounded-2xl border border-line bg-white px-5 py-4">
-                  <h3 className="m-0 text-base font-bold text-brand-navy">
-                    {reason.title === 'Pay in instalments' ? (
-                      <PayInInstalmentsAccent>{reason.title}</PayInInstalmentsAccent>
-                    ) : (
-                      reason.title
-                    )}
-                  </h3>
+                  <h3 className="m-0 text-base font-bold text-brand-navy">{reason.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{reason.body}</p>
                 </div>
               </HomeStaggerItem>
@@ -343,10 +329,10 @@ export default function HomePage() {
               <h2 className="mt-2 text-3xl font-extrabold leading-tight text-white sm:text-4xl">
                 Find your flight.
                 <br />
-                <PayInInstalmentsAccent>Pay in instalments.</PayInInstalmentsAccent>
+                Book with a UK agent.
               </h2>
               <p className="mt-3 max-w-md text-base text-white/80">
-                Search now, book with a UK agent, then pay in instalments before you fly.
+                Search now, then WhatsApp a UK agent to confirm the fare.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">

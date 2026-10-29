@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatMoney } from '@jlt/shared';
-import { PayInInstalmentsAccent } from '../../../components/InstalmentAccent';
 import { RouteGuideCta } from '../../../components/RouteGuideCta';
 import { SearchForm } from '../../../components/SearchForm';
 import { countryLabel, findAirport } from '../../../data/airports';
@@ -67,10 +66,6 @@ export default async function RouteLandingPage({
           {
             q: `How do I book flights from ${fromCity} to ${toCity}?`,
             a: 'Search live fares, select an offer, then request a callback. A UK agent confirms availability and booking by phone or WhatsApp.',
-          },
-          {
-            q: 'Can I pay in instalments?',
-            a: 'Yes — instalment plans are our primary way of helping travellers book. You book the ticket with a UK agent, then pay in instalments — every instalment must be paid before you fly.',
           },
           {
             q: 'Are the prices I see final?',
@@ -191,47 +186,30 @@ export default async function RouteLandingPage({
 
       <section className="overflow-hidden rounded-3xl bg-brand-navy px-5 py-8 text-white sm:px-8">
         <p className="m-0 text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
-          Our primary promise
+          How booking works
         </p>
         <h2 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">
-          Book now. <PayInInstalmentsAccent>Pay in instalments.</PayInInstalmentsAccent>
+          Book {fromCity}–{toCity} with a UK agent
         </h2>
         <p className="mt-2 max-w-xl text-sm text-white/80 sm:text-base">
-          Instalment plans are how most of our travellers book {fromCity}–{toCity}. Search live
-          fares, book with a UK agent, and pay in instalments — all paid before you fly. Or pay in
-          full if you prefer.
+          Search live fares, then a UK agent confirms the ticket with you. Nothing is charged on
+          this website.
         </p>
-        <Link
-          href="/guides/paying-for-flights-in-instalments"
-          className="mt-4 inline-flex text-sm font-bold text-accent hover:text-white"
-        >
-          How instalments work →
-        </Link>
       </section>
 
       <section className="grid gap-4 sm:grid-cols-3">
         {[
-          {
-            title: 'Pay in instalments',
-            body: 'Our primary way to book — your agent sets up a scheduled plan after your callback.',
-          },
           {
             title: 'Compare live fares',
             body: `See indicative prices for ${fromCity}–${toCity}, then let a UK agent confirm the live fare before you book.`,
           },
           {
             title: 'Agent-assisted booking',
-            body: 'No online payment on this site. We finalise seats, bags, and your payment plan with you.',
+            body: 'No online payment on this site. We finalise seats and bags with you.',
           },
         ].map((item) => (
           <div key={item.title} className="rounded-2xl border border-line bg-white p-5 shadow-sm">
-            <h3 className="m-0 text-base font-bold text-brand-navy">
-              {item.title === 'Pay in instalments' ? (
-                <PayInInstalmentsAccent>{item.title}</PayInInstalmentsAccent>
-              ) : (
-                item.title
-              )}
-            </h3>
+            <h3 className="m-0 text-base font-bold text-brand-navy">{item.title}</h3>
             <p className="mt-2 text-sm text-muted">{item.body}</p>
           </div>
         ))}
