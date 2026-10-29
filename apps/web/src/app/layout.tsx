@@ -50,7 +50,8 @@ export const metadata: Metadata = {
     url: '/',
     images: [
       {
-        url: `/og?title=${encodeURIComponent('Cheap flights from London to Lagos')}`,
+        url: `/og?title=${encodeURIComponent('Cheap flights from London to Lagos')}&v=2`,
+        type: 'image/png',
         width: 1200,
         height: 630,
         alt: `${AGENCY_NAME} — cheap flights from London to Lagos and Nigeria`,
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: defaultTitle,
     description: defaultDescription,
-    images: [`/og?title=${encodeURIComponent('Cheap flights from London to Lagos')}`],
+    images: [`/og?title=${encodeURIComponent('Cheap flights from London to Lagos')}&v=2`],
   },
   robots: {
     index: true,

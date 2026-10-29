@@ -84,7 +84,8 @@ export function buildPageMetadata({
       url,
       images: [
         {
-          url: `/og?title=${encodeURIComponent(socialTitle)}`,
+          url: `/og?title=${encodeURIComponent(socialTitle)}&v=2`,
+          type: 'image/png',
           width: 1200,
           height: 630,
           alt: socialTitle,
@@ -95,7 +96,7 @@ export function buildPageMetadata({
       card: 'summary_large_image',
       title: socialTitle,
       description,
-      images: [`/og?title=${encodeURIComponent(socialTitle)}`],
+      images: [`/og?title=${encodeURIComponent(socialTitle)}&v=2`],
     },
     robots: noIndex ? { index: false, follow: false } : { index: true, follow: true },
   };
