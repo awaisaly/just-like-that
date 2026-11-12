@@ -1,6 +1,14 @@
 /** Customer-facing agency name. Repo / package name stays `just-like-that`. */
 export const AGENCY_NAME = 'Elca Airbridge';
 
+/** Companies House name, including the registered spelling. */
+export const LEGAL_COMPANY_NAME = 'ELCA SERVCIES LTD';
+
+export const COMPANY_NUMBER = '10892708';
+
+/** Current registered office on the Companies House record. */
+export const REGISTERED_OFFICE = '43 South Mead, Redhill, England, RH1 2EL';
+
 /** Possessive form for copy (“Elca Airbridge’s …”). */
 export const AGENCY_NAME_POSSESSIVE = `${AGENCY_NAME}’s`;
 

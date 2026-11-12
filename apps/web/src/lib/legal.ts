@@ -1,4 +1,4 @@
-import { AGENCY_NAME } from './brand';
+import { AGENCY_NAME, COMPANY_NUMBER, LEGAL_COMPANY_NAME, REGISTERED_OFFICE } from './brand';
 import { DEFAULT_SUPPORT_EMAIL } from './contact';
 
 export type LegalInline = string | { label: string; href: string };
@@ -42,14 +42,17 @@ export const legalPages: LegalPage[] = [
     title: 'Terms of service',
     kicker: 'Website and booking terms',
     description: `Terms for using the ${AGENCY_NAME} website and booking flights with a UK agent, including indicative fares.`,
-    updated: '13 October 2026',
+    updated: '12 November 2026',
     sections: [
       {
         id: 'who-we-are',
         title: 'Who we are',
         blocks: [
           p(
-            `${AGENCY_NAME} (“we”, “us”) is a UK travel desk. This website lets you compare flight options and then arrange a booking with one of our agents.`,
+            `${AGENCY_NAME} (“we”, “us”) is the trading name of ${LEGAL_COMPANY_NAME}, company number ${COMPANY_NUMBER}, a private company registered in England and Wales. The registered office is ${REGISTERED_OFFICE}.`,
+          ),
+          p(
+            'This website lets you compare flight options and then arrange a booking with one of our agents.',
           ),
           p(
             'We do not take card payments on this website, and we do not issue tickets automatically when you select a fare. A booking is made when an agent confirms it with you.',
@@ -201,14 +204,14 @@ export const legalPages: LegalPage[] = [
     title: 'Privacy policy',
     kicker: 'UK GDPR',
     description: `How ${AGENCY_NAME} collects, uses, and shares personal information when you search flights or contact a UK agent.`,
-    updated: '13 October 2026',
+    updated: '12 November 2026',
     sections: [
       {
         id: 'controller',
         title: 'Who is responsible',
         blocks: [
           p(
-            `${AGENCY_NAME} is the controller of personal information collected through this website and when you book with our agents.`,
+            `${LEGAL_COMPANY_NAME} (company number ${COMPANY_NUMBER}), trading as ${AGENCY_NAME}, is the controller of personal information collected through this website and when you book with our agents. Registered office: ${REGISTERED_OFFICE}.`,
           ),
           p(
             'Contact us at ',

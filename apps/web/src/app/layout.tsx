@@ -6,7 +6,7 @@ import { DeferredWhatsAppChatButton } from '../components/DeferredWhatsAppChatBu
 import { Providers } from '../components/Providers';
 import { SiteChrome } from '../components/SiteChrome';
 import { SiteFooter } from '../components/SiteFooter';
-import { AGENCY_NAME } from '../lib/brand';
+import { AGENCY_NAME, COMPANY_NUMBER, LEGAL_COMPANY_NAME } from '../lib/brand';
 import { ADS_CALL_LINK_CLASS, ADS_CALL_NUMBER_CLASS, getSupportEmail } from '../lib/contact';
 import { getSiteUrl, SITE_KEYWORDS } from '../lib/seo';
 import './globals.css';
@@ -107,8 +107,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     '@context': 'https://schema.org',
     '@type': ['Organization', 'TravelAgency'],
     name: AGENCY_NAME,
+    legalName: LEGAL_COMPANY_NAME,
+    identifier: COMPANY_NUMBER,
     url: siteUrl,
     logo: `${siteUrl}/icon-192.png`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '43 South Mead',
+      addressLocality: 'Redhill',
+      addressRegion: 'England',
+      postalCode: 'RH1 2EL',
+      addressCountry: 'GB',
+    },
     image: `${siteUrl}/icon-192.png`,
     email: supportEmail,
     description: defaultDescription,

@@ -6,7 +6,7 @@ import {
 } from '../data/destinations';
 import { findAirport } from '../data/airports';
 import { getSeoPagesByType, seoPath } from '../data/seo-pages';
-import { AGENCY_NAME } from '../lib/brand';
+import { AGENCY_NAME, COMPANY_NUMBER, LEGAL_COMPANY_NAME, REGISTERED_OFFICE } from '../lib/brand';
 import {
   getSupportEmail,
   getWhatsAppLines,
@@ -16,119 +16,6 @@ import {
 import { TOURS_HREF } from '../lib/tours';
 import { AgencyWordmark } from './AgencyWordmark';
 import { WhatsAppChannelIcon } from './ContactChannelIcons';
-
-function VisaBadge() {
-  return (
-    <svg viewBox="0 0 48 32" className="h-7 w-auto" role="img" aria-label="Visa">
-      <rect width="48" height="32" rx="4" fill="#1A1F71" />
-      <text
-        x="24"
-        y="21"
-        textAnchor="middle"
-        fill="#fff"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="12"
-        fontWeight="700"
-        letterSpacing="0.5"
-      >
-        VISA
-      </text>
-    </svg>
-  );
-}
-
-function MastercardBadge() {
-  return (
-    <svg viewBox="0 0 48 32" className="h-7 w-auto" role="img" aria-label="Mastercard">
-      <rect width="48" height="32" rx="4" fill="#252525" />
-      <circle cx="19" cy="16" r="8" fill="#EB001B" />
-      <circle cx="29" cy="16" r="8" fill="#F79E1B" />
-      <path
-        d="M24 10.2a8 8 0 0 1 0 11.6 8 8 0 0 1 0-11.6z"
-        fill="#FF5F00"
-      />
-    </svg>
-  );
-}
-
-function AmexBadge() {
-  return (
-    <svg viewBox="0 0 48 32" className="h-7 w-auto" role="img" aria-label="American Express">
-      <rect width="48" height="32" rx="4" fill="#2E77BC" />
-      <text
-        x="24"
-        y="20"
-        textAnchor="middle"
-        fill="#fff"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="8"
-        fontWeight="700"
-      >
-        AMEX
-      </text>
-    </svg>
-  );
-}
-
-function IataBadge() {
-  return (
-    <svg viewBox="0 0 56 32" className="h-7 w-auto" role="img" aria-label="IATA">
-      <rect width="56" height="32" rx="4" fill="#fff" stroke="#10193a" strokeWidth="1.5" />
-      <text
-        x="28"
-        y="14"
-        textAnchor="middle"
-        fill="#10193a"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="9"
-        fontWeight="800"
-      >
-        IATA
-      </text>
-      <text
-        x="28"
-        y="24"
-        textAnchor="middle"
-        fill="#64748b"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="5.5"
-        fontWeight="600"
-      >
-        ACCREDITED
-      </text>
-    </svg>
-  );
-}
-
-function AtolBadge() {
-  return (
-    <svg viewBox="0 0 56 32" className="h-7 w-auto" role="img" aria-label="ATOL">
-      <rect width="56" height="32" rx="4" fill="#0B3D91" />
-      <text
-        x="28"
-        y="14"
-        textAnchor="middle"
-        fill="#fff"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="9"
-        fontWeight="800"
-      >
-        ATOL
-      </text>
-      <text
-        x="28"
-        y="24"
-        textAnchor="middle"
-        fill="#B8D0F5"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="5.5"
-        fontWeight="600"
-      >
-        PROTECTED
-      </text>
-    </svg>
-  );
-}
 
 function SecureBadge() {
   return (
@@ -262,26 +149,9 @@ export function SiteFooter() {
         </div>
 
         <div className="footer-trust">
-          <div>
-            <p className="footer-trust-label">We accept</p>
-            <div className="footer-trust-row" aria-label="Accepted payment cards">
-              <VisaBadge />
-              <MastercardBadge />
-              <AmexBadge />
-            </div>
-            <p className="mt-2 text-[11px] leading-snug text-muted">
-              Card payments are taken securely when you book with a UK agent — not on this website.
-            </p>
-          </div>
-
-          <div>
-            <p className="footer-trust-label">Accreditation & trust</p>
-            <div className="footer-trust-row" aria-label="Travel agency trust marks">
-              <AtolBadge />
-              <IataBadge />
-              <SecureBadge />
-              <UkBadge />
-            </div>
+          <div className="footer-trust-row" aria-label="Trust">
+            <SecureBadge />
+            <UkBadge />
           </div>
         </div>
 
@@ -331,6 +201,11 @@ export function SiteFooter() {
           <div>
             <p className="m-0">
               <AgencyWordmark size="footer" />
+            </p>
+            <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted">
+              {LEGAL_COMPANY_NAME} · Company no. {COMPANY_NUMBER}
+              <br />
+              Registered office: {REGISTERED_OFFICE}
             </p>
             <p className="mt-1 text-xs text-muted">UK travel desk · agent-assisted</p>
           </div>

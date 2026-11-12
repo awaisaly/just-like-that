@@ -14,7 +14,7 @@ import {
   supportTelHref,
   whatsappChatHref,
 } from '../../lib/contact';
-import { AGENCY_NAME } from '../../lib/brand';
+import { AGENCY_NAME, COMPANY_NUMBER, LEGAL_COMPANY_NAME, REGISTERED_OFFICE } from '../../lib/brand';
 import { buildPageMetadata } from '../../lib/seo';
 
 export const metadata = buildPageMetadata({
@@ -176,6 +176,16 @@ export default function ContactPage() {
           >
             Search flights
           </Link>
+        </div>
+      </section>
+
+      <section className="contact-meta" aria-label="Registered company">
+        <div className="contact-hours">
+          <p className="contact-hours-label">Registered company</p>
+          <p className="contact-hours-value">{LEGAL_COMPANY_NAME}</p>
+          <p className="contact-hours-note">Company number {COMPANY_NUMBER}</p>
+          <p className="contact-hours-note">Registered office: {REGISTERED_OFFICE}</p>
+          <p className="contact-hours-note">Trading as {AGENCY_NAME}.</p>
         </div>
       </section>
 
